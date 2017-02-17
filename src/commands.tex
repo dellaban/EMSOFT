@@ -211,9 +211,9 @@
 \newcommand{\shiftpoints}{4pt}
 
 
-\newcommand{\ta}{(\Loc,\loc_0,\A,\T,\X,\tpc)}
+\newcommand{\ta}{(\Loc,\loc_0,\A,\T,\X,\inv)}
 \newcommand{\tab}[1]{(\Loc_{#1},\loc_0^{#1},\A_{#1},T_{#1},\X_{#1},\tpc_{#1})}
-\newcommand{\lts}{(\Q,A\cup\realpos,\lto)}
+\newcommand{\lts}{(\Q,\A\cup\realpos,\to)}
 \newcommand{\ltsg}{(\Q_g,\gamma\cup\realpos,\lto)}
 \newcommand{\squig}{{\scriptstyle\sim\mkern-3.9mu}}
 \newcommand{\lsquigend}{{\lhd\mkern-3mu}}
@@ -237,11 +237,11 @@
 
 \newcommand{\plntxt}[1]{\mathit{Plannable(#1)}}
 \newcommand{\pln}[1]{\mathit{Plannable(#1)}=\bigvee_{\loc\in\Loc_{#1}}
-\at{\loc}\wedge\backhtxt(\bigwedge_{a_i\in#1} \guard{a_i}{\loc_i}),}
+\at{\loc}\wedge\backhtxt(\bigwedge_{a_i\in#1} \guard{a_i}{\loc_i})}
 
 \newcommand{\plnIntxt}[2]{\mathit{Plannable(#1,#2)}}
 \newcommand{\plnIn}[2]{\mathit{Plannable(#1,#2)}=\bigvee_{\loc\in\Loc_{#1}}
-\at{\loc}\wedge\bigwedge_{a_i\in#1} \Big(\guard{a_i}{\loc_i}+#2\Big),}
+\at{\loc}\wedge\bigwedge_{a_i\in#1} \Big(\guard{a_i}{\loc_i}+#2\Big)}
 
 
 \newcommand{\stat}{%

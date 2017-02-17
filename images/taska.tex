@@ -14,7 +14,7 @@
   \path (l0) edge [in=100, out=160,loop,looseness=4] node[left]{$end_0$} (l0)
          edge [bend left] node[right,align=center]{$init_0$\\$z>4$} (l1)
     (l1) edge [in=-10, out=-70,loop,looseness=4] node[right]{$end_0$} (l1)
-         edge [bend left] node[left,align=center]{$run$\\$z:=0$} (l0);
+         edge [bend left] node[left,align=center]{$start_0$\\$z:=0$} (l0);
 
   \node [accepting, place] (p1-0) [right=2cm of l0] {$\loc_0^2$};
   \node [place] (p1-1) [right=1.5cm of p1-0]{$\loc_1^2$};

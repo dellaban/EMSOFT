@@ -25,9 +25,13 @@ the weak planning semantics and discuss its properties.
 
 \subsubsection*{Preliminaries}\label{subsec:wp}\mbox{}\\ 
 We define the predicate $\plnIntxt{\alpha}{\delta}$ characterizing all states
-  from which $\alpha$ can be planned and execute after $\delta$ units of time, that is, 
+  from which $\alpha$ can be planned in $\delta$ units of time, that is, 
   $\alpha$ will be \emph{enabled} after a time progresses of $\delta$ units of time:
-  \begin{equation}\label{eq:enf}
+  \begin{equation}\label{eq:enf1}
+    \plnIntxt{\alpha}{\delta}\implies\enabled(\alpha)[\val+\delta]   
+  \end{equation}
+ Effectively, this predicate can be written as follows: 
+  \begin{equation}\label{eq:enf2}
     \plnIn{\alpha}{\delta}
 \end{equation}
 %Notice that for $(\loc,\val),(\loc',\val')\in\reach(S)$, and $a_i\in\alpha$ we have:
@@ -35,8 +39,8 @@ We define the predicate $\plnIntxt{\alpha}{\delta}$ characterizing all states
 %\loc_i=\loc'_i \text{ and } \val_i=\val'_i.$$
 
 \begin{property}\label{pt:plnIn1}
-  Let $(\loc,\val)$ be a state of the composition $S$. For any interaction $\beta\in\gamma$ such that, $\p{\alpha}\cap\p{\beta}=\emptyset$
-  and $(\loc,\val)\transit{\beta}_{\gamma}(\loc',\val')$, where $\p{\alpha}$ (resp. $\p{\beta}$) represents components participating in 
+  Let $(\loc,\val)$ be a state of the composition $S$. For any interactions $\alpha,\beta\in\gamma$ such that, $(\loc,\val)\transit{\beta}_{\gamma}(\loc',\val')$
+  and $\p{\alpha}\cap\p{\beta}=\emptyset$, where $\p{\alpha}$ (resp. $\p{\beta}$) represents components participating in 
   interaction $\alpha$ (resp. $\beta$), if $\plnIntxt{\alpha}{\delta}$ holds at state $(\loc,\val)$ then it still holds at state $(\loc',\val')$.
 \end{property}
 This property derives from the fact that executing interactions with disjoint set of components than $\alpha$ does not change the states
@@ -45,15 +49,20 @@ of components participating in $\alpha$, that is, for $a_i\in\alpha$ we have $\l
 
 \begin{property}\label{pt:plnIn2}
   Let $(\loc,\val)$ and $(\loc,\val+\delta')$, with $\delta'\in\realpos$ be two states of the composition $S$. 
-  If $\plnIntxt{\alpha}{\delta}$ is $\true$ at state $(\loc,\val)$ then $\plnIntxt{\alpha}{\delta-\delta'}$ is true at state
+  For an interaction $\alpha\in\gamma$, if $\plnIntxt{\alpha}{\delta}$ is $\true$ at state $(\loc,\val)$ then $\plnIntxt{\alpha}{\delta-\delta'}$ is true at state
   $(\loc,\val+\delta')$ for $\delta'\le\delta$.
 \end{property}
-This property can be found directly by writing Equation~\ref{eq:enf} on state $(\loc,\val+\delta')$.
+This property can be found directly by writing Equation~\ref{eq:enf1} on state $(\loc,\val+\delta')$.
 
 Let $\tcal{H}$ be a partial function $\tcal{H}: \gamma \to\realpos\times\realpos$ that defines for each
 interaction $\alpha\in\gamma$, its respective planning horizons as an interval $[\hmn,\hmx]$. 
 We define the predicate $\plntxt{\alpha}$ characterizing all states from which 
-$\alpha$ can be planned w.r.t its planning horizons as follows:  
+$\alpha$ can be planned w.r.t its planning horizons, that is:
+  \begin{equation}\label{eq:enf1}
+    \plntxt{\alpha}\implies\enabled(\alpha)[\val+\delta]\wedge\delta\in[\hmn,\hmx]  
+  \end{equation}
+
+Formally, it is defined as follows:
 \begin{displaymath}
   \pln{\alpha}
 \end{displaymath}
@@ -89,7 +98,7 @@ We define below the semantics for planning each interaction $\alpha\in\gamma$ wi
 
 \begin{definition}[Planning Semantics]\label{def:pln_sem}
 Given a set of components $\{B_1,\cdots,B_n\}$ and an interaction set $\gamma$,
-we define the planning semantics of the composite component $S = (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$,
+we define the planning semantics of the composition $\gamma(B_1,\cdots,B_n)$,
 as the labeled transition system $S_p=(\Q_p,
 \gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$ where:
 \begin{itemize}
@@ -101,7 +110,7 @@ as the labeled transition system $S_p=(\Q_p,
     \item Plan: $\alpha\in\gamma,\delta\in[\hmn,\hmx]$
     \begin{align*}
       &\hspace{4mm}\alpha\notin\confl(\pi)\wedge\plnIntxt{\alpha}{\delta}\\
-     \cline{1-2}
+      \cline{1-2}
      &(\loc,\val,\pi)\tranbp{\plan{\alpha,\delta}}{4}(\loc,\val,\pi\cup\{\alpha\mapsto\delta\}).\\
     \end{align*}
     \vspace*{-10mm}
@@ -124,28 +133,21 @@ as the labeled transition system $S_p=(\Q_p,
 \end{definition}
 \begin{example}
   \label{exp:dl}
-  Let us consider the following execution sequence for the example of Figure~\ref{fig:run} under the weak planning semantics rules and 
-  for a value $\deltamax=5$ for all interactions except $\alpha_5$ and $\alpha_6$ that will be assigned a $\deltamax=3$:
-      \begin{displaymath}
-      %  \scriptsize{
-        \small{
-        \begin{split}
-          &((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0),\emptyset)\tranbp{\plan{\alpha_1,5}}{6}((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0),\{\alpha_1\mapsto5\})\tranbp{5}{3}\\&
-          ((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(5,5,5),\{\alpha_1\mapsto0\})\tranbp{\alpha_1}{3}((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5),\emptyset)\tranbp{\plan{\alpha_3,2}}{6}
-          \\&((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5),\{\alpha_3\mapsto2\})\tranbp{2}{3}((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(7,7,7),\{\alpha_3\mapsto0\})\tranbp{\alpha_3}{3}
-          \\&((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,7,0),\emptyset)\tranbp{\plan{\alpha_5,2}}{6}((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,7,0),\{\alpha_5\mapsto2\})\tranbp{2}{3}
-          \\&((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(2,9,2),\{\alpha_5\mapsto0\})\tranbp{\alpha_5}{3}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,9,2),\emptyset)\tranbp{\plan{\alpha_2,3}}{6}\\
-            &((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,9,2),\{\alpha_2\mapsto3\})\tranbp{3}{3}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(5,12,5),\{\alpha_2\mapsto0\})\tranbp{\alpha_2}{3}\\
-            &((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),(5,12,5),\emptyset)\tranbp{\plan{\alpha_4,0}}{6}((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),(5,12,5)\{\alpha_4\mapsto0\})\tranbp{\alpha_4}{3}\\
-            &((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(5,0,0),\emptyset)\tranbp{\plan{\alpha_7,4}}{6}((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(5,0,0),\{\alpha_7\mapsto4\})\tranbp{3}{3}\\
-            &((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(8,3,3),\{\alpha_7\mapsto1\})
-        \end{split}
-      }
-      \end{displaymath}
+  Let us consider the following execution sequence for example of Figure~\ref{fig:run} under the planning semantics rules, and for 
+  horizons values within 1 and 3 TU for all interactions. 
+  \begin{displaymath}
+    \begin{split}
+      &((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0),\emptyset)\tranbp{\plan{\alpha_1,1}}{6}\cdots\tranbp{1}{3}\cdots\tranbp{\alpha_1}{3}\cdots\\
+      &\tranbp{\plan{\alpha_3,1}}{6}\cdots\tranbp{1}{3}\cdots\tranbp{\alpha_3}{3}\cdots\tranbp{\plan{\alpha_2,1}}{6}\cdots\tranbp{\plan{\alpha_5,3}}{6}\cdots\\
+      &\tranbp{1}{3}\cdots\tranbp{\alpha_2}{3}\cdots\tranbp{\plan{\alpha_4,1}}{6}\cdots\tranbp{1}{3}\cdots\tranbp{\alpha_4}{3}\cdots\tranbp{1}{3}\cdots\\
+      &\tranbp{\alpha_5}{3}\cdots\tranbp{\plan{\alpha_7,3}}{6}\cdots\tranbp{2}{3}((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(3,5,3),\{\alpha_7\mapsto1\})
+    \end{split}
+  \end{displaymath}
+
 This execution sequence represents a path that alternates plan actions, time steps and execution of some interactions. We can see that for interaction
-$\alpha_7$ which is planned 4 units of time ahead, the system cannot reach the state from which it can be executed since there is a time progress expiration
-in component $T_2$ after 3 time units from planning this interaction. This means that local planning of interactions doesn't always allow the progress of time and may
-thus, introduce deadlocks even if the system under the global semantics rules is deadlock-free. 
+$\alpha_7$ which is planned 3 units of time ahead, the system cannot reach the state from which it can be executed since there is a time progress expiration
+in component $T_2$. This execution sequence shows that a given system can deadlock under the planning semantics, even if it is deadlock-free under the global semantics 
+rules. 
       
 \end{example}
 
@@ -156,33 +158,33 @@ by considering \plana-transitions unobservable.
 As explained in Example~\ref{exp:dl}, the planning semantics does not preserve the deadlock freedom property of our system.
 Nevertheless, the following proves weak simulation relations between the two semantics.
 
-\begin{theorem}\label{thm:pi_pln}
+\begin{lemma}\label{lem:pi_pln}
   For all the reachable states $(\loc,\val,\pi)$ of the planning semantics, and $\forall\alpha\in\pi$, the
   predicate $\plnIntxt{\alpha}{\pi(\alpha)}$ is $\true$.
-\end{theorem}
+\end{lemma}
 
-Let $S_g=(\Q_g,\gamma\cup\realpos,\transit{}_{\gamma})$ (resp. $S_{p}=(\Q_{p},\gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$)
+Let $LTS_g=(\Q_g,\gamma\cup\realpos,\transit{}_{\gamma})$ (resp. $LTS_{p}=(\Q_{p},\gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$)
 the labeled transition system characterizing the global (resp. planning) semantics. 
 \begin{proposition}\mbox{}\\
   \label{prop:relation}
   \vspace{-6mm}
   \begin{description}[labelwidth=1.5cm]
-    \item[\namedlabel{itm:1}{Relation 1}]$\forall\delta\in\realpos.(\loc,\val,\pi)\tranbp{\delta}{3}(\loc',\val',\pi')
+    \item[\namedlabel{itm:1}{R1}]$\forall\delta\in\realpos.(\loc,\val,\pi)\tranbp{\delta}{3}(\loc',\val',\pi')
       \Rightarrow (\loc,\val)\transit{\delta}_{\gamma}(\loc',\val')$
-    \item[\namedlabel{itm:2}{Relation 2}]$\forall\alpha\in\gamma.(\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi')
+    \item[\namedlabel{itm:2}{R2}]$\forall\alpha\in\gamma.(\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi')
       \Rightarrow (\loc,\val)\transit{\alpha}_{\gamma}(\loc',\val')$
   \end{description}
 \end{proposition}
-It is straightforward that~\ref{itm:1} is a consequence of the definition of time progress in the planning semantics. For Relation~\ref{itm:2},  
+It is straightforward that~\ref{itm:1} is a consequence of the definition of time progress in the planning semantics. For relation~\ref{itm:2},  
 using Definition~\ref{def:plan}, we can deduce that:\\
 \begin{displaymath}
 (\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi')\Rightarrow \pi(\alpha)=0,
 \end{displaymath}
-By Theorem~\ref{thm:pi_pln}, this implies that $\plnIntxt{\alpha}{0}$ is $\true$ at state $(\loc,\val,\pi)$, meaning that $\enabled(\alpha)$ is
+By Lemma~\ref{lem:pi_pln}, this implies that $\plnIntxt{\alpha}{0}$ is $\true$ at state $(\loc,\val,\pi)$, meaning that $\enabled(\alpha)$ is
 also $\true$, which allows to infer~\ref{itm:2}.  
 
 \begin{corollary}\label{cr:reach}
-  If a state $(\loc,\val,\pi)\in\reach(S_p)$, then $(\loc,\val)\in\reach(S_g)$.
+  If a state $(\loc,\val,\pi)\in\reach(LTS_p)$, then $(\loc,\val)\in\reach(LTS_g)$.
 \end{corollary}
 
 \begin{definition}[Weak Simulation]
@@ -195,7 +197,7 @@ also $\true$, which allows to infer~\ref{itm:2}.
 \end{definition}
 The definition of weak simulation is based on the unobservability of $\beta-$transitions. In our case, $\beta-$transitions corresponds to $\plana-$transitions.
 \begin{corollary}\label{cr:sim}
-  $S_p\simu{R_1} S_g$ with $R_1=\{(\q,\pi);\q)\in\Q_p\times\Q_g\}$.
+  $LTS_p\simu{R_1} LTS_g$ with $R=\{(\q,\pi);\q)\in\Q_p\times\Q_g\}$.
 \end{corollary}
 
 Corollary~\ref{cr:sim} corresponds to a notion of correctness of the planning semantics: any execution in the planning semantics corresponds to an execution in the global state semantics.
@@ -204,7 +206,7 @@ By contrast to (cite fm), where planning immediately, i.e. with a zero horizon, 
 by introducing a minimal horizon of planning interactions, the planning semantics does no longer
 preserve all execution sequences of the global state semantics.
 
-As explained in example, the planning semantics may introduce deadlocks as shown by the scenario presented in Example~\ref{exp:dl}.
+As explained in the previous example, the planning semantics may introduce deadlocks as shown by the scenario presented in the Example 3.3.
 In the following, we present different verification methods to check the deadlock freedom of a system under the planning semantics rules.
 
 

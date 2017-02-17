@@ -10,19 +10,19 @@ uniform notation throughout the paper.
 \begin{definition}[Component]
   \label{def:atom}
   A \emph{component} is a tuple
-  $(\Loc, \loc_0, A, T, \X, \inv)$ where
-  $\Loc$ is a finite set of \emph{locations}, $\loc_0 \in \Loc$ is an \emph{initial} location, $A$
+  \\$\ta$ where
+  $\Loc$ is a finite set of \emph{locations}, $\loc_0 \in \Loc$ is an \emph{initial} location, $\A$
   a finite set of \emph{actions}, $\X$ is a finite set of
-  \emph{clocks}, $T \subseteq \Loc\times(A\times \tcal{C}
+  \emph{clocks}, $\T \subseteq \Loc\times(\A\times \tcal{C}
   \times 2^{\X})\times \Loc$ is a set of \emph{transitions} labeled with an action, a
   guard, and a set of clocks to be reset,
   and $\inv: \Loc\rightarrow\tcal{C}$ assigns a \emph{time
-    progress condition}, $\tpc{\loc}$,
+  progress condition}, $\tpc{\loc}$,
     to each location, where $\tcal{C}$ is the set of \emph{clock
   constraints} defined by the following grammar: 
   \begin{displaymath} 
-  C := \true \mid x\sim\mathit{ct} \mid x - y \sim\mathit{ct} \mid C 
-\wedge C\mid\false, 
+    \tcal{C} := \true \mid x\sim\mathit{ct} \mid x - y \sim\mathit{ct} \mid \tcal{C} 
+    \wedge \tcal{C}\mid\false, 
 \end{displaymath}
   with $x, y\in \X$, $\sim$ $\in\{<,\le,=,\ge,>\}$ and $\mathit{ct} \in
   \mathbb{R}_{\ge 0}$.
@@ -32,13 +32,13 @@ uniform notation throughout the paper.
 
 Throughout the paper, we consider that components are deterministic timed automata, that is, 
 at a given location $\loc$ and for a given action $a$, there is at most one outgoing transition from $\loc$ labeled by $a$. 
-Given a timed automaton $(\Loc, \loc_0, A, T, \X, \inv)$, we write $\loc \transit{a,g,r} \loc'$ 
-if there exists a transition $\tau = \big(\loc,(a,g,r),\loc'\big) \in T$. 
+Given a timed automaton $\ta$, we write $\loc \transit{a,g,r} \loc'$ 
+if there exists a transition $\tau = \big(\loc,(a,g,r),\loc'\big) \in\T$. 
 We also write: 
 \begin{displaymath}
   \guard{a}{\loc}=
   \begin{cases}
-    g, &\text{ if } \exists\tau = \big(\loc,(a,g,r),\loc'\big) \in T\\
+    g, &\text{ if } \exists\tau = \big(\loc,(a,g,r),\loc'\big) \in\T\\
     \false, &\text{ otherwise }
   \end{cases}
 \end{displaymath}
@@ -53,15 +53,14 @@ $\val[r](x) = 0$ for $x\in r$, $\val[r](x) = \val(x)$ otherwise.
 We also denote by $C+\delta$ the clock constraint $C$ shifted by $\delta$, i.e. such that $C(\val+\delta)$ iff $C(\val)$.
 \begin{definition}[Semantics]
   \label{def:atom_sem}
-  A component $B = (\Loc, \loc_0, A, T, \X, \inv)$ defines the labeled transition system (LTS) 
-  $(\Q, A\cup\realpos, \rightarrow)$ where $\Q\subseteq\Loc\times\Val(\X)$ denotes the \emph{states} of $B$ 
+  A component $B = \ta$ defines the labeled transition system (LTS) 
+  $\lts$ where $\Q\subseteq\Loc\times\Val(\X)$ denotes the \emph{states} of $B$, 
   and  $\rightarrow\subseteq\Q\times(A\cup\realpos) \times
   Q$ denotes the set of transitions between states according to the rules:
-    \begin{itemize}
+  \begin{itemize}[leftmargin=4mm]
     \item $(\loc,\val) \transit{a} (\loc',\val[r])$ if $\loc \transit{a,g,r} \loc'$, and $g(\val)$ is true (action step).
-      %\wedge \tpc{\loc'}(\val[r])$ (action step).
       \item $(\loc,\val) \transit{\delta} (\loc,\val+\delta)$ if $\tpc{\loc}(\val+\delta)$ for $\delta\in\realpos$
-      (time progress).
+      (time step).
     \end{itemize}
 \end{definition}
 We define the predicate $\urg(\tpc{\loc})$ characterizing the urgency of a time progress condition
@@ -70,9 +69,9 @@ $\tpc{\loc}=\bigwedge\limits_{i=1}^m x_i\le ct_i$ at a state $(\loc,\val)$ as fo
 \urg(\tpc{\loc})=\bigvee_{i=1}^m (x_i=ct_i),
 \end{displaymath}
 An \emph{execution sequence} of $B$ from a state $(\loc,\val)$ is a path in the LTS starting at $(\loc,\val)$ and that 
-alternates action steps and time steps (time progress), that is:
+alternates action steps and time steps, that is:
 \begin{displaymath}
-  (\loc_1,\val_1) \transit{\ex_1} \ldots \transit{\ex_i} (\loc_n,\val_n),n\in\integerpos,\sigma\in A\cup\realpos
+  (\loc_1,\val_1) \transit{\ex_1} \ldots \transit{\ex_i} (\loc_n,\val_n),n\in\integerpos,\sigma\in \A\cup\realpos
 \end{displaymath}
 In this paper, we always assume components with \emph{well formed guards} meaning that transitions $\loc \transit{a,g,r} \loc'$ satisfy
 $g(v)\Rightarrow\tpc{\loc}(\val)\wedge\tpc{\loc'}(\val[r])$ for any $v \in \Val$.
@@ -103,7 +102,7 @@ We also define the predicate $\enabled(a)$ characterizing states $(\loc, \val)$ 
   if neither action steps nor time steps can be done from this state. The following equation characterizes those states:
   \vspace{-1mm}
   \begin{displaymath}
-   \forall a\in A. \ \neg\enabled(a) \ \wedge \ \urg(\tpc{\loc})
+   \forall a\in\A. \ \neg\enabled(a) \ \wedge \ \urg(\tpc{\loc})
   \end{displaymath}
 \end{definition}
 
@@ -114,31 +113,27 @@ We also define the predicate $\enabled(a)$ characterizing states $(\loc, \val)$ 
   a fixed subset of components. It takes
   place only if all the participants agree to execute the corresponding actions.
   Given $n$ components $B_i$, $i=1,\dots,n$, with disjoint sets of actions
-  $A_i$, an interaction is a subset of actions $\alpha \subseteq \cup_{1 \leq  i \leq n} A_i$
-  containing at most one action per component, i.e. $\alpha \cap A_i$ is either empty or a singleton $\{ a_i \}$.
+  $\A_i$, an interaction is a subset of actions $\alpha \subseteq \cup_{1 \leq  i \leq n}\A_i$
+  containing at most one action per component, i.e. $\alpha \cap\A_i$ is either empty or a singleton $\{ a_i \}$.
   That is, an interaction 
-  $\alpha$ can be put in the form $\{ a_i \}_{i \in I}$ with $I \subseteq \{ 1, \ldots, n \}$ and $a_i \in A_i$ for all $i \in I$.
- 
-  
-  
+  $\alpha$ can be put in the form $\{ a_i \}_{i \in I}$ with $I \subseteq \{ 1, \ldots, n \}$ and $a_i \in\A_i$ for all $i \in I$.
+%\begin{definition}[Composition] 
+%  \label{def:comp}
+%  For $n$ components $B_i = (\Loc_i,
+%  \loc^i_0, A_i, T_i, \X_i, \inv_i)$, with $\Loc_j \cap \Loc_j = \emptyset$, $A_i \cap A_j = 
+%  \emptyset$, and $\X_i \cap \X_j = \emptyset$ for any $i \neq j$, the
+%  \emph{composition} $\gamma(B_1, \ldots, B_n)$ w.r.t. a set of interactions
+%  $\gamma$ is defined by a timed automaton
+%  $S = (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$ where $\loc_0 =
+%  (\loc^1_0,\dots, \loc^n_0)$, $\X=\X_1\cup\ldots\cup\X_n$, $\Loc=\Loc_1\times\ldots\times\Loc_n$,
+%  $\inv=\inv_1 \wedge \ldots \wedge \inv_n$ for $\loc=(\loc_1,\dots,
+%  \loc_n)$, and $T_{\gamma}$ is such that $\loc\xrightarrow{\alpha,g,r}{}\loc'$ for 
+%  $\alpha=\{a_i\}_{i\in I}$, $\loc=(\loc_1,\dots,\loc_n)$, and $\loc'=(\loc'_1,\dots
+%  ,\loc'_n)$, if for $i\not\in I$ we have $\loc'_i = \loc_i$, and for $i\in I$ we have 
+%  $\loc_i\xrightarrow{a_i,g_i,r_i}\loc'_i$, and $g_{\alpha}=\bigwedge_{i\in I}g_i$ and $r=\bigcup_{i\in I}r_i$.
+%\end{definition}
 
-\begin{definition}[Composition] 
-  \label{def:comp}
-  For $n$ components $B_i = (\Loc_i,
-  \loc^i_0, A_i, T_i, \X_i, \inv_i)$, with $\Loc_j \cap \Loc_j = \emptyset$, $A_i \cap A_j = 
-  \emptyset$, and $\X_i \cap \X_j = \emptyset$ for any $i \neq j$, the
-  \emph{composition} $\gamma(B_1, \ldots, B_n)$ w.r.t. a set of interactions
-  $\gamma$ is defined by a timed automaton
-  $S = (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$ where $\loc_0 =
-  (\loc^1_0,\dots, \loc^n_0)$, $\X=\X_1\cup\ldots\cup\X_n$, $\Loc=\Loc_1\times\ldots\times\Loc_n$,
-  $\inv=\inv_1 \wedge \ldots \wedge \inv_n$ for $\loc=(\loc_1,\dots,
-  \loc_n)$, and $T_{\gamma}$ is such that $\loc\xrightarrow{\alpha,g,r}{}\loc'$ for 
-  $\alpha=\{a_i\}_{i\in I}$, $\loc=(\loc_1,\dots,\loc_n)$, and $\loc'=(\loc'_1,\dots
-  ,\loc'_n)$, if for $i\not\in I$ we have $\loc'_i = \loc_i$, and for $i\in I$ we have 
-  $\loc_i\xrightarrow{a_i,g_i,r_i}\loc'_i$, and $g_{\alpha}=\bigwedge_{i\in I}g_i$ and $r=\bigcup_{i\in I}r_i$.
-\end{definition}
-
-In practice we do not explicitly build compositions of components as presented in Definition~\ref{def:comp}.
+In practice we do not explicitly build compositions of components.
 We rather interpret their semantics at runtime by evaluating enabled interactions based on current states of components.
 In a composition of $n$ components $B_{i\in\{1,\cdots,n\}}$, denoted by $\gamma(B_1, \ldots, B_n)$,
 an action $a_i$ can execute only as part of an interaction $\alpha$ such that $a_i \in
@@ -146,39 +141,38 @@ an action $a_i$ can execute only as part of an interaction $\alpha$ such that $a
 \in \alpha$, which corresponds to the usual notion of multiparty
 interaction.
 
-\begin{property}[Semantics of a Composition]
+\begin{definition}[Semantics of a Composition]
   \label{pt:comp_sem}
   Given a set of components $\{B_1,\cdots,B_n\}$ and an interaction set $\gamma$.
-The semantics of the composite component $S = (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$ w.r.t the set of interaction 
-$\gamma$, is the LTS $S_g=(\Q_g,\gamma\cup\realpos,\to_{\gamma})$ where:
-\begin{itemize}
+  The semantics of the composition $S =\gamma(B_1,\cdots,B_n)$ w.r.t the set of interactions 
+  $\gamma$, is the LTS $(\Q_g,\gamma\cup\realpos,\to_{\gamma})$ where:
+\begin{itemize}[leftmargin=5mm]
   \item $\Q_g=\Loc\times\mathcal{V}(\X)$ is the set of global states, where $\Loc=\Loc_1\times
   \cdots\times\Loc_n$ and $\X=\bigcup^n_{i=1}\X_i$. We write a state $\q=(\loc,\val)$
   where $\loc=(\loc_1,\cdots,\loc_n)\in\Loc$ is a global location and $\val=(\val_1,
-  \cdots,\val_n)\in\Val(\X)$ is a global clocks valuations.
-  \item $\gamma$ is the set of interactions
+  \cdots,\val_n)\in\Val(\X)$ is global clocks valuations.
   \item $\to_{\gamma}$ is the set of labeled transitions defined by the rules: 
   \begin{itemize}
     \item $(\loc,\val)\transit{\alpha}_{\gamma}(\loc',\val')$ if for $\alpha=\{a_i\}_{i\in I}\in\gamma.
       \forall i\in I.(\loc_i,\val_i)\transit{a_i}(\loc_i,\val_i)$ and $\forall i \notin I.(\loc_i,\val_i)=(\loc_i',\val'_i)$
       (Interaction step).
         \item $(\loc,\val)\transit{\delta}_{\gamma}(\loc,\val+\delta)$ if
-          $\forall i\in\{1,\cdots,n\}\quad \inv_{\loc_i}(\val_i+\delta)$ for $\delta\in\realpos$ (time progress).
+          $\forall i\in\{1,\cdots,n\}\quad \inv_{\loc_i}(\val_i+\delta)$ for $\delta\in\realpos$ (time step).
       \end{itemize}
   \end{itemize}
-\end{property}
+\end{definition}
 
-In what follows, we consider only deadlock-free systems w.r.t the presented semantics.
+%In what follows, we consider only deadlock-free systems w.r.t the presented semantics.
 By abuse of notation, predicates $\at{\loc_i}$ of individual components $B_i$ are interpreted on states of $S$,
 being true for $(\loc,\val)$ iff $B_i$ is at location $\loc_i$ in $\loc$, i.e. iff $\loc\in
 \Loc_1\times\ldots\times\Loc_{i-1}\times\{\loc_i\}\times\Loc_{i+1}\times\ldots\times\Loc_n$.
 Similarly, clock constraints of components $B_i$ are applied to clock valuation functions $\val$ 
-of the composition $S= (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$ by restricting $\val$ to clocks $\X_i$ of $B_i$.
+of the composition by restricting $\val$ to clocks $\X_i$ of $B_i$.
 Given an interaction $\alpha\in\gamma$, these notations allow us to write $\enabled(\alpha)$ as:
 \begin{align*}
   \enabled(\alpha) &= \bigvee_{\loc=(\loc_1,\cdots,\loc_n)\in\Loc_{\alpha}} \at{\loc}\wedge \guard{\alpha}{\loc},\\
                    &= \bigvee_{(\loc_1,\cdots,\loc_n)\in\Loc_{\alpha}} \at{\loc}\wedge \bigwedge_{a_i\in\alpha}\guard{a_i}{\loc_i},\\
-                   &= \bigvee_{(\loc_1,\cdots,\loc_n)\in\Loc_{\alpha}} \bigwedge_{i=1}^n\at{\loc_i}\wedge \bigwedge_{a_i\in\alpha}\guard{a_i}{\loc_i},\\
+                   &= \bigvee_{(\loc_1,\cdots,\loc_n)\in\Loc_{\alpha}} \Big(\bigwedge_{i=1}^n\at{\loc_i}\wedge \bigwedge_{a_i\in\alpha}\guard{a_i}{\loc_i}\Big),\\
                    &= \bigwedge_{a_i\in\alpha} \enabled(a_i),
 \end{align*}
 where $\Loc_{\alpha}=\{\loc\in\Loc|\loc\transit{\alpha,g,r}\loc'\}.$
@@ -191,7 +185,7 @@ where $\Loc_{\alpha}=\{\loc\in\Loc|\loc\transit{\alpha,g,r}\loc'\}.$
   Component $C$ represents a  controller that initializes, releases, and ends tasks $T_1$ and $T_2$.
   Tasks use the shared resource $R$ during their execution.
   To implement such behavior, we consider the following interactions between $C$, $R$, and $T_1$: $\alpha_1=\{init_0, init_1\}$,
-    $\alpha_3=\{run, start_1\}$, $\alpha_5=\{ take, process_1\}$, $\alpha_7 = \{end_0, free, end_1 \}$, 
+    $\alpha_3=\{start_0, start_1\}$, $\alpha_5=\{ take, process_1\}$, $\alpha_7 = \{end_0, free, end_1 \}$, 
       and similar interactions $\alpha_2$, $\alpha_4$, $\alpha_6$, $\alpha_8$ for task $T_2$, 
       as shown by connections on Figure~\ref{fig:run}.
       The controller is responsible for firing
@@ -205,10 +199,10 @@ where $\Loc_{\alpha}=\{\loc\in\Loc|\loc\transit{\alpha,g,r}\loc'\}.$
       %  \scriptsize{
         \small{
         \begin{split}
-          &((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0))\transit{5}_{\gamma}((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(5,5,5))\transit{\alpha_1}_{\gamma}((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5))\\
-          &\transit{\alpha_3}_{\gamma}((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,5,0))\transit{2}_{\gamma}((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(2,7,2))\transit{\alpha_5}_{\gamma}
-          ((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,7,2))\\&\transit{3}_{\gamma}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(5,10,5))\transit{\alpha_2}_{\gamma}((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),
-          (5,10,5))
+          &((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0))\transit{5}_{\gamma}((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(5,5,5))\transit{\alpha_1}_{\gamma}\\
+          &((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5))\transit{\alpha_3}_{\gamma}((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,5,0))\transit{2}_{\gamma}\\
+          &((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(2,7,2))\transit{\alpha_5}_{\gamma}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,7,2))\transit{3}_{\gamma}\\
+          &((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(5,10,5))\transit{\alpha_2}_{\gamma}((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),(5,10,5))\\
         \end{split}
       }
       \end{displaymath}

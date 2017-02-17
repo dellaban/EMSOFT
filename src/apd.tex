@@ -1,42 +1,4 @@
 \section{Appendix}
-\begin{proof}[Theorem~\ref{thm:dl}]
-
-Let $(\loc,\val,\pi)$ be a reachable state of the planning semantics.
-Assuming that $(\loc,\val,\pi)$ is a deadlock state, this means that 
-\emph{(i)} time cannot progress in the system, 
-\emph{(ii)} no interactions can be planned or \emph{(iii)} executed.
-
-By definition of the planning semantics we have:\\
-\begin{description}[labelwidth=1.5cm]
-  \setlength\itemsep{1em}
-  \item[\namedlabel{p1}{R1}] $\emph(i)\Rightarrow
-    \bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
-    \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))$
-  \item[\namedlabel{p2}{R2}] $\emph(iii)\Rightarrow\forall\alpha\in\gamma\setminus\pi,
-    \neg\plntxt{\alpha}\vee\alpha\in\confl(\pi)$
-  \item[\namedlabel{p3}{R3}] $\emph(ii)\Rightarrow\forall\alpha\in\pi,\pi(\alpha)\neq0
-        \wedge\plnIntxt{\alpha}{\pi(\alpha)}$
-\end{description}
-
-From~\ref{p1} and~\ref{p2} we can deduce that interactions 
-involving the component disallowing the time progress cannot be planned either because
-they are conflicting with the plan or not plannable, i.e., not in their respective
-planning states. This allows to write:
-\begin{adjustwidth}{-8mm}{-8mm}
-\begin{equation}\label{eq:pr1}
-  \bigvee_{B_i\in S\setminus\p{\pi}}\Big[\Big(\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
-    \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)\wedge
-    \Big(\bigwedge_{\alpha\in\Gamma(B_i)\setminus\confl(\pi)}\hspace{-8mm}
-    \neg\plntxt{\alpha}\vee\hspace{-5mm}
-    \bigvee_{\alpha\in\Gamma(B_i)\cap\confl(\pi)}\hspace{-8mm}\plntxt{\alpha}\Big)\Big]
-\end{equation}
-\end{adjustwidth}
-
-By combining Equation~\ref{eq:pr1} and~\ref{p2}, we obtain Equation~\ref{eq:dl} of 
-Theorem~\ref{thm:dl}.
-\end{proof}
-\qed
-
 
 \begin{proof}[Theorem~\ref{thm:dla}]
   Let $(\loc,\val,\pi)$ be a reachable deadlock state of the planning semantics. This 
@@ -60,4 +22,3 @@ Theorem~\ref{thm:dl}.
 
 
 \end{proof}
-\qed
