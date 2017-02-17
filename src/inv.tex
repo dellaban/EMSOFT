@@ -1,0 +1,66 @@
+\section{Using Knowledge to Enhance Deadlock-free Planning}\label{sec:4}
+In Section~\ref{sec:3}, we presented sufficient conditions that ensure a deadlock-free planning of interactions.
+Effectively, we use an SMT solver to check the satisfiability of those conditions on the reachable states of the planning 
+semantics. 
+As explained in Section~\ref{sec:3} to prove deadlock-freedom of weak planning semantics it is sufficient to prove that for all interactions $\alpha \in \gamma$ the following formula:
+$$ \reach(S_g) \wedge \neg \sched(\alpha, \deltama) $$
+is unsatisfiable.
+In practice, we do not calculate $\reach(S_g)$ to avoid the combinatorial explosion problem inherent to composition of timed automata.
+Instead, we use over-approximations of the latter which enable us to build stronger conditions of deadlock freedom.
+As explained in more detail below, these over-approximations take the form of invariants $I$ (i.e. such that $Reach(S_g) \Rightarrow I$) that are used to establish deadlock freedom by checking the unsatisfiability of:
+$$ I \wedge \neg \sched(\alpha, \deltama) $$
+%To achieve that, invariants $I$ rely not only on local knowledge of components, but we also
+%consider how components synchronize their actions through the interactions set to be as accurate as possible.
+
+
+\subsection*{Timed Invariants}\label{sec:hinv}
+
+Our approach consists in leveraging  global knowledge of the system in the form of invariants that will be used to approximate $\reach(S_g)$.  
+Locations reachable in a composition $S = \gamma(B_1,\dotsc,B_n)$ are necessary combinations of reachable locations of individual components $B_i$, i.e, 
+$\reach(S_g)\Rightarrow\bigwedge_{i=1}^n \reach(B_i)$.
+However, in general not all combinations are reachable since components are not fully independent as they synchronize through interaction set $\gamma$.
+Moreover, individual reachable states of components do not express the fact that time progresses the same way in all components.
+
+For example, a global location may be not reachable because component locations having disjoint time progress conditions, or an interaction may be not enabled from a state because 
+of an empty timing constraint.
+Such properties require additional relationships relating clocks of different components that are not available in $\reach(B_i)$ as it is is restricted to clocks of a single component.
+
+%: a zone of one of its symbolic states is conjunction clock constraints relating clocks, as explained in Section~\ref{sec:ts}.
+%At a location $l_i$ of a component $B_i$, values of clocks of $B_i$ necessary belong to one of the zones of the symbolic states of $B_i$ of the from $(l_i, \zeta_j)$, which is captured by invariant $\reachable(B_i)}$.
+
+We follow the approach of~\cite{DBLP:conf/tacas/AstefanoaeiRBBC14,RTD-FINDER,veriRepo} for reinforcing individual reachable states of components
+with global invariants on clocks.
+They are induced by simultaneity of transitions execution when executing an interaction and the synchrony of time progress.
+To compute such invariants, additional \emph{history} clocks are first introduced in components.
+History clocks are associated to actions of components and to interactions, and reset upon their execution.
+They do not modify the behavior since they are not involved in timing constraints.
+They only reveal local timing of components, relevant to the interaction layer, which allows to infer further properties referred as \emph{history clocks inequalities} in~\cite{DBLP:conf/tacas/AstefanoaeiRBBC14}, expressing the fact that the history clock of an interaction is necessary equal to history clocks of its actions after its execution and until the execution of another interaction involving these actions.
+By combining history clocks inequalities $\historyineq(S)$ and symbolic states of components, we have: 
+  \begin{equation}
+    \label{eq:r2}
+    \reach(S_g)\Rightarrow\bigwedge_{i=1}^n \reach(B_i)\wedge\quad\historyineq(S_g)
+  \end{equation}
+
+  Notice that for such systems with multiparty interactions, other types of invariants could be used, like those of~\cite{lin-inv} that corresponds to the notion of \emph{S-invariants} in the Petri net community~\cite{MurataPetriNet}.
+  Even if they are time abstracted, it is proved that they are appropriate for verifying non coverage of subsets of individual locations.
+
+\begin{example}
+  We illustrate the application of (\ref{eq:r2}) for a safe planning of interactions by considering again example of Figure~\ref{fig:run}.
+  It can be shown that locations configuration including location $\loc_2^3$ (resp. $\loc_2^2$) does not satisfy the predicate $\sched(\alpha,\deltama)$ for interaction $\alpha_5$ (resp. $\alpha_6)$.
+  In the following, we prove how such configurations can be excluded using history clocks inequalities.\\
+  Since action $run$ of $C$ is synchronized with either $start_1$ of $T_1$ or $start_2$ of $T_2$, and since history clocks $h_a$ of an action $a$ is reset whenever $a$ is executed, 
+  by~\cite{DBLP:conf/tacas/AstefanoaeiRBBC14} the history clock inequalities for $run$ are:
+  \begin{equation}\label{eq:histconst}
+    ( h_{run} = h_{start_1} < h_{start_2} - 4 ) \ \vee \ ( h_{run} = h_{start_2} < h_{start_1} - 4 ).
+  \end{equation}
+  Equation~(\ref{eq:histconst}) states that $h_{run}$ is equal to the history clock corresponding to the last synchronization, i.e. either $h_{start_1}$ or $h_{start_2}$, and is lower than history clocks of previous synchronizations.
+  Value $4$ in~(\ref{eq:histconst}) is obtained considering \emph{separation constraints} computed from symbolic states of components~\cite{DBLP:conf/tacas/AstefanoaeiRBBC14}: two occurrences of $run$ are separated by at least $4$ time units because of timing constraints of $C$, and so do occurrences of $start_1$ or $start_2$ which can only execute jointly with $run$.
+  To relate history clocks with components clocks, we simply include history clocks when computing symbolic states of components (i.e. $\reach(B_i)$ for components), which is used to establish here that $x = h_{start_1}$ and $y = h_{start_2}$.
+  That is, combined with~(\ref{eq:histconst}) we obtain $x < y - 4$ or $y < x - 4$.
+  
+  By definition of $\enabled$ we have $\enabled(\alpha_6) = \at{\loc_2^2} \wedge  (1 \leq x \leq 3)  $.
+  Similarly, $\enabled(\alpha_6) = \at{\loc_2^3} \wedge (1\le y \leq 3)$.
+  This proves that components $T_1$ and $T_2$ can never be at locations $\loc_2^3$ and $\loc_2^2$ at the same time. Thus, while checking for interaction $\alpha_5$ (resp. $\alpha_6$)
+  that $\bigwedge_{i=1}^n \reach(B_i)\wedge\historyineq(S_g)\wedge\neg\sched(\alpha,\deltama)$ is unsatisfiable, this case will be excluded using history clock inequalities. 
+\end{example}
+

@@ -1,0 +1,53 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+ \foreach \y in {0,1,2,3} {
+    \node (rec\the\numexpr\y*4) [yshift=\the\numexpr\y*20 mm,rounded corners=2pt,fill=aqua,thick,minimum width=1.5cm,minimum height=1.5cm]{};
+    \node (rec\the\numexpr\y*4+1) [rounded corners=2pt,fill=aqua,right=5mm of rec\the\numexpr\y*4,thick,minimum width=1.5cm,minimum height=1.5cm]{};
+    \node (rec\the\numexpr\y*4+2) [rounded corners=2pt,fill=aqua,right=5mm of rec\the\numexpr\y*4+1,thick,minimum width=1.5cm,minimum height=1.5cm]{};
+    \node (rec\the\numexpr\y*4+3) [rounded corners=2pt,fill=aqua,right=5mm of rec\the\numexpr\y*4+2,thick,minimum width=1.5cm,minimum height=1.5cm]{};
+}
+ \foreach \y in {0,1,2,3} {
+
+    \node (p1) at ($(rec\the\numexpr\y*4.north east)!0.5!(rec\the\numexpr\y*4.south east)$){};
+    \node (p2) at ($(rec\the\numexpr\y*4+3.north west)!0.5!(rec\the\numexpr\y*4+3.south west)$){};
+    \begin{scope}[on background layer]
+      \draw[color=prpl,-,line width=2.5mm] (p1)++(-1mm,0)--($(p2)+(1mm,0)$);
+    \end{scope}
+    \ifthenelse{\equal{\y}{0}}{
+
+      \foreach \x in {0,1,2,3} {
+        \node (p1) at ($(rec\the\numexpr\y+\x.north east)!0.5!(rec\the\numexpr\y+\x.north west)$){};
+        \node (p2) at ($(rec\the\numexpr\x+12.south east)!0.5!(rec\the\numexpr\x+12.south west)$){};
+        \begin{scope}[on background layer]
+          \draw[color=prpl,-,line width=2.5mm] (p1)++(0,-1mm)--($(p2)+(0,2mm)$);
+        \end{scope}
+
+    }}{}
+ } 
+ \only<2,3>{ 
+ \draw (rec5) circle (5mm)node {Sch}; 
+ \node at (rec0) {$B_1$}; 
+ \node at (rec1) {$B_2$}; 
+ \node at (rec2) {$B_3$}; 
+ \node at (rec4) {$B_4$}; 
+ \node at (rec6) {$B_5$}; 
+ \node at (rec8) {$B_6$}; 
+ \node at (rec9) {$B_7$}; 
+ \node at (rec10) {$B_8$}; 
+ \node at (rec12) {$B_9$}; 
+ \node at (rec13) {$B_{10}$}; 
+ \node at (rec14) {$B_{11}$}; 
+};
+\node (l1) [below=5mm of rec0,fill=aqua,label=right:Compute Cluster] {}; 
+\node (l2) [below=5mm of l1,fill=prpl,label=right:Communication Network] {}; 
+\end{tikzpicture}
+\end{figure}
+

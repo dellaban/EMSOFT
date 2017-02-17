@@ -1,0 +1,124 @@
+\section{Planning Semantics Correctness}
+\label{sec4}
+Local planning of interactions consists effectively in applying a local time step, followed
+by the execution of an interaction. Even if local time steps are allowed in planned components,
+it may be disallowed in the rest of the system. Additionally, planning horizons 
+insert a certain latency between interactions, which can result in missing interactions deadlines in some cases.
+Thus, as explained in Example, the planning semantics may 
+exhibit deadlock situations nonexistent in the system under the global state semantics, since:
+\emph{(i)} it does not consider time progress conditions of components not participating in 
+planned interactions, and \emph{(ii)} it introduces a certain latency between interaction executions. 
+
+Since the application model does not consider delays between interactions,
+in case of urgency of a time progress condition, semantically, consecutive executions can happen
+in the global state semantics and enable thus to get ride of this urgency. Thing that does not hold in the planning semantics.
+In what follows, we present different methodologies in order to enforce system correctness under
+the planning semantics rules. 
+
+\subsubsection{Planning Semantics Restriction}\mbox{}\\
+\label{sec4:1}
+For the sake of simplicity, we assume that all interactions have the same lower bound  
+planning horizon, that is, $\forall\alpha,\beta\in\gamma$ such that $\alpha\neq\beta$,
+$\hmn=\hmnb{\beta}=h_{\min}$.
+In order to enforce the correctness of the planning semantics, we restrict the condition
+of time progress as follows:
+\begin{equation}
+\label{eq:tpc_rest}
+\begin{split}
+  &\delta\le \text{next } \pi
+  \wedge\forall B_i\notin\p{\pi}.\tpc{i}(\val_i+\delta+h_{\min})\\
+  %\urg(\tpc{\loc_i}(\val_i+\delta+\delta'))\forall\delta'<h_{\min}\\
+        \cline{1-2}
+        &\hspace{12mm}(\loc,\val,\pi)\tranbp{\delta}{3}(\loc,\val+\delta,\pi-\delta)\\
+\end{split}
+\end{equation}
+This restriction aims to disallow any time progress, if there is a component not
+participating in any interaction of the plan such that it progresses out of its
+allowed planning intervals.
+
+Let $\dot{S_{p}}=(\Q_{p},\gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$
+the labeled transition system characterizing the planning semantics under
+the restriction~\ref{eq:tpc_rest}. 
+
+\begin{corollary}\label{cr:sim2}
+  $\dot{S_p}\simu{R_1} S_g$ with $R_1=\{(\q,\pi);\q)\in\Q_p\times\Q_g\}$.
+\end{corollary}
+
+\subsubsection{Deadlock Characterization}
+
+%\begin{theorem}[Local Deadlock]
+%  \label{thm:local_dl}
+%  Let $\{B_1,\cdots,B_n\}$ be a set of components and $\gamma$ an interaction set. 
+%  Let $\loc_i\in\Loc_i$ be a location of a component $B_{i\in\{1,\cdots,n\}}$ 
+%  such that $\tpc{\loc_i}\neq\true$. Let $\Gamma(\loc_i)$ be the subset of interactions
+%  including all actions possible from the location $\loc_i$, that is,
+%  $\Gamma(\loc_i)=\{\alpha|\exists\loc_i\transit{a_i,g_i,r_i}\loc'_i.a_i\in\alpha\}$.
+%  If it exists a reachable state $(\loc,\val,\pi)$ of the planing semantics 
+%  such that: 
+%  \[\exists\loc_i\in\loc,\val_i=\tpc{\loc_i-h_{\min}}.\forall\alpha\in\Gamma\ \neg\plntxt{\alpha}\] 
+%  then component the $B_i$ locally deadlocks under the planning semantics rules, and thus, the composition under 
+%  the planning semantics rules deadlocks.
+%\end{theorem}
+
+%Condition of Theorem~\ref{thm:local_dl} enables to identifies models where the time progress condition
+%of a component is affected by the execution of interactions including other components.
+
+\begin{theorem}
+  \label{thm:dl}
+  If a reachable state $(\loc,\val,\pi)$ of the composition $S=\gamma(B_1,\cdots,B_n)$ under
+  the planning semantics rules deadlocks, then the following is satisfied:
+  \begin{adjustwidth}{-10mm}{-10mm}
+  \begin{equation}\label{eq:dl}
+  \begin{split}
+    &\bigvee_{B_i\in S\setminus\p{\pi}}\Big[\Big(
+    \underbrace{\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
+  \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)}_\text{\mytag{A}{A}}\wedge
+    \Big(\underbrace{\bigwedge_{\alpha\in\Gamma(B_i)\setminus\confl(\pi)}\hspace{-8mm}
+    \neg\plntxt{\alpha}\vee\hspace{-5mm}\bigvee_{\alpha\in\Gamma(B_i)\cap\confl(\pi)}
+\hspace{-8mm}\plntxt{\alpha}}_\text{\mytag{B}{B}}\Big)\Big]\\
+&\hspace{4.5cm}\wedge\underbrace{\bigwedge_{\alpha\in\pi}\Big(\pi(\alpha)\neq0\wedge
+    \plnIntxt{\alpha}{\pi(\alpha)}\Big)}_\text{\mytag{C}{C}} 
+  \end{split}
+  \end{equation}
+  \end{adjustwidth}
+\end{theorem}
+
+Theorem~\ref{thm:dl} characterizes deadlock states of the planning semantics. Precisely,
+terms A of Equation~\ref{eq:dl} represents the time progress restriction as presented
+in~\ref{eq:tpc_rest}. It expresses clocks valuations, in a component not participating 
+in the planned interaction, $h_{\min}$ units of time before its expiration. On the other hand,
+term B describes the cause of the time progress restriction, that is, all interactions
+of $\Gamma(\loc_i)$ are not plannable either because (1) they are conflicting with the plan
+or, (2) because they are not in their corresponding planning states.
+Finally, term C depicts the existence of interactions in the plan and the fact that none of them
+reached yet their execution dates.
+ 
+\begin{theorem}\label{thm:dla}
+  Let $\phi(\alpha)$ be the following predicate:
+
+  \begin{adjustwidth}{-10mm}{-10mm}
+    \begin{equation}\label{eq:dla}
+  \begin{split}
+    &\bigvee_{B_i\in S\setminus\p{\alpha}}\Big[\Big(
+    \bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
+  \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)\wedge
+    \Big(\bigwedge_{\beta\in\Gamma(B_i)\setminus\confl(\alpha)}\hspace{-8mm}
+    \neg\plntxt{\beta}\vee\hspace{-5mm}\bigvee_{\beta\in\Gamma(B_i)\cap\confl(\alpha)}
+\hspace{-8mm}\plntxt{\beta}\Big)\Big]\\
+&\hspace{6.5cm}\wedge\tilde{\plntxt{\alpha}} 
+  \end{split}
+\end{equation}
+  \end{adjustwidth}
+  where $\tilde{\plntxt{\alpha}}$ is the obtained predicate by replacing 
+  $h_{\min}$ by 0 in $\plntxt{\alpha}$ and transforming the upper 
+  timing constraints of interaction $\alpha$ to strict guards.
+  If a reachable state $(\loc,\val,\pi)$ deadlocks then $\exists\alpha\in\gamma$ 
+  such that $\phi(\alpha)$ is satisfied.
+\end{theorem}
+
+Since reachable states of the restricted planning semantics are reachable 
+in the global state semantics (Corollary~\ref{cr:sim2}), we can deduce that if for
+every interaction of $\gamma$, Equation~\ref{eq:dla} is unsatisfied, then the system
+under the restricted planning semantics is deadlock-free.
+
+

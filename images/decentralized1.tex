@@ -1,0 +1,59 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+
+  
+    \node (interaction) [rectangle split,rectangle split horizontal, rectangle split part fill={lbordeau,lbordeau},draw,
+    draw opacity=0,rectangle split parts=2,rounded corners=2pt, left=-10mm of rec8,
+    yshift=13mm,thick,minimum width=19cm,minimum height=3cm,align=center]{\Large{$\pi=\emptyset$} \\
+    \Large{$\gamma=\{\alpha_1,\alpha_2,\alpha_3\}$} \nodepart{second} \includegraphics[scale=.3]{../images/gears.png}};
+ 
+   \node (rec2) [xshift=-5mm,below=5mm of interaction,draw, thick,minimum width=1cm,minimum height=1cm]{$B_{2}$};
+  \node (rec1) [draw, left=2mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{1}$};
+  \node (rec3) [draw, right=2mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{3}$};
+  \node (rec4) [draw, right=2mm of rec3,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{4}$};
+  \node (g1) at (rec1)[xshift=3mm,yshift=3mm]{\includegraphics[scale=0.04]{../images/gears.png}};
+  \node (g2) at (rec2)[xshift=3mm,yshift=3mm]{\includegraphics[scale=0.04]{../images/gears.png}};
+  \node (g3) at (rec3)[xshift=3mm,yshift=3mm]{\includegraphics[scale=0.04]{../images/gears.png}};
+  \node (g4) at (rec4)[xshift=3mm,yshift=3mm]{\includegraphics[scale=0.04]{../images/gears.png}};
+
+
+  \node  (p1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node  (p'1) [above=4mm of p1]{};
+  \node (p2) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  \node  (p'2) [above=4mm of p2]{};
+  \node (q1) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node  (q'1) [above=4mm of q1]{};
+  \node (q2) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  \node  (q'2) [above=4mm of q2]{};
+  \node (r1) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node  (r'1) [above=4mm of r1]{};
+  \node (r2) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  \node  (r'2) [above=4mm of r2]{};
+  \node (t1) at ($(rec4.north west)!0.7!(rec4.north east)$) {};
+  \node  (t'1) [above=4mm of t1]{};
+  \node (t2) at ($(rec4.north west)!0.3!(rec4.north east)$) {};
+  \node  (t'2) [above=4mm of t2]{};
+
+  \draw[->] (p1) -- (p'1);
+  \draw[->] (p'2) -- (p2);
+  \draw[->] (q1) -- (q'1);
+  \draw[->] (r1) -- (r'1);
+  \draw[->] (q'2) -- (q2);
+  \draw[->] (r'2) -- (r2);
+  \draw[->] (t'2) -- (t2);
+  \draw[->] (t1) -- (t'1);
+  \node [inner xsep=15mm,inner ysep=15mm,draw=bordeau, fit=(interaction)(rec1)(rec2)(rec3)(rec4),label={[shift={(0,-3.6)}]\large{Centralized Interactions Protocol}}] (sys) {};
+
+\end{tikzpicture}
+\end{figure}
+
+
+

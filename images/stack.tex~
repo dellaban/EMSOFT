@@ -1,0 +1,130 @@
+	\documentclass{article}
+	\usepackage[demo]{graphicx}
+	\usepackage{caption}
+	\usepackage{subcaption}
+	% Packages
+	\usepackage{fixltx2e}
+	\usepackage{ntheorem}
+	\usepackage{float}
+	\usepackage{xr}
+	\usepackage{geometry}
+	\usepackage{algpseudocode}
+	\usepackage{algorithmicx}
+	\usepackage{algorithm}
+	\usepackage{caption}
+	\usepackage{pifont}
+	\usepackage{verbatim}
+	\usepackage[english]{babel}
+	\usepackage{wrapfig}
+	\usepackage{capt-of}
+	\usepackage{color}
+	\usepackage{pdftricks}
+	\usepackage{etex}
+	\usepackage[version=0.96]{pgf}
+	\usepackage{tikz}
+	\usetikzlibrary{plotmarks,calc,arrows,shapes,snakes,automata,backgrounds,petri,positioning,fit}
+	\usepackage{proof}
+	\usepackage{latexsym}
+	\usepackage{amsfonts}
+	\usepackage{stackrel}
+	\usepackage{amsmath}
+	%\usepackage{amssymb}
+	%\usepackage{amsthm}
+	\usepackage{subcaption}
+	
+	\begin{document}
+	
+
+	\begin{figure}
+	  \centering
+	  \begin{subfigure}[b]{0.3\textwidth}
+	  \centering
+	  \begin{tikzpicture}[->,node distance=5mm,>=stealth',bend angle=20,auto,
+	  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+	  red place/.style={place,draw=red!75,fill=red!20}
+	  every label/.style={red},
+	  every node/.style={scale=0.8},
+	  dots/.style={fill=black,circle,inner sep=2pt},
+	  initial text={},
+	  scale=.8]
+	  \node [place,accepting] (l0)  {$l_1$};
+	  \node [place,below=8mm of l0] (l1) [label=right:$x\le 10$] {$l_2$};
+	  \node [place,below=1.3cm of l1] (l2) {$l_3$};
+
+	  \path (l0) edge node [align=center, xshift =0.7cm]{init \\ reset\{x,y\}} (l1)
+		(l1) edge [bend left] node [align=center]{$cont$ \\ $y \ge 20$ \\ reset\{x,y\}} (l2)
+		     edge [loop,in=120,out=150,looseness=10] node [align=center,below,xshift=-8mm,yshift=5mm]{$loop$ \\ $x=10$ \\ reset\{x\}} (l1)
+		(l2) edge [bend left] node[align=center] {$end$ \\ reset\{x,y\}} (l1);
+	    \end{tikzpicture}
+	  \caption{\centering An atomic BIP component}
+	  \label{fig:z1}
+	  \end{subfigure}
+	  %\node [inner ysep=3.7cm,inner xsep=2.5cm, draw, right=1.2cm of l0, above=-1.2cm of l2] (rec1) {};
+	  \begin{subfigure}[b]{0.3\textwidth}
+	  \centering
+	  \begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=20,auto,
+	  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+	  red place/.style={place,draw=red!75,fill=red!20}
+	  every label/.style={red},
+	  every node/.style={scale=.7},
+	  dots/.style={fill=black,circle,inner sep=2pt},
+	  initial text={}]
+	  \node [right=5cm of l0](s0){$\ll l_1, x=y\gg$};
+	  \node [below=3mm of s0](s1){$\ll l_2, x \le 10 \wedge x=y  \gg$};
+	  \node [below=3mm of s1,xshift=-2cm](s2){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 10  \gg$};
+	  \node [below=3mm of s2,xshift=0cm](s3){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 20  \gg$};
+	  \node [below=3mm of s3,xshift=0cm](s4){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 30  \gg$};
+	  \node [below=3mm of s4,xshift=0cm](s5){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 40  \gg$};
+	  \node [below=3mm of s5,xshift=0cm](s6){$\ll l_2, x \le 10 \wedge y > 20 \wedge y-x > 40  \gg$};
+	  \node [below=3mm of s6,xshift=3cm](s7){$\ll l_3,  y=x  \gg$};
+	  \node [right=0cm of s6](s8){};
+
+	  \path (s0) edge (s1)
+		(s1) edge (s2)
+		(s2) edge (s3)
+		(s3) edge (s4)
+		(s4) edge (s5)
+		(s5) edge (s6)
+		(s6) edge (s7)
+		(s8) edge[looseness=10,loop,right,out=-20,in=20](s8)
+		(s7)++(1,0) edge[bend right] ++(-5mm,4cm);
+	    \end{tikzpicture}
+	  \caption{\centering Symbolic states representation before normalization}
+	  \label{fig:z2}
+	  \end{subfigure}
+	 
+	  \begin{subfigure}[b]{0.3\textwidth}
+	  \centering
+	  \begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=20,auto,
+	  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+	  red place/.style={place,draw=red!75,fill=red!20}
+	  every label/.style={red},
+	  every node/.style={scale=.7},
+	  dots/.style={fill=black,circle,inner sep=2pt},
+	  initial text={}]
+	  \node [right=5cm of s0](t0){$\ll l_1, x=y\gg$};
+	  \node [below=3mm of t0](t1){$\ll l_2, x \le 10 \wedge x=y  \gg$};
+	  \node [below=3mm of t1,xshift=-2cm](t2){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 10  \gg$};
+	  \node [below=3mm of t2,xshift=0cm](t3){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 20  \gg$};
+	  \node [below=3mm of t3,xshift=0cm](t4){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 30  \gg$};
+	  \node [below=3mm of t4,xshift=0cm](t5){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 40  \gg$};
+	  \node [below=3mm of t5,xshift=0cm](t6){$\ll l_2, x \le 10 \wedge y > 20 \wedge y-x > 40  \gg$};
+	  \node [below=3mm of t6,xshift=3cm](t7){$\ll l_3,  y=x  \gg$};
+	  \node [right=0cm of t6](t8){};
+
+	  \path (t0) edge (t1)
+		(t1) edge (t2)
+		(t2) edge (t3)
+		(t3) edge (t4)
+		(t4) edge (t5)
+		(t5) edge (t6)
+		(t6) edge (t7)
+		(t8) edge[looseness=10,loop,right,out=-20,in=20](t8)
+		(t7)++(1,0) edge[bend right] ++(-5mm,4cm);
+	    \end{tikzpicture}
+	  \caption{\centering Symbolic states representation after normalization}
+	  \label{fig:z3}
+	  \end{subfigure}
+	\caption{An atomic component and its symbolic state representations}\label{fig:zone}
+	\end{figure}
+	\end{document}

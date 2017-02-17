@@ -1,0 +1,109 @@
+\documentclass[format=acmtog]{acmart}
+\input{../src/packages.tex}
+\input{../src/commands.tex}
+\newtheorem{property}{Property}
+\stackMath
+
+
+% Metadata Information
+\acmJournal{TOG}
+
+\tikzset{                                 
+    connect/.style args={(#1) to (#2) over (#3) by #4}{
+    insert path={                         
+      let                             
+      \p1=($(#1)-(#3)$),            
+      \n1={veclen(\x1,\y1)},        
+      \n2={atan2(\y1,\x1)},         
+      \n3={abs(#4)},                
+      \n4={#4>0 ?180:-180}          
+              in                            
+              (#1) -- ($(#1)!\n1-\n3!(#3)$) 
+              arc (\n2:\n2+\n4:\n3) -- (#2) 
+      }                                     
+    }                                       
+}        
+\begin{document}
+
+\title{TBA}
+\author{Mahieddine Dellabani}
+\affiliation{%
+    \institution{University Grenoble Alpes, VERIMAG}
+    \city{Grenoble}
+    \country{France}
+  }
+\author{Jacques Combaz}
+\affiliation{%
+    \institution{University Grenoble Alpes, VERIMAG}
+    \city{Grenoble}
+    \country{France}
+  }
+\author{Mohamed Foughal}
+\affiliation{%
+    \institution{LAAS}
+    \city{Toulouse}
+    \country{France}
+  }
+\author{Saddek Bensalem}
+\affiliation{%
+    \institution{University Grenoble Alpes, VERIMAG}
+    \city{Grenoble}
+    \country{France}
+  }
+
+
+
+\renewcommand\shortauthors{Dellabani, Combaz, Foughal et al}
+
+
+
+\begin{abstract}
+Design, implementation and verification of distributed real-time systems is acknowledged to be a very hard task.
+These type of systems are prone to different kind of delays, such as execution times of actions or communication delays implied by the distributed platform.
+This increases considerably the complexity of coordinating the parallel activities of running components.
+In order to ensure global consistency and timing constraints satisfaction, scheduling of such systems must cope with those delays, and propose and execution strategy to avoid execution failure. 
+In this paper, we investigate a formal model for such systems as compositions of timed automata subject to multi-party interactions and we propose 
+method aiming to overcome the communication delays problem through planning ahead interactions. Moreover, we propose different verification technics for checking dealock-freedom property for the proposed approach and hightlight the complexity of verifying this property.
+\end{abstract}
+
+
+\begin{CCSXML}
+  <ccs2012>
+  <concept>
+  <concept_id>10003752.10003766</concept_id>
+  <concept_desc>Theory of computation~Formal languages and automata theory</concept_desc>
+  <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+  <concept_id>10003752.10003790.10002990</concept_id>
+  <concept_desc>Theory of computation~Logic and verification</concept_desc>
+  <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+  <concept_id>10010520.10010553</concept_id>
+  <concept_desc>Computer systems organization~Embedded and cyber-physical systems</concept_desc>
+  <concept_significance>500</concept_significance>
+  </concept>
+  </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Formal languages and automata theory}
+\ccsdesc[500]{Theory of computation~Logic and verification}
+\ccsdesc[500]{Computer systems organization~Embedded and cyber-physical systems}
+
+\keywords{Distributed Real-Time Systems$\cdot$Timed Automata$\cdot$Compositional Verification}
+
+
+
+
+\maketitle
+\input{../src/intro.tex}
+\input{../src/sec2.tex}
+\input{../src/sec3.tex}
+\input{../src/sec4.tex}
+\input{../src/apd.tex}
+
+
+\bibliographystyle{abbrv} 
+\bibliography{main}
+\end{document}

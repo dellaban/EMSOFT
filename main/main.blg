@@ -1,0 +1,74 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: abbrv.bst
+Database file #1: main.bib
+A bad cross reference---entry "DBLP:conf/pdcs/ChabrolDALD05"
+refers to entry "DBLP:conf/pdcs/2005", which doesn't exist
+A bad cross reference---entry "DBLP:conf/hybrid/GhosalHKS04"
+refers to entry "DBLP:conf/hybrid/2004", which doesn't exist
+A bad cross reference---entry "DBLP:conf/lctrts/HenzingerKM05"
+refers to entry "DBLP:conf/lctrts/2005", which doesn't exist
+A bad cross reference---entry "DBLP:conf/rtas/ZhaoLL07"
+refers to entry "DBLP:conf/rtas/2007", which doesn't exist
+A bad cross reference---entry "DBLP:conf/fsttcs/Bagrodia87"
+refers to entry "DBLP:conf/fsttcs/1987", which doesn't exist
+A bad cross reference---entry "DBLP:conf/coordination/PerezCRT02"
+refers to entry "DBLP:conf/coordination/2002", which doesn't exist
+A bad cross reference---entry "DBLP:conf/concur/ParrowS92"
+refers to entry "DBLP:conf/concur/1992", which doesn't exist
+A bad cross reference---entry "DBLP:conf/isola/BensalemBCT14"
+refers to entry "DBLP:conf/isola/2014-1", which doesn't exist
+A bad cross reference---entry "DBLP:conf/tacas/AstefanoaeiRBBC14"
+refers to entry "DBLP:conf/tacas/2014", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/tacas/2014"
+Warning--I didn't find a database entry for "DBLP:conf/pdcs/2005"
+Warning--I didn't find a database entry for "DBLP:conf/hybrid/2004"
+Warning--I didn't find a database entry for "DBLP:conf/lctrts/2005"
+Warning--I didn't find a database entry for "DBLP:conf/rtas/2007"
+Warning--I didn't find a database entry for "DBLP:conf/fsttcs/1987"
+Warning--I didn't find a database entry for "DBLP:conf/coordination/2002"
+Warning--I didn't find a database entry for "DBLP:conf/concur/1992"
+Warning--I didn't find a database entry for "DBLP:conf/isola/2014-1"
+You've used 32 entries,
+            2118 wiz_defined-function locations,
+            720 strings with 10937 characters,
+and the built_in function-call counts, 11600 in all, are:
+= -- 1152
+> -- 516
+< -- 14
++ -- 213
+- -- 172
+* -- 743
+:= -- 1855
+add.period$ -- 99
+call.type$ -- 32
+change.case$ -- 180
+chr.to.int$ -- 0
+cite$ -- 32
+duplicate$ -- 495
+empty$ -- 921
+format.name$ -- 172
+if$ -- 2498
+int.to.chr$ -- 0
+int.to.str$ -- 32
+missing$ -- 28
+newline$ -- 163
+num.names$ -- 64
+pop$ -- 209
+preamble$ -- 1
+purify$ -- 150
+quote$ -- 0
+skip$ -- 376
+stack$ -- 0
+substring$ -- 686
+swap$ -- 153
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 126
+warning$ -- 0
+while$ -- 113
+width$ -- 34
+write$ -- 357
+(There were 9 error messages)

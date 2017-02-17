@@ -1,0 +1,63 @@
+\section{Appendix}
+\begin{proof}[Theorem~\ref{thm:dl}]
+
+Let $(\loc,\val,\pi)$ be a reachable state of the planning semantics.
+Assuming that $(\loc,\val,\pi)$ is a deadlock state, this means that 
+\emph{(i)} time cannot progress in the system, 
+\emph{(ii)} no interactions can be planned or \emph{(iii)} executed.
+
+By definition of the planning semantics we have:\\
+\begin{description}[labelwidth=1.5cm]
+  \setlength\itemsep{1em}
+  \item[\namedlabel{p1}{R1}] $\emph(i)\Rightarrow
+    \bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
+    \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))$
+  \item[\namedlabel{p2}{R2}] $\emph(iii)\Rightarrow\forall\alpha\in\gamma\setminus\pi,
+    \neg\plntxt{\alpha}\vee\alpha\in\confl(\pi)$
+  \item[\namedlabel{p3}{R3}] $\emph(ii)\Rightarrow\forall\alpha\in\pi,\pi(\alpha)\neq0
+        \wedge\plnIntxt{\alpha}{\pi(\alpha)}$
+\end{description}
+
+From~\ref{p1} and~\ref{p2} we can deduce that interactions 
+involving the component disallowing the time progress cannot be planned either because
+they are conflicting with the plan or not plannable, i.e., not in their respective
+planning states. This allows to write:
+\begin{adjustwidth}{-8mm}{-8mm}
+\begin{equation}\label{eq:pr1}
+  \bigvee_{B_i\in S\setminus\p{\pi}}\Big[\Big(\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
+    \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)\wedge
+    \Big(\bigwedge_{\alpha\in\Gamma(B_i)\setminus\confl(\pi)}\hspace{-8mm}
+    \neg\plntxt{\alpha}\vee\hspace{-5mm}
+    \bigvee_{\alpha\in\Gamma(B_i)\cap\confl(\pi)}\hspace{-8mm}\plntxt{\alpha}\Big)\Big]
+\end{equation}
+\end{adjustwidth}
+
+By combining Equation~\ref{eq:pr1} and~\ref{p2}, we obtain Equation~\ref{eq:dl} of 
+Theorem~\ref{thm:dl}.
+\end{proof}
+\qed
+
+
+\begin{proof}[Theorem~\ref{thm:dla}]
+  Let $(\loc,\val,\pi)$ be a reachable deadlock state of the planning semantics. This 
+  means that Equation~\ref{eq:dl} is satisfied, meaning that $\exists\alpha\in\pi$ 
+  satisfying:
+  \begin{equation}\label{1}
+    \Big(\bigwedge_{\beta\in\Gamma(B_i)\setminus\confl(\alpha)}\hspace{-8mm}
+    \neg\plntxt{\beta}\vee\hspace{-5mm}\bigvee_{\beta\in\Gamma(B_i)\cap\confl(\alpha)}
+    \hspace{-8mm}\plntxt{\beta}\Big)\wedge\pi(\alpha)\neq0\wedge
+    \plnIntxt{\alpha}{\pi(\alpha)}
+  \end{equation}
+  We have:
+  \begin{align}
+  \pi(\alpha)\neq0\wedge\plnIntxt{\alpha}{\pi(\alpha)}
+  &\Rightarrow\tilde{\plntxt{\alpha}}\label{2}\\
+  \bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i}(\val+h_{\min}))&\Rightarrow\bigvee_{B_i\in S\setminus\p{\alpha}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i}(\val+h_{\min})\label{3}
+   \end{align}
+     
+   By combining~\ref{1},~\ref{2} and~\ref{3} we obtain Equation~\ref{eq:dla}, which
+   proves Theorem~\ref{thm:dla}
+
+
+\end{proof}
+\qed

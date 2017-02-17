@@ -1,0 +1,253 @@
+\begin{figure}[h]
+ \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [accepting, place] (l0)  {$\loc_0^1$};
+  \node [place,below=1.5cm of l0,label={[shift={(-2,-1.9)}]$C$}] (l1) {$\loc_1^1$};
+
+  \path (l0) edge [in=100, out=160,loop,looseness=4] node[left]{$end_0$} (l0)
+         edge [bend left] node[right,align=center]{$init_0$\\$z>4$} (l1)
+    (l1) edge [in=-10, out=-70,loop,looseness=4] node[right]{$end_0$} (l1)
+         edge [bend left] node[left,align=center]{$run_0$\\$z:=0$} (l0);
+
+  \node [accepting, place] (p1-0) [right=2cm of l0] {$\loc_0^2$};
+  \node [place] (p1-1) [right=1.5cm of p1-0]{$\loc_1^2$};
+  \node [place] (p1-2) [below=1.5cm of p1-1,label=right:\textcolor{red}{$x\le 3$},label={[shift={(1,-1.9)}]$T_1$}]            {$\loc_2^2$};
+  \node [place] (p1-3) [left=1.5cm of p1-2] {$\loc_3^2$};
+
+  \path (p1-0) edge node[align=center, pos=0.5]{$init_1$} (p1-1)
+    (p1-1) edge node[align=center, pos=0.5]{$start_1$\\$x:=0$ } (p1-2)
+    (p1-2) edge node[align=center, pos=0.5]{$process_1$  } (p1-3)
+    (p1-3) edge node[align=center, pos=0.5]{$end_1$} (p1-0);
+
+
+  \node [place] (p2-1) [left=2cm of l0]{$\loc_1^3$};
+  \node [accepting, place] (p2-0) [left=1.5cm of p2-1]{$\loc_0^3$};
+  \node [place] (p2-2) [below=1.5cm of p2-1,label=right:\textcolor{red}{$y\le 3$},label={[shift={(-4.8,-1.9)}]$T_2$}]            {$\loc_2^3$};
+  \node [place] (p2-3) [left=1.5cm of p2-2] {$\loc_3^3$};
+
+  \path (p2-0) edge node[align=center, pos=0.5]{$init_2$} (p2-1)
+    (p2-1) edge node[align=center, pos=0.5]{$start_2$\\ $y:=0$ } (p2-2)
+    (p2-2) edge node[align=center, pos=0.5]{$process_2$ } (p2-3)
+    (p2-3) edge node[align=center, pos=0.5]{$end_2$} (p2-0);
+
+  \node [accepting, place] (r0) [above=2cm of l0,xshift=-2.25cm,label={[shift={(-1,-2)}]$R$}] {$\loc_0^4$};
+  \node [place,right=2cm of r0] (r1) {$\loc_1^4$};
+
+  \path (r0) edge [bend left] node[above]{take} (r1)
+    (r1) edge [bend left] node[below]{free} (r0);
+
+  \node [inner xsep=2cm,inner ysep=2cm,draw, yshift=-1mm, fit=(l0)(l1)] (rec1) {};
+  \node [inner xsep=2cm,inner ysep=1.5cm,draw, fit=(r0)(r1)] (rec2) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p1-0)(p1-1)(p1-2)(p1-3)] (rec3) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p2-0)(p2-1)(p2-2)(p2-3)] (rec4) {};
+%  \node [inner xsep=4cm,inner ysep=2.5cm,draw, fit=(rec1)(rec2)(rec3)(rec4)] (rec5) {};
+ % \node [inner xsep=1.5cm,inner ysep=5mm,draw,above=5mm of rec1] (rec5) {
+
+  %  $\begin{aligned}
+  %    \gamma &=\{
+  %  init_1=\{init,init_1\}, start_1=\{start,start_1\}, process_1=\{enter,proces_1\}, 
+  %  end_1=\{end,exit,end_1\}, \\
+   %  & init_2=\{init, init_2\}, start_2=\{start,start_2\}, 
+   % process_2=\{enter,process_2\},end_2=\{end,exit,end_2\}\} 
+  %  \end{aligned}$
+ % };
+
+  \node [dots,label=90:$init_2$] (i2) at ($(rec4.south west)!0.6!(rec4.south east)$) {};
+  \node [dots,label=90:$start_2$] (s2) at ($(rec4.south west)!0.8!(rec4.south east)$) {};
+  \node [dots,label=-90:$end_2$] (e2) at ($(rec4.north east)!0.2!(rec4.north west)$) {};
+  \node [dots,label=-90:$process_2$] (p2) at ($(rec4.north east)!0.5!(rec4.north west)$) {};
+
+  \node [dots,swap,label=90:$init_1$] (i1) at ($(rec3.south east)!0.6!(rec3.south west)$) {};
+  \node [dots,swap,label=90:$start_1$] (s1) at ($(rec3.south east)!0.8!(rec3.south west)$) {};
+  \node [dots,swap,label=-90:$end_1$] (e1) at ($(rec3.north west)!0.2!(rec3.north east)$) {};
+  \node [dots,swap,label=-90:$process_1$] (p1) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+
+  \node [dots,label=-90:take] (tr) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  \node [dots,label=90:free] (fr) at ($(rec2.south west)!0.5!(rec2.south east)$) {};
+
+  \node [dots,label=90:$init_0$] (ic) at ($(rec1.south west)!0.4!(rec1.south east)$) {};
+  \node [dots,label=90:$run_0$] (rc) at ($(rec1.south west)!0.6!(rec1.south east)$) {};
+  \node [dots,label=-90:$end_0$] (ec) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+  
+  \only<1>{
+  \path (tr) ++(0,0.25cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-2.5cm]{$\alpha_5$} (xp1) -- (tr) -- (xp2)node[above,xshift=-2.5cm]{$\alpha_6$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw[-,name path=line1] (i1) |-node[above,xshift=-2.5cm]{$\alpha_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-2.5cm]{$\alpha_2$} -| (i2); %here
+
+
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+
+  \path[-,name path=line2] (s1) |-node[above,xshift=-1.5cm]{$\alpha_3$} (sx1) -- (rc) -- (sx2)node[above,xshift=-2cm]{$\alpha_4$} -| (s2); %here
+
+ \path[name intersections={of=line1 and line2, by={a,b,c,d}}];% here
+
+% draw semicircles at crossing points on the path
+\coordinate (aux1) at (s2|-sx2);
+\coordinate (aux2) at (s1|-sx1);
+\draw[-,connect=(s2) to (aux1) over (d) by 3pt];
+\draw[-] (aux1) -- (sx2);
+\draw[-,connect=(sx2) to (rc) over (c) by 3pt];
+\draw[-,connect=(rc) to (sx1) over (b) by 3pt];
+\draw[-] (sx1) -- (aux2);
+\draw[-,connect=(aux2) to (s1) over (a) by 3pt];
+
+\path (fr) ++(0,-2.5mm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[above,xshift=-2cm]{$\alpha_7$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[above,xshift=2cm]{$\alpha_8$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+}
+% \path (i1) ++(-0.5cm,0) coordinate(xi1);
+ % \path (i2) ++(0.2cm,0) coordinate(xi2);
+ % \path (s1) ++(-0.2cm,0) coordinate(xs1);
+ % \path (s2) ++(0.2cm,0) coordinate(xs2);
+ % \path (e1) ++(-0.3cm,0) coordinate(xe1);
+ % \path (e2) ++(0.3cm,0) coordinate(xe2);
+ % \path (p1) ++(-0.2cm,0) coordinate(xp1);
+ % \path (p2) ++(0.2cm,0) coordinate(xp2);
+ % \draw  [-] (i1) -- (xi1) -- (ic);
+ % \draw  [-] (i2) -- (xi2) -- (ic);
+ % \draw  [-] (s1) -- (xs1) -- (rc);
+ % \draw  [-] (s2) -- (xs2) -- (rc);
+ % \draw  [-] (e2) -- (xe2) -- (ec);
+ % %\draw  [-] (xe2) -- (fr);
+ % \draw  [-] (e1) -- (xe1) -- (ec);
+%  \draw  [-] (xe1) -- (fr);
+  \only<2>{
+  \path (tr) ++(0,0.25cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-2.5cm]{$\alpha_5$} (xp1) -- (tr) -- (xp2)node[above,xshift=-2.5cm]{$\alpha_6$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw[-,name path=line1,bordeau,thick] (i1) |-node[above,xshift=-2.5cm]{$\alpha_1$} (xi1) -- (ic); %here
+  \draw[-,name path=line1,blue,thick]  (ic) -- (xi2)node[above,xshift=-2.5cm]{$\alpha_2$} -| (i2); %here
+  \path[-,name path=line1] (i1) |- (xi1) -- (ic) -- (xi2) -| (i2); %here
+
+
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+
+  \path[-,name path=line2] (s1) |-node[above,xshift=-1.5cm]{$\alpha_3$} (sx1) -- (rc) -- (sx2)node[above,xshift=-2cm]{$\alpha_4$} -| (s2); %here
+
+ \path[name intersections={of=line1 and line2, by={a,b,c,d}}];% here
+
+% draw semicircles at crossing points on the path
+\coordinate (aux1) at (s2|-sx2);
+\coordinate (aux2) at (s1|-sx1);
+\draw[-,connect=(s2) to (aux1) over (d) by 3pt];
+\draw[-] (aux1) -- (sx2);
+\draw[-,connect=(sx2) to (rc) over (c) by 3pt];
+\draw[-,connect=(rc) to (sx1) over (b) by 3pt];
+\draw[-] (sx1) -- (aux2);
+\draw[-,connect=(aux2) to (s1) over (a) by 3pt];
+
+\path (fr) ++(0,-2.5mm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[above,xshift=-2cm]{$\alpha_7$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[above,xshift=2cm]{$\alpha_8$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+}
+  \only<3>{
+  \path (tr) ++(0,0.25cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-2.5cm]{$\alpha_5$} (xp1) -- (tr) -- (xp2)node[above,xshift=-2.5cm]{$\alpha_6$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw[-,name path=line1] (i1) |-node[above,xshift=-2.5cm]{$\alpha_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-2.5cm]{$\alpha_2$} -| (i2); %here
+
+
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+
+  \path[-,name path=line2] (s1) |-node[above,xshift=-1.5cm,bordeau]{$\alpha_3$} (sx1) -- (rc) -- (sx2)node[above,blue,xshift=-2cm]{$\alpha_4$} -| (s2); %here
+
+ \path[name intersections={of=line1 and line2, by={a,b,c,d}}];% here
+
+% draw semicircles at crossing points on the path
+\coordinate (aux1) at (s2|-sx2);
+\coordinate (aux2) at (s1|-sx1);
+\draw[-,thick,blue,connect=(s2) to (aux1) over (d) by 3pt];
+\draw[-,thick,blue] (aux1) -- (sx2);
+\draw[-,thick,blue,connect=(sx2) to (rc) over (c) by 3pt];
+\draw[-,thick,bordeau,connect=(rc) to (sx1) over (b) by 3pt];
+\draw[-,thick,bordeau] (sx1) -- (aux2);
+\draw[-,thick,bordeau,connect=(aux2) to (s1) over (a) by 3pt];
+
+\path (fr) ++(0,-2.5mm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[above,xshift=-2cm]{$\alpha_7$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[above,xshift=2cm]{$\alpha_8$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+}
+  \only<4>{
+  \path (tr) ++(0,0.25cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-,thick,bordeau] (p1) |-node[above,xshift=-2.5cm]{$\alpha_5$} (xp1) -- (tr);
+  \draw  [-,thick,blue] (tr) -- (xp2)node[above,xshift=-2.5cm]{$\alpha_6$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw[-,name path=line1] (i1) |-node[above,xshift=-2.5cm]{$\alpha_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-2.5cm]{$\alpha_2$} -| (i2); %here
+
+
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+
+  \path[-,name path=line2] (s1) |-node[above,xshift=-1.5cm]{$\alpha_3$} (sx1) -- (rc) -- (sx2)node[above,xshift=-2cm]{$\alpha_4$} -| (s2); %here
+
+ \path[name intersections={of=line1 and line2, by={a,b,c,d}}];% here
+
+% draw semicircles at crossing points on the path
+\coordinate (aux1) at (s2|-sx2);
+\coordinate (aux2) at (s1|-sx1);
+\draw[-,connect=(s2) to (aux1) over (d) by 3pt];
+\draw[-] (aux1) -- (sx2);
+\draw[-,connect=(sx2) to (rc) over (c) by 3pt];
+\draw[-,connect=(rc) to (sx1) over (b) by 3pt];
+\draw[-] (sx1) -- (aux2);
+\draw[-,connect=(aux2) to (s1) over (a) by 3pt];
+
+\path (fr) ++(0,-2.5mm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[above,xshift=-2cm]{$\alpha_7$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[above,xshift=2cm]{$\alpha_8$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+}
+  \only<5>{
+  \path (tr) ++(0,0.25cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-2.5cm]{$\alpha_5$} (xp1) -- (tr) -- (xp2)node[above,xshift=-2.5cm]{$\alpha_6$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw[-,name path=line1] (i1) |-node[above,xshift=-2.5cm]{$\alpha_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-2.5cm]{$\alpha_2$} -| (i2); %here
+
+
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+
+  \path[-,name path=line2] (s1) |-node[above,xshift=-1.5cm]{$\alpha_3$} (sx1) -- (rc) -- (sx2)node[above,xshift=-2cm]{$\alpha_4$} -| (s2); %here
+
+ \path[name intersections={of=line1 and line2, by={a,b,c,d}}];% here
+
+% draw semicircles at crossing points on the path
+\coordinate (aux1) at (s2|-sx2);
+\coordinate (aux2) at (s1|-sx1);
+\draw[-,connect=(s2) to (aux1) over (d) by 3pt];
+\draw[-] (aux1) -- (sx2);
+\draw[-,connect=(sx2) to (rc) over (c) by 3pt];
+\draw[-,connect=(rc) to (sx1) over (b) by 3pt];
+\draw[-] (sx1) -- (aux2);
+\draw[-,connect=(aux2) to (s1) over (a) by 3pt];
+
+\path (fr) ++(0,-2.5mm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-,thick,bordeau] (e1) |- node[above,xshift=-2cm]{$\alpha_7$}(xe1) -- (ec);
+  \draw [-,thick,bordeau] (xe1) -- (fr);
+  \draw [-,thick,blue] (e2) |- node[above,xshift=2cm]{$\alpha_8$}(xe2) -- (ec);
+  \draw [-,thick,blue] (xe2) -- (fr);
+}
+
+\end{tikzpicture}
+\end{figure}  
+
+
+

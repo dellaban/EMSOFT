@@ -1,0 +1,75 @@
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  shifttl/.style={shift={(-\shiftpoints,\shiftpoints)}},
+  shifttr/.style={shift={(\shiftpoints,\shiftpoints)}},
+  shiftbl/.style={shift={(-\shiftpoints,-\shiftpoints)}},
+  shiftbr/.style={shift={(\shiftpoints,-\shiftpoints)}}
+]
+
+  \node [place] (l1)  [label=above:$B_1$]{$\loc_1$};
+  \node [place,below=19mm of l1] (l1') {$\loc'_1$};
+  \path (l1) edge node[align=center]{a}(l1');
+
+  \node [place,right=10mm of l1] (l2)  [label=above:$B_2$]{$\loc_2$};
+  \node [place,below=19mm of l2] (l2') {$\loc'_2$};
+  \path (l2) edge node[align=center]{b}(l2');
+  
+  \node [place,right=10mm of l2] (l3)  [label=above:$B_3$]{$\loc_3$};
+  \node [place,below=19mm of l3] (l3') {$\loc'_3$};
+  \path (l3) edge node[align=center]{a}(l3');
+
+  \node [ellipse,draw=green,inner xsep=10mm, inner ysep=5mm,fit=(l1')(l2')(l3')]{};
+  
+  
+  
+\end{tikzpicture}
+\caption{Execution sequence in global state model}\label{fig:par1}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\textwidth}
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [place,right=30mm of l3] (l1)  [label=above:$B^{\perp}_1$]{$\loc_1$};
+  \node [place,below=7mm of l1] (l1t) {$\perp_{\tau_1}$};
+  \node [place,below=7mm of l1t] (l1') {$\loc'_1$};
+  \path (l1) edge node[align=center]{a}(l1t)
+        (l1t) edge node[align=center]{$\beta$}(l1');
+
+  \node [place,right=10mm of l1] (l2)  [label=above:$B^{\perp}_2$]{$\loc_2$};
+  \node [place,below=7mm of l2] (l2t) {$\perp_{\tau_2}$};
+  \node [place,below=7mm of l2t] (l2') {$\loc'_2$};
+  \path (l2) edge node[align=center]{b}(l2t)
+        (l2t) edge node[align=center]{$\beta$}(l2');
+
+  \node [place,right=10mm of l2] (l3)  [label=above:$B^{\perp}_3$]{$\loc_3$};
+  \node [place,below=7mm of l3] (l3t) {$\perp_{\tau_3}$};
+  \node [place,below=7mm of l3t] (l3') {$\loc'_3$};
+  \path (l3) edge node[align=center]{c}(l3t)
+        (l3t) edge node[align=center]{$\beta$}(l3');
+  %\node [ellipse,draw=red,inner xsep=10mm, inner ysep=5mm,fit=(l1')(l2')(l3t)]{};
+        \begin{scope}[transform shape]      
+        \path [draw=red,inner ysep=2cm,rounded corners]  
+                       (l1'.south west) 
+                    -- (l2'.south east) 
+                    -- (l3t.north east) 
+                    -- cycle; 
+        \end{scope}
+                    
+                    
+\end{tikzpicture}
+\caption{Execution sequence in partial state model}\label{fig:par2}
+  \end{subfigure}
+\end{figure}

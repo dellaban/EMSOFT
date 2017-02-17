@@ -1,0 +1,66 @@
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,},
+  initial text={}]
+
+  \tikzstyle{every node}=[font=\scriptsize]
+ 
+  \node [place,accepting] (l0)  {$l^{1}_{1}$};
+  \node [place,below=of l0,xshift=1cm] (l1) {$l^{1}_{2}$};
+  \node [place,below=of l0,xshift=-1cm,label={[shift={(1,-1)}]$B_1$}] (l2) {$l^{1}_{3}$};
+  
+  \path (l0) edge node {$p^{\prime}$} (l1)
+        edge node [swap] {$q^{\prime}$} (l2);
+  
+  \node [place,accepting] (l2-0) [left=3cm of l0,label=right:\textcolor{red}{$c_{1}\le 5$}]
+        {$l^{2}_{1}$};
+  \node [place,below=of l2-0,swap,label={[shift={(-1,-1)}]$B_2$}] (l2-1) {$l^{2}_{2}$};
+  
+  \path (l2-0) edge node[align=center] {p \\ $c_{1}\le 5$} (l2-1);
+  
+  \node [place,accepting] (l3-0) [right=3cm of l0,label=right:\textcolor{red}{$c_{2}\le 3$}]
+    {$l^{3}_{1}$};
+  \node [place,below=of l3-0,label={[shift={(-.5,-1)}]$B_3$}] (l3-1) {$l^{3}_{2}$};
+  
+  \path (l3-0) edge node[align=center]{q \\ $c_{2}\le 3$} (l3-1);
+  
+  \node [scale=0.7,inner sep=1cm, draw, fit=(l0)(l1)(l2)] (rec1) {};
+  \node [scale=0.7,inner sep=1cm, inner xsep=1.5cm, draw, fit=(l2-0)(l2-1)] (rec2) {};
+  \node [scale=0.7,inner sep=1cm, draw, inner xsep=1.5cm, fit=(l3-0)(l3-1)] (rec3) {};
+  
+  \node [dots,label=-90:p] (p) at ($(rec2.north east)!0.3!(rec2.north west)$) {};
+  
+  \node [dots,label=-90:$p^{\prime}$] (pc) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node [dots,label=-90:$q^{\prime}$] (qc) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  
+  \node [dots,label=-90:q] (q) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+
+
+  \draw [-] (p) to[ncbar] (pc) node[xshift=-1.5cm,yshift=.9cm]{a}; 
+  \draw [-] (qc) to[ncbar] (q) node[xshift=-1.5cm,yshift=.9cm]{b}; 
+  
+  \node [draw=blue, ellipse,minimum height=40pt,minimum width=60pt,xshift=-2.1cm,yshift=1.3cm] (c1) {};
+  \node [above=2mm of c1]{$Scheduler_{1}$}; 
+  \node [draw=red, ellipse,minimum height=40pt,minimum width=60pt,xshift=2.1cm,yshift=1.3cm] (c2) {};
+  \node [above=2mm of c2]{$Scheduler_{2}$}; 
+
+\end{tikzpicture}
+\caption{\small Illustration of a blocking situation}\label{fig:block}
+\end{figure}
+
+\begin{example}
+Figure \ref{fig:block} illustrates a blocking situation.
+Let us assume that the system is at the initial state $(l_1^1, l_1^2, l_1^3, 0)$.
+In case where $scheduler_1$ plans the execution of interaction a at 4 time units,
+component $B_3$ will be forced to stay at location $l^3_1$ for at least 4 time units, since
+the only enabled interaction from this location interaction b, which is a conflicting with $a$.
+As a result, a timelock raises in component $B_3$ since a delay of 4 tome units is not
+allowed by time progress condition $c_2 \le 3$. 
+\end{example}
+

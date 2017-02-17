@@ -1,0 +1,107 @@
+\begin{figure}[h]
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [accepting, place,label={[shift={(-1.5,-1.8)}]$B_4$}] (l0)  {$l_0^4$};
+  \node [place,right=2cm of l0] (l1) {$l_1^4$};
+
+  \path (l0) edge [in=160, out=-160,loop] node[left]{end} (l0)
+             edge [bend left] node[above]{init} (l1)
+        (l1) edge [in=-20, out=20,loop] node[right]{end} (l1)
+             edge [bend left] node[below]{run} (l0);
+
+  \node [accepting, place] (p1-0) [below=2cm of l1,xshift=2cm] {$l_0^1$};
+  \node [place] (p1-1) [right=1.5cm of p1-0]{$l_1^1$};
+  \node [place] (p1-2) [below=1.5cm of p1-1,label={[shift={(1,-1.8)},label=left:\textcolor{red}{$x\le 3$}]$B_1$}]            {$l_2^1$};
+  \node [place] (p1-3) [left=1.5cm of p1-2] {$l_3^1$};
+  
+  \path (p1-0) edge node[align=center, pos=0.5]{$init_1$} (p1-1)
+        (p1-1) edge node[align=center, pos=0.5]{$start_1$\\$x:=0$ } (p1-2)
+        (p1-2) edge node[align=center, pos=0.5]{$process_1$\\ $1\le x\le 3$ } (p1-3)
+        (p1-3) edge node[align=center, pos=0.5]{$end_1$} (p1-0);
+
+
+  \node [place] (p2-1) [below=2cm of l0,xshift=-2cm]{$l_1^2$};
+  \node [accepting, place] (p2-0) [left=1.5cm of p2-1]{$l_0^2$};
+  \node [place] (p2-2) [below=1.5cm of p2-1,label={[shift={(-4.5,-1.8)}]$B_2$},label=below:\textcolor{red}{$y\le 3$}]      {$l_2^2$};
+  \node [place] (p2-3) [left=1.5cm of p2-2] {$l_3^2$};
+  
+  \path (p2-0) edge node[align=center, pos=0.5]{$init_2$} (p2-1)
+        (p2-1) edge node[align=center, pos=0.5]{$start_2$\\ $y:=0$ } (p2-2)
+        (p2-2) edge node[align=center, pos=0.5]{$process_2$\\ $1\le y\le 3$ } (p2-3)
+        (p2-3) edge node[align=center, pos=0.5]{$end_2$} (p2-0);
+  
+  \node [accepting, place] (r0) [left=1.8cm of p1-0] {$l_0^3$};
+  \node [place,below=1.5cm of r0,label={[shift={(-1.5,-1.7)}]$B_3$}] (r1) {$l_1^3$};
+
+  \path (r0) edge [bend left,align=center] node[right]{enter\\$z>4$} (r1)
+        (r1) edge [bend left] node[left]{exit} (r0);
+  
+  \node [inner xsep=3cm,inner ysep=1cm,draw, fit=(l0)(l1)] (rec2) {};
+  \node [inner xsep=2cm,inner ysep=1.95cm,yshift=0.05cm,draw, fit=(r0)(r1)] (rec1) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p1-0)(p1-1)(p1-2)(p1-3)] (rec3) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p2-0)(p2-1)(p2-2)(p2-3)] (rec4) {};
+%  \node [inner xsep=4cm,inner ysep=2.5cm,draw, fit=(rec1)(rec2)(rec3)(rec4)] (rec5) {};
+  \node [dots,label=90:$init_2$] (i2) at ($(rec4.south west)!0.6!(rec4.south east)$) {};
+  \node [dots,label=90:$release_2$] (s2) at ($(rec4.south west)!0.8!(rec4.south east)$) {};
+  \node [dots,label=-90:$end_2$] (e2) at ($(rec4.north east)!0.2!(rec4.north west)$) {};
+  \node [dots,label=-90:$process_2$] (p2) at ($(rec4.north east)!0.5!(rec4.north west)$) {};
+  
+  \node [dots,swap,label=90:$init_1$] (i1) at ($(rec3.south east)!0.6!(rec3.south west)$) {};
+  \node [dots,swap,label=90:$release_1$] (s1) at ($(rec3.south east)!0.8!(rec3.south west)$) {};
+  \node [dots,swap,label=-90:$end_1$] (e1) at ($(rec3.north west)!0.2!(rec3.north east)$) {};
+  \node [dots,swap,label=-90:$process_1$] (p1) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+
+  \node [dots,label=-90:enter] (tr) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  \node [dots,label=90:exit] (fr) at ($(rec2.south west)!0.5!(rec2.south east)$) {};
+  
+  \node [dots,label=90:init] (ic) at ($(rec1.south west)!0.4!(rec1.south east)$) {};
+  \node [dots,label=90:run] (rc) at ($(rec1.south west)!0.6!(rec1.south east)$) {};
+  \node [dots,label=-90:end] (ec) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+
+  \path (tr) ++(0,0.5cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-2.5cm]{$\alpha_3$} (xp1) -- (tr) -- (xp2)node[above,xshift=-2.5cm]{$\beta_3$} -| (p2);
+  \path (ic) ++(0,-0.5cm) +(1cm,0) coordinate(xi1) +(-1cm,0) coordinate(xi2);
+  \draw  [-, name path=line1] (i1) |-node[above,xshift=-3cm]{$\alpha_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-1.5cm]{$\beta_1$} -| (i2);
+  \path (rc) ++(0,-1cm) +(1cm,0) coordinate(sx1) +(-1cm,0) coordinate(sx2);
+  \path  [-, name path=line2] (s1) |-node[below,xshift=-2cm]{$\alpha_2$} (sx1) -- (rc) -- (sx2)node[below,xshift=-2cm]{$\beta_2$} -| (s2);
+  \path[name intersections={of=line1 and line2, by={a,b,c,d}}];%
+  
+  \coordinate (aux1) at (s2|-sx2);
+  \coordinate (aux2) at (s1|-sx1);
+  \draw[-,connect=(s2) to (aux1) over (d) by 3pt];
+  \draw[-] (aux1) -- (sx2);
+  \draw[-,connect=(sx2) to (rc) over (c) by 3pt];
+  \draw[-,connect=(rc) to (sx1) over (b) by 3pt];
+  \draw[-] (sx1) -- (aux2);
+  \draw[-,connect=(aux2) to (s1) over (a) by 3pt];
+  
+  
+  
+  
+  \path (fr) ++(0,-0.5cm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[below,xshift=-2cm]{$\alpha_4$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[below,xshift=2cm]{$\beta_4$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+ % \node [inner xsep=1.5cm,inner ysep=5mm,draw,above=2mm of rec1] (rec5) {
+    
+  %  $\begin{aligned}
+  %    \gamma =\{
+  %  \alpha_1=\{init,init_1\}, \alpha_2=\{start,start_1\}, \alpha_3=\{enter,proces_1\}, 
+  %\alpha_4=\{end,exit,end_1\},\\ \alpha_5=\{init, init_2\}, \alpha_6=\{start,start_2\}, 
+  %  \alpha_7=\{enter,process_2\},\alpha_8=\{end,exit,end_2\}\} 
+  %  \end{aligned}$
+  %};
+
+\end{tikzpicture}
+%\caption{Simple example of distributed task manager}\label{fig:run2}
+\end{figure}
+
+

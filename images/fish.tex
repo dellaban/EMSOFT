@@ -1,0 +1,148 @@
+\begin{figure}[b]
+  \centering
+ \begin{adjustwidth}{-26mm}{-12mm}
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+  
+\tikzstyle{every node}=[font=\scriptsize]
+
+  \node [accepting, place] (l0)  {$l_0$};
+  \node [place,below=of l0,xshift=1.25cm] (l1) {$l_1$};
+ \node [place,below=of l0,xshift=-1.25cm,label={[shift={(-1,-1.7)}]$V$}] (l2) {$l_2$};
+
+  \path (l0) edge [in=30, out=60,loop] node[below,xshift=7mm]{$eq_0$} (l0)
+             edge [in=150, out=120,loop] node[below,xshift=-7mm]{$set_0$} (l0)
+             edge [bend left] node{$set_1$} (l1)
+             edge [bend right] node[left]{$set_2$} (l2)
+        (l1) edge [in=60, out=30,loop] node[above]{$set_1$} (l1)
+             edge [in=-60, out=-30,loop] node[below]{$eq_1$} (l1)
+             edge [bend left] node[right]{$set_0$} (l0)
+             edge [bend right] node[above]{$set_2$} (l2)
+        (l2) edge [in=120, out=150,loop] node[above]{$set_2$} (l2)
+             edge [in=240, out=210,loop] node[below]{$eq_2$} (l2)
+             edge [bend right] node[left]{$set_0$} (l0)
+             edge [bend right] node[below]{$set_1$} (l1);
+
+  \node [place] (l2-3) [left=2.75cm of l2] {$wait_1$};
+  \node [place] (l2-2) [above=of l2-3,label=above:\textcolor{red}{$x\le k$}]{$req_1$};
+  \node [place] (l2-4) [left=of l2-3,label={[shift={(-1,-1.8)}]$P_1$}]            {$cs_1$};
+  \node [accepting, place, left=of l2-2] (l2-1)  {$idle_1$};
+
+  \path (l2-1) edge node[align=center, pos=0.5]{$try_1$\\ $x:=0$ } (l2-2)
+        (l2-2) edge node[align=center, pos=0.5, swap]{$set_1$ \\ $x:=0$} (l2-3)
+        (l2-3) edge node[align=center, pos=0.5]{$enter_1$ \\ $x > k$} (l2-4)
+               edge [bend right] node[align=center, pos=0.5, swap]{$retry_1$ \\ $x:=0$} (l2-2)
+        (l2-4) edge node[align=center,pos=0.5]{$exit_1$} (l2-1);
+  
+  \node [place] (l3-4) [right=2.75cm of l1,label={[shift={(-1,-1.8)}]$P_2$}]            {$cs_2$};
+  \node [accepting, place,above=of l3-4] (l3-1)  {$idle_2$};
+  \node [place] (l3-2) [right=of l3-1,label=above:\textcolor{red}{$x\le k$}]{$req_2$};
+  \node [place] (l3-3)  [right=of l3-4] {$wait_2$};
+
+  \path (l3-1) edge node[align=center, pos=0.5]{$try_2$\\ $x:=0$ } (l3-2)
+        (l3-2) edge node[align=center, pos=0.5, swap]{$set_2$ \\ $x:=0$} (l3-3)
+        (l3-3) edge node[align=center, pos=0.5]{$enter_2$\\ $x > k$} (l3-4)
+               edge [bend right] node[align=center, pos=0.5, swap]{$retry_2$ \\$x:=0$} (l3-2)
+        (l3-4) edge node[align=center,pos=0.5]{$exit_2$} (l3-1);
+  
+  
+  \node [inner sep=1cm, yshift=1.5pt,inner ysep =1.1cm,draw, fit=(l0)(l1)(l2)] (rec1) {};
+  \node [inner sep=1cm, draw, fit=(l2-1)(l2-2)(l2-3)(l2-4)] (rec2) {};
+  \node [inner sep=1cm, draw, fit=(l3-1)(l3-2)(l3-3)(l3-4)] (rec3) {};
+
+  \node [dots,label=-180:$set_1$] (set1) at ($(rec2.north east)!0.1!(rec2.south east)$) {};
+  \node [dots,label=-180:$enter_1$] (enter1) at ($(rec2.north east)!0.3!(rec2.south east)$) {};
+  \node [dots,label=-90:$retry_1$] (retry1) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  \node [dots,label=-90:$exit_1$] (exit1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node [dots,label=-90:$try_1$] (try1) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  
+  \node [dots,label=0:$set_2$] (set2) at ($(rec3.north west)!0.095!(rec3.south west)$) {};
+  \node [dots,label=0:$enter_2$] (enter2) at ($(rec3.north west)!0.295!(rec3.south west)$) {};
+  \node [dots,label=-90:$retry_2$] (retry2) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+  \node [dots,label=-90:$exit_2$] (exit2) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node [dots,label=-90:$try_2$] (try2) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  
+  \node [dots,label=0:$set_1$] (setp1) at ($(rec1.north west)!0.1!(rec1.south west)$) {};
+  \node [dots,label=0:$eq_1$] (eq1) at ($(rec1.north west)!0.3!(rec1.south west)$) {};
+  \node [dots,label=180:$set_2$] (setp2) at ($(rec1.north east)!0.1!(rec1.south east)$) {};
+  \node [dots,label=180:$eq_2$] (eq2) at ($(rec1.north east)!0.3!(rec1.south east)$) {};
+  \node [dots,label=-90:$set_0$] (set0) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node [dots,label=-90:$eq_0$] (eq0) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  
+  \draw [-] (set1) -- node[above]{$take_1$}(setp1);
+  \draw [-] (set2) -- node[above]{$take_2$}(setp2);
+  \draw [-] (enter1) --node[above]{$acq_1$} (eq1);
+  \draw [-] (enter2) --node[above]{$acq_2$} (eq2);
+ 
+  %\draw [-] (try1) to[ncbar] (set0);
+  %\draw [-] (retry1) to[ncbar=7mm] (set0);
+ % \draw [-] (exit1) to[ncbar=10mm] (eq0);
+  
+ % \draw [-] (try2) to[ncbar] (set0);
+ % \draw [-] (retry2) to[ncbar=-7mm] (set0);
+%  \draw [-] (exit2) to[ncbar=-10mm] (eq0);
+
+\path (set0) ++(0,0.5cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+\draw  [-,name path=line1] (exit1) |-node[above,xshift=5cm]{$free_1$} (x1) -- (set0) -- (x2)node[above,xshift=3.5cm]{$free_2$} -| (exit2);
+
+\path (eq0) ++(0,1cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+\path  [-,name path=line2] (try1) |- node[above,xshift=3cm]{$check_1$}(x1) -- (eq0) -- (x2) node[above,xshift=2.5cm]{$check_2$}-| (try2);
+
+\path (eq0) ++(0,1.5cm) +(-1cm,0) coordinate(xx1) +(1cm,0) coordinate(xx2);
+\path  [-,name path=line3] (retry1) |- node[above,xshift=3cm]{$recheck_1$}(xx1) -- (eq0) -- (xx2) node[above,xshift=2.5cm]{$recheck_2$}-| (retry2);
+  
+  \path[name intersections={of=line2 and line1, by={a,b,c,d}}];%
+  \path[name intersections={of=line3 and line1, by={i,j,k,l}}];%
+  
+  \coordinate (aux1) at (try1|-x1);
+  \coordinate (aux2) at (try2|-x2);
+  \draw[-,connect=(try1) to (aux1) over (a) by 2pt];
+  \draw[-] (aux1) -- (x1);
+  \draw[-,connect=(x1) to (eq0) over (b) by 2pt];
+  \draw[-,connect=(eq0) to (x2) over (c) by 2pt];
+  \draw[-] (x2) -- (aux2);
+  \draw[-,connect=(aux2) to (try2) over (d) by 2pt];
+  \coordinate (aux1) at (retry1|-xx1);
+  \coordinate (aux2) at (retry2|-xx2);
+  \draw[-,connect=(retry1) to (aux1) over (i) by 2pt];
+  \draw[-] (aux1) -- (xx1);
+  \draw[-,connect=(xx1) to (eq0) over (j) by 2pt];
+  \draw[-,connect=(eq0) to (xx2) over (k) by 2pt];
+  \draw[-] (xx2) -- (aux2);
+  \draw[-,connect=(aux2) to (retry2) over (l) by 2pt];
+
+
+\end{tikzpicture}
+\end{adjustwidth}
+\caption{\small $acq_1$ and $acq_2$ form a false-conflict based on timing constraint}\label{fig:fish}
+\end{figure}
+
+
+\begin{example}
+  Let us now reconsider the Fisher protocol depicted in Figure \ref{fig:fish}. This protocol
+  details how processes can access to a shared variable. The role of the shared variable 
+  is represented by a third party component $V$. The system invariant strengthened with 
+  history clocks enables to deduct a weaker inductive invariant, that is, for for any index 
+  \ti{i}, $h_{eq_i} < h_{set_i} \to h_{eq_i} < h_{eq_0} \wedge h_{set_i} < h_{eq_0}$.
+  This property enables us to infer that there is only one process at a time in the critical
+  section, that is, mutual exclusion holds, and thus, all $acq_i$ interactions 
+  are false conflicting interactions.
+\end{example}
+\begin{example}
+  Figure \ref{fig:fish} represents a timed system modeling the Fischer's protocol \cite{uppaal}, a timed 
+  mutual exclusion protocol.
+  Processes are concurrent and before entering the critical section, each process checks for
+  both their turn and a delay (positive integer greater than the time between successive steps
+  of the execution of a process).  
+  The protocol relies on the fact that after k time units with id different from 0,
+  all processes wishing to enter the critical section are waiting,
+  but only one has the right ID. Since only one process at a time can access the critical section
+  the $enter_i$ interactions form a false conflict due to the specific temporal aspect of this protocol.
+\end{example}
+

@@ -1,0 +1,192 @@
+\sbox{\img}{\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  sh2n/.style={shift={(0,0.5)}},
+  sh2s/.style={shift={(0,-0.5)}},
+  sh2e/.style={shift={(0.7,0)}},
+  sh2w/.style={shift={(-0.7,0)}},
+  sh2nw/.style={shift={(-0.7,0.5)}},
+  sh2ne/.style={shift={(0.7,0.5)}},
+  sh2sw/.style={shift={(-0.7,-0.5)}},
+  sh2se/.style={shift={(0.7,-0.5)}},
+  h2n/.style={shift={(0,1.1)}},
+  h2s/.style={shift={(0,-1.1)}},
+  h2e/.style={shift={(0.5,0)}},
+  h2w/.style={shift={(-0.5,0)}},
+  h2nw/.style={shift={(-0.5,1.1)}},
+  h2ne/.style={shift={(0.5,1.1)}},
+  h2sw/.style={shift={(-0.5,-1.1)}},
+  h2se/.style={shift={(0.5,-1.1)}},
+  rc/.style={rounded corners=2mm}]
+             
+  \node [accepting, place] (l2-1)  {$l_1^2$};
+  \node [place,right=2cm of l2-1,label={[shift={(1.4,-0.9)}]\textcolor{red}{$y\le150$}}]
+    (l2-2) {$l_2^2$};
+  \node [place,below=2cm of l2-2,label={[shift={(1.4,-0.9)}]\textcolor{red}{$k\le400$}}]
+    (l2-3) {$l_3^2$};
+  
+  
+  \draw[-stealth,rc] (l2-1) -- ([sh2ne]l2-1.center) -- node[above,align=center]
+  {ats, $y:=0$}  ([sh2nw]l2-2.center) -- (l2-2);
+  \draw[-stealth,rc] (l2-1) -- ([h2n]l2-1.center) -- node[above,align=center]
+  {ap, $y:=0$}  ([h2n]l2-2.center) -- (l2-2);
+  \draw[-stealth,rc] (l2-2) -- ([sh2sw]l2-2.center) -- node[above,align=center]
+  {vs, $k:=0$}  ([sh2se]l2-1.center) -- (l2-1);
+  \draw[-stealth,rc] (l2-2) -- ([h2s]l2-2.center) -- node[above,align=center]
+  {vp, $k:=0$\\$y\ge150 \text{ \& } k\ge400$}  ([h2se]l2-1.center) -- (l2-1);
+  \draw[-stealth,rc] (l2-2) -- ([sh2se]l2-2.center) -- node[right,align=center]
+  {internalp\\ $y\ge150 \text{ \& } k\le400$}  ([sh2ne]l2-3.center) -- (l2-3);
+  \draw[-stealth,rc] (l2-3) -- ([sh2w]l2-3.center) -| node[above,align=center,xshift=15mm]
+  {vs, $k:=0$} (l2-1);
+  \draw[-stealth,rc] (l2-3) -- ([sh2sw]l2-3.center) -| node[below,align=center,xshift=15mm]
+  {vp, $k:=0$\\$k>400$} ([sh2sw]l2-1.center) -- (l2-1);
+  \end{tikzpicture}}
+\begin{figure}[H]
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\vbox to\ht\img{\vfil
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  sh2n/.style={shift={(0,0.5)}},
+  sh2s/.style={shift={(0,-0.5)}},
+  sh2e/.style={shift={(0.7,0)}},
+  sh2w/.style={shift={(-0.7,0)}},
+  sh2nw/.style={shift={(-0.7,0.5)}},
+  sh2ne/.style={shift={(0.7,0.5)}},
+  sh2sw/.style={shift={(-0.7,-0.5)}},
+  sh2se/.style={shift={(0.7,-0.5)}},
+  h2n/.style={shift={(0,1.1)}},
+  h2s/.style={shift={(0,-1.1)}},
+  h2e/.style={shift={(0.5,0)}},
+  h2w/.style={shift={(-0.5,0)}},
+  h2nw/.style={shift={(-0.5,1.1)}},
+  h2ne/.style={shift={(0.5,1.1)}},
+  h2sw/.style={shift={(-0.5,-1.1)}},
+  h2se/.style={shift={(0.5,-1.1)}},
+  rc/.style={rounded corners=2mm}]
+
+  \node [accepting, place,label={[shift={(0,-1.9)}]\textcolor{red}{$x\le850$}}] (l1-1)  {$l_1^1$};
+  \node [place,right=2cm of l1-1] (l1-2) {$l_2^1$};
+
+  \path (l1-1) edge [in=160,out=190,loop,align=center] node[left]{vp\\$x:=0$} (l1-1)
+               edge [in=240,out=210,loop,align=center] node[below,xshift=-7mm]{vs\\
+               $x < 850$\\$x:=0$} (l1-1)
+               edge [in=140, out=110,loop,align=center] node[above]{ap\\$x \ge 850$
+               \\$x:=0$} (l1-1)
+        (l1-1) edge node[above]{ats} (l1-2)
+        (l1-2) edge [bend right] node[above,align=center]{vp, $x:=0$} (l1-1)
+        edge [bend left] node[below,align=center]{vs, $x:=0$} (l1-1);
+    \end{tikzpicture}\vfil}
+  \caption{\centering LRI}
+  \label{fig:p1}
+  \end{subfigure}
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+  \usebox\img
+  \caption{\centering AVI-URI}
+  \label{fig:p2}
+  \end{subfigure}
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  sh2n/.style={shift={(0,0.5)}},
+  sh2s/.style={shift={(0,-0.5)}},
+  sh2e/.style={shift={(0.7,0)}},
+  sh2w/.style={shift={(-0.7,0)}},
+  sh2nw/.style={shift={(-0.7,0.5)}},
+  sh2ne/.style={shift={(0.7,0.5)}},
+  sh2sw/.style={shift={(-0.7,-0.5)}},
+  sh2se/.style={shift={(0.7,-0.5)}},
+  h2n/.style={shift={(0,1.1)}},
+  h2s/.style={shift={(0,-1.1)}},
+  h2e/.style={shift={(0.5,0)}},
+  h2w/.style={shift={(-0.5,0)}},
+  h2nw/.style={shift={(-0.5,1.1)}},
+  h2ne/.style={shift={(0.5,1.1)}},
+  h2sw/.style={shift={(-0.5,-1.1)}},
+  h2se/.style={shift={(0.5,-1.1)}},
+  rc/.style={rounded corners=2mm}]
+
+  \node [accepting, place,below=4cm of l1-1, xshift=-15mm] (l3-1)  {$l_1^3$};
+  \node [place,right=1.5cm of l3-1,label={[shift={(0,-1.9)}]\textcolor{red}{$z\le50$}}]
+      (l3-2) {$l_2^3$};
+      \node [place,right=1.5cm of l3-2,label={[shift={(1.4,-0.9)}]\textcolor{red}{$z\le100$}}]
+      (l3-3) {$l_3^3$};
+  \node [place,below=1.5cm of l3-3] (l3-4) {$l_4^3$};
+  \node [place,below=1.5cm of l3-1] (l3-5) {$l_5^3$};
+               
+               
+  \draw[-stealth,rc] (l3-3) -- ([h2n]l3-3.center) -- node[above,align=center]
+  {internalp, $z\ge100$}  ([h2n]l3-1.center) -- (l3-1);
+  \draw[-stealth,rc] (l3-1) -- ([sh2ne]l3-1.center) -- node[above,align=center]{vp, $z:=0$}
+  ([sh2nw]l3-2.center) -- (l3-2);
+  \draw[-stealth,rc] (l3-5) -- ([sh2nw]l3-5.center) -- node[left,align=center]{ats}
+  ([sh2sw]l3-1.center) -- (l3-1);
+  \draw[-stealth,rc] (l3-4) -- ([sh2nw]l3-4.center) -- node[left,align=center]
+  {intenalp\\ $z\le100$}  ([sh2sw]l3-3.center) -- (l3-3);
+  \path (l3-1) edge node[below]{vs, $z:=0$} (l3-2)
+               edge node[right]{aget} (l3-5)
+        (l3-2) edge node[above]{internalp, $z\ge50$} (l3-3)
+        (l3-3) edge node[right]{aget} (l3-4);
+  \end{tikzpicture}
+  \caption{\centering PVARP}
+  \label{fig:p3}
+  \end{subfigure}
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  sh2n/.style={shift={(0,0.5)}},
+  sh2s/.style={shift={(0,-0.5)}},
+  sh2e/.style={shift={(0.7,0)}},
+  sh2w/.style={shift={(-0.7,0)}},
+  sh2nw/.style={shift={(-0.7,0.5)}},
+  sh2ne/.style={shift={(0.7,0.5)}},
+  sh2sw/.style={shift={(-0.7,-0.5)}},
+  sh2se/.style={shift={(0.7,-0.5)}},
+  h2n/.style={shift={(0,1.1)}},
+  h2s/.style={shift={(0,-1.1)}},
+  h2e/.style={shift={(0.5,0)}},
+  h2w/.style={shift={(-0.5,0)}},
+  h2nw/.style={shift={(-0.5,1.1)}},
+  h2ne/.style={shift={(0.5,1.1)}},
+  h2sw/.style={shift={(-0.5,-1.1)}},
+  h2se/.style={shift={(0.5,-1.1)}},
+  rc/.style={rounded corners=2mm}]
+
+  \node [accepting, place,right=2cm of l3-3] (l4-1)  {$l_1^4$};
+  \node [place,right=1.5cm of l4-1,label={[shift={(1.4,-0.9)}]\textcolor{red}{$t\le150$}}]
+  (l4-2) {$l_2^4$};
+  \node [place,below=1.5cm of l4-1] (l4-3) {$l_3^4$};
+
+  \draw[-stealth,rc] (l4-2) -- ([sh2nw]l4-2.center) -- node[above,align=center]
+  {internalp, $t\ge150$}  ([sh2ne]l4-1.center) -- (l4-1);
+  \path (l4-1) edge node[left]{vget} (l4-3)
+               edge node[below,align=center]{vp, $t:=0$} (l4-2)
+        (l4-3) edge node[below,xshift=5mm]{vs, $t:=0$} (l4-2);
+  \end{tikzpicture}
+  \caption{\centering VRP}
+  \label{fig:p4}
+  \end{subfigure}
+\caption{Pacemaker system modeled in BIP}\label{fig:paceg}
+\end{figure}

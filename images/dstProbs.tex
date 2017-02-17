@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+  % one picture
+  \node[circle,draw,inner sep=5mm,fill=lbordeau] (A) {
+    \begin{varwidth}{.3\linewidth}
+      \begin{itemize}
+        \item Heterogenecity
+        \item Consistency
+        \item Failure Handeling
+      \end{itemize}
+  \end{varwidth}};
+  \scriptsize{
+  % some more
+   \path (A) (-30:3 cm)
+      node[ellipse,draw,inner sep=2 mm,fill=llbordeau] (B) {Clocks Synchronization};
+   %\draw[very thick,red,->] (A)--(B);
+   \path (A) (40:3.5 cm)
+      node[ellipse,draw,inner sep=4 mm,align=center,fill=llbordeau] (B) {Ressource Management};
+   %\draw[very thick,red,->] (A)--(B);
+   \path (A) (140:3 cm)
+      node[ellipse,draw,inner sep=2 mm,align=center,fill=llbordeau] (B) {Deadline Expiration};
+   %\draw[very thick,red,->] (A)--(B);
+   \path (A) (210:3.5 cm)
+      node[ellipse,draw,inner sep=4 mm,fill=llbordeau] (B) {Communication Problems};
+   %\draw[very thick,red,->] (A)--(B);
+}
+
+\end{tikzpicture}

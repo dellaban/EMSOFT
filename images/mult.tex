@@ -1,0 +1,87 @@
+\begin{figure}[!H]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+  \node (rec1) at (0,0) [draw, thick,minimum width=2cm,minimum height=2cm]{$B_{1}$};
+  \node (rec2) [draw, left=of rec1,xshift=2cm,thick,minimum width=2cm,minimum height=2cm]{$B_{2}$};
+  \node (rec3) [draw, right=of rec1,xshift=-2cm,thick,minimum width=2cm,minimum height=2cm]{$B_{3}$};
+
+
+  \node [dots,label=-90:$p_{0}$] (p1) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node [dots,label=-90:$p_{1}$] (pp1) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  \node [dots,label=-90:$q_{1}$] (q1) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+    
+  \node [dots,label=-90:$q_{2}$] (q2) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node [dots,label=-90:$p_{2}$] (p2) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  
+  \node [dots,label=-90:$q_{3}$] (q3) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node [dots,label=-90:$p_{3}$] (p3) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+
+  
+
+  \draw [-] (q1) to[ncbar=-7.5mm] (q2) node[xshift=3cm,yshift=2.2cm]{a3}; 
+  \draw [-] (q3) to[ncbar=-7.5mm] (q2); 
+  \draw [-] (p2) to[ncbar] (p1) node[xshift=-2cm,yshift=1cm]{a2};
+  \draw [-] (p3) to[ncbar=-5mm] (pp1) node[xshift=2cm,yshift=1cm]{a1};
+
+  \node (rec4) [draw, right=of rec3,xshift=4cm,yshift=3cm,thick,minimum width=13cm,minimum height=2cm]{Scheduler};
+  \node (rec5) [draw, below=of rec4,yshift=1cm,thick,minimum width=2cm,minimum height=2cm]{$B_{1}^{SR}$};
+  \node (rec6) [draw, right=of rec5,thick,minimum width=2cm,minimum height=2cm]{$B_{3}^{SR}$};
+  \node (rec7) [draw, left=of rec5,thick,minimum width=2cm,minimum height=2cm]{$B_{2}^{SR}$};
+ 
+  
+
+  \node [triangle,label=-90:$o_{1}$] (o1) at ($(rec5.north west)!0.15!(rec5.north east)$) {};
+  \node [dots,label=-90:$p_{0}$] (rp0) at ($(rec5.north west)!0.4!(rec5.north east)$) {};
+  \node [dots,label=-90:$p_{1}$] (rp1) at ($(rec5.north west)!0.6!(rec5.north east)$) {};
+  \node [dots,label=-90:$q_{1}$] (rq1) at ($(rec5.north west)!0.8!(rec5.north east)$) {};
+  
+  \node [triangle,label=-90:$o_{3}$] (o3) at ($(rec6.north west)!0.15!(rec6.north east)$) {};
+  \node [dots,label=-90:$q_{3}$] (rq3) at ($(rec6.north west)!0.5!(rec6.north east)$) {};
+  \node [dots,label=-90:$p_{3}$] (rp3) at ($(rec6.north west)!0.75!(rec6.north east)$) {};
+  
+  \node [triangle,label=-90:$o_{2}$] (o2) at ($(rec7.north west)!0.15!(rec7.north east)$) {};
+  \node [dots,label=-90:$q_{2}$] (rq2) at ($(rec7.north west)!0.5!(rec7.north east)$) {};
+  \node [dots,label=-90:$p_{2}$] (rp2) at ($(rec7.north west)!0.75!(rec7.north east)$) {};
+
+  \node [dots,label=90:$o_{1}$,above=of o1,yshift=-1.3cm] (so1) {};
+  \node [dots,label=90:$o_{2}$,above=of o2,yshift=-1.3cm] (so2) {};
+  \node [dots,label=90:$o_{3}$,above=of o3,yshift=-1.3cm] (so3) {};
+  \node [triangle,label=-90:$p_{2}$,above=of rp2,yshift=-1cm,rotate=180] (sp2) {};
+  \node [triangle,label=-90:$q_{2}$,above=of rq2,yshift=-1cm,rotate=180] (sq2) {};
+  \node [triangle,label=-90:$p_{3}$,above=of rp3,yshift=-1cm,rotate=180] (sp3) {};
+  \node [triangle,label=-90:$q_{3}$,above=of rq3,yshift=-1cm,rotate=180] (sq3) {};
+  \node [triangle,label=-90:$p_{0}$,above=of rp0,yshift=-1cm,rotate=180] (sp0) {};
+  \node [triangle,label=-90:$p_{1}$,above=of rp1,yshift=-1cm,rotate=180] (sp1) {};
+  \node [triangle,label=-90:$q_{1}$,above=of rq1,yshift=-1cm,rotate=180] (sq1) {};
+
+
+  \draw [-] (o1) -- (so1);
+  \draw [-] (o2) -- (so2);
+  \draw [-] (o3) -- (so3);
+  \draw [-,dashed] (rp0) -- (sp0);
+  \draw [-,dashed] (rp1) -- (sp1);
+  \draw [-,dashed] (rq1) -- (sq1);
+  \draw [-,dashed] (rp2) -- (sp2);
+  \draw [-,dashed] (rq2) -- (sq2);
+  \draw [-,dashed] (rp3) -- (sp3);
+  \draw [-,dashed] (rq3) -- (sq3);
+
+  \path (rec3) +(1cm,0.5cm) coordinate(x1);
+  \path (rec3) +(3cm,0.5cm) coordinate(x2);
+  
+  \draw [-to,thick,snake=snake,segment amplitude=.4mm,
+         segment length=2mm,line after snake=1mm]
+         (x1) -- (x2)
+         node [above=1mm,midway,text width=3cm,text centered]{};
+
+\end{tikzpicture}
+\caption{Introducing parallelism between components}
+\end{figure}
+

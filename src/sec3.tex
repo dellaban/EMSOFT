@@ -1,0 +1,213 @@
+\section{Local Planning of Interactions}
+\label{sec3}
+To the best of our knowledge, distributed platforms rarely offer built-in primitives
+for the high level coordination, required by models where different components
+need to synchronize together. Thus, the implementation of such models requires
+an execution engine (for centralized execution), or more (for a more distributed execution),
+responsible of coordinating components synchronizations using simpler primitives,
+such as point-to-point messages passing (cite bip parrallel real time) and maybe a figure.
+
+However, the semantics presented in previous section does not distinguish between 
+an engine decision time and the actual execution time of components.
+Particularly, communication delays induced by distributed platforms may introduce 
+deadline misses during this process.
+Additionally, Section~\ref{sec2} semantics is based on the global state of the system,
+that is, the operational semantics rules is achieved through global states, which
+break the principle of distribution where interaction execution should require only 
+knowing the state of its participating components. 
+We introduced in (cite FM) the \emph{weak planning semantics}, a semantics for local
+planning of interaction within a defined upper bounded horizon. This semantics plans interaction based only on
+the state of its involved components. This approach aim to differentiate the scheduling decision 
+time of an interaction and its actual execution. In this paper we extend this work to lower bounded
+horizons, which effectively, represent the estimation of the target platform communication
+delays. In what follows, we first give some formal definitions, then we present our extension of
+the weak planning semantics and discuss its properties.
+
+\subsubsection*{Preliminaries}\label{subsec:wp}\mbox{}\\ 
+We define the predicate $\plnIntxt{\alpha}{\delta}$ characterizing all states
+  from which $\alpha$ can be planned and execute after $\delta$ units of time, that is, 
+  $\alpha$ will be \emph{enabled} after a time progresses of $\delta$ units of time:
+  \begin{equation}\label{eq:enf}
+    \plnIn{\alpha}{\delta}
+\end{equation}
+%Notice that for $(\loc,\val),(\loc',\val')\in\reach(S)$, and $a_i\in\alpha$ we have:
+%$$\enabledfrom(\alpha) \text{ at }(\loc,\val)\Rightarrow \enabled(\alpha) \text{ at } (\loc',\val'),\text{ such that }
+%\loc_i=\loc'_i \text{ and } \val_i=\val'_i.$$
+
+\begin{property}\label{pt:plnIn1}
+  Let $(\loc,\val)$ be a state of the composition $S$. For any interaction $\beta\in\gamma$ such that, $\p{\alpha}\cap\p{\beta}=\emptyset$
+  and $(\loc,\val)\transit{\beta}_{\gamma}(\loc',\val')$, where $\p{\alpha}$ (resp. $\p{\beta}$) represents components participating in 
+  interaction $\alpha$ (resp. $\beta$), if $\plnIntxt{\alpha}{\delta}$ holds at state $(\loc,\val)$ then it still holds at state $(\loc',\val')$.
+\end{property}
+This property derives from the fact that executing interactions with disjoint set of components than $\alpha$ does not change the states
+of components participating in $\alpha$, that is, for $a_i\in\alpha$ we have $\loc_i=\loc'_i$ and $\val_i=\val'_i$.
+
+
+\begin{property}\label{pt:plnIn2}
+  Let $(\loc,\val)$ and $(\loc,\val+\delta')$, with $\delta'\in\realpos$ be two states of the composition $S$. 
+  If $\plnIntxt{\alpha}{\delta}$ is $\true$ at state $(\loc,\val)$ then $\plnIntxt{\alpha}{\delta-\delta'}$ is true at state
+  $(\loc,\val+\delta')$ for $\delta'\le\delta$.
+\end{property}
+This property can be found directly by writing Equation~\ref{eq:enf} on state $(\loc,\val+\delta')$.
+
+Let $\tcal{H}$ be a partial function $\tcal{H}: \gamma \to\realpos\times\realpos$ that defines for each
+interaction $\alpha\in\gamma$, its respective planning horizons as an interval $[\hmn,\hmx]$. 
+We define the predicate $\plntxt{\alpha}$ characterizing all states from which 
+$\alpha$ can be planned w.r.t its planning horizons as follows:  
+\begin{displaymath}
+  \pln{\alpha}
+\end{displaymath}
+  with $\backhtxt$ represents an adaptation of the backward operators~\cite{tripakis98:thesis} that satisfies:
+\begin{displaymath}
+\backh
+\end{displaymath}
+\begin{property}\label{pt:pln}
+  If the predicate $\plnIntxt{\alpha}{\delta}$ is $\true$ at a state $(\loc,\val)$, then the 
+  predicate $\plntxt{\alpha}$ is also $\true$ for $\delta\in[\hmn,\hmx]$.
+\end{property}
+
+\begin{definition}[Plan]\label{def:plan}
+We say that two interactions $\alpha$ and $\beta$, $\alpha \neq \beta$, \emph{conflicts} if $\p{\alpha}\cap\p{\beta}\neq\emptyset$, and we write $\alpha\#\beta$.
+A plan $\pi$ is a partial function $\pi:\gamma \to\realpos$ defining relative times for 
+executing a subset of non conflicting interactions, i.e.:
+\begin{displaymath}
+  \alpha\neq\alpha',\pi(\alpha)\neq\perp,\pi(\alpha')\neq\perp\implies \neg(\alpha\#\alpha').
+\end{displaymath}
+We also denote by $\confl(\pi)$ the set of interactions conflicting with the plan $\pi$, i.e. $\confl(\pi) = \{ \alpha \ | \ \exists \beta \# \alpha \ . \ \pi (\beta) \neq \bot \}$, and $\p{\pi}$ the set of components involved in interactions planned by $\pi$, i.e. $\p{\pi} = \{ B_i \ | \ \exists \alpha \ . \ \pi(\alpha) \neq \bot \wedge B_i \in \p{\alpha} \}$.
+\end{definition}
+%We write $(\alpha,\delta)\in\pi$ the planning of interaction $\alpha$ in $\delta$ units of 
+We denote by $next \ \pi$ the closest relative execution time of interactions in the plan $\pi$, i.e. $next \ \pi = \textnormal{ min } \{ \pi(\alpha) \ | \ \alpha \in \gamma \wedge \pi(\alpha) \neq \bot \} \cup \{ +\infty \}$.
+Notice that since $\pi$ stores relative times, whenever time progresses by $\delta$ the value $\pi(\alpha)$ assigned by $\pi$ to an interaction $\alpha$ should be decreased by $\delta$, until it reaches $0$ which means that $\alpha$ have to execute.
+We write $\pi-\delta$ describing the progress of time 
+over the plan, that is, $(\pi-\delta)(\alpha) = \pi(\alpha) - \delta$ for interactions $\alpha$ such that $\pi(\alpha) \neq \bot$.
+We also write
+$\pi-\alpha$ to denote the removal of interaction $\alpha$ from the plan $\pi$, i.e. $(\pi-\alpha)(\beta) = \pi(\beta)$ for any interaction $\beta \neq \alpha$, $(\pi-\alpha)(\alpha) = \bot$.
+Similarly, $\pi \cup \{ \alpha \mapsto \delta \}$ assigns relative time $\delta$ to $\alpha$, $\alpha \notin conf(\pi)$, into existing plan $\pi$, i.e. $(\pi \cup \{ \alpha \mapsto \delta \})(\beta) = \delta$ for $\beta = \alpha$, $(\pi \cup \{ \alpha \mapsto \delta \})(\beta) = \pi(\beta)$ otherwise.
+Finally, the plan $\pi$ such that $\pi(\alpha) = \bot$ for all interactions $\alpha \in \gamma$ is denoted by $\emptyset$.
+
+We define below the semantics for planning each interaction $\alpha\in\gamma$ with $\delta$-horizon within $[\hmn,\hmx]$.
+
+\begin{definition}[Planning Semantics]\label{def:pln_sem}
+Given a set of components $\{B_1,\cdots,B_n\}$ and an interaction set $\gamma$,
+we define the planning semantics of the composite component $S = (\Loc,\loc_0,\gamma,T_{\gamma},\X,\inv)$,
+as the labeled transition system $S_p=(\Q_p,
+\gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$ where:
+\begin{itemize}
+  \item $\Q_p=\Loc\times\mathcal{V}(\X)\times\Pi$, where $\Loc$ is the set of global location,
+    $\mathcal{V}(\X)$ is the set of global clocks valuations, and $\Pi$ is the set of plans.
+  \item $\plana$ defines the action of planning interactions
+  \item $\tranbp{}{3}$ is the set of labeled transitions defined by the rules:
+  \begin{itemize}
+    \item Plan: $\alpha\in\gamma,\delta\in[\hmn,\hmx]$
+    \begin{align*}
+      &\hspace{4mm}\alpha\notin\confl(\pi)\wedge\plnIntxt{\alpha}{\delta}\\
+     \cline{1-2}
+     &(\loc,\val,\pi)\tranbp{\plan{\alpha,\delta}}{4}(\loc,\val,\pi\cup\{\alpha\mapsto\delta\}).\\
+    \end{align*}
+    \vspace*{-10mm}
+
+    \item Exec: $\alpha\in\gamma$
+     \begin{align*}
+       &\hspace{14mm}\pi(\alpha)=0\\
+            \cline{1-2}
+          &(\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi-\alpha)\}\\
+        \end{align*}
+  \item Time Progress: $\delta\in\realpos$
+      \begin{align*}
+        &\delta\le \text{next } \pi
+        \wedge\tpc{i}(\val_i+\delta)_{i\in\{1,\cdots,n\}}\\
+        \cline{1-2}
+        &\hspace{4mm}(\loc,\val,\pi)\tranbp{\delta}{3}(\loc,\val+\delta,\pi-\delta)\\
+          \end{align*}
+  \end{itemize}
+  \end{itemize}
+\end{definition}
+\begin{example}
+  \label{exp:dl}
+  Let us consider the following execution sequence for the example of Figure~\ref{fig:run} under the weak planning semantics rules and 
+  for a value $\deltamax=5$ for all interactions except $\alpha_5$ and $\alpha_6$ that will be assigned a $\deltamax=3$:
+      \begin{displaymath}
+      %  \scriptsize{
+        \small{
+        \begin{split}
+          &((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0),\emptyset)\tranbp{\plan{\alpha_1,5}}{6}((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(0,0,0),\{\alpha_1\mapsto5\})\tranbp{5}{3}\\&
+          ((\loc_0^1,\loc_0^2,\loc_0^3,\loc_0^4),(5,5,5),\{\alpha_1\mapsto0\})\tranbp{\alpha_1}{3}((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5),\emptyset)\tranbp{\plan{\alpha_3,2}}{6}
+          \\&((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(5,5,5),\{\alpha_3\mapsto2\})\tranbp{2}{3}((\loc_1^1,\loc_1^2,\loc_0^3,\loc_0^4),(7,7,7),\{\alpha_3\mapsto0\})\tranbp{\alpha_3}{3}
+          \\&((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,7,0),\emptyset)\tranbp{\plan{\alpha_5,2}}{6}((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(0,7,0),\{\alpha_5\mapsto2\})\tranbp{2}{3}
+          \\&((\loc_0^1,\loc_2^2,\loc_0^3,\loc_0^4),(2,9,2),\{\alpha_5\mapsto0\})\tranbp{\alpha_5}{3}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,9,2),\emptyset)\tranbp{\plan{\alpha_2,3}}{6}\\
+            &((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(2,9,2),\{\alpha_2\mapsto3\})\tranbp{3}{3}((\loc_0^1,\loc_3^2,\loc_0^3,\loc_1^4),(5,12,5),\{\alpha_2\mapsto0\})\tranbp{\alpha_2}{3}\\
+            &((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),(5,12,5),\emptyset)\tranbp{\plan{\alpha_4,0}}{6}((\loc_1^1,\loc_3^2,\loc_1^3,\loc_1^4),(5,12,5)\{\alpha_4\mapsto0\})\tranbp{\alpha_4}{3}\\
+            &((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(5,0,0),\emptyset)\tranbp{\plan{\alpha_7,4}}{6}((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(5,0,0),\{\alpha_7\mapsto4\})\tranbp{3}{3}\\
+            &((\loc_0^1,\loc_3^2,\loc_2^3,\loc_1^4),(8,3,3),\{\alpha_7\mapsto1\})
+        \end{split}
+      }
+      \end{displaymath}
+This execution sequence represents a path that alternates plan actions, time steps and execution of some interactions. We can see that for interaction
+$\alpha_7$ which is planned 4 units of time ahead, the system cannot reach the state from which it can be executed since there is a time progress expiration
+in component $T_2$ after 3 time units from planning this interaction. This means that local planning of interactions doesn't always allow the progress of time and may
+thus, introduce deadlocks even if the system under the global semantics rules is deadlock-free. 
+      
+\end{example}
+
+\subsection{Relation between Global and Weak Planning Semantics}
+We use weak simulation to compare the model under
+the global state semantics rules and the one under the planning semantics rules
+by considering \plana-transitions unobservable.
+As explained in Example~\ref{exp:dl}, the planning semantics does not preserve the deadlock freedom property of our system.
+Nevertheless, the following proves weak simulation relations between the two semantics.
+
+\begin{theorem}\label{thm:pi_pln}
+  For all the reachable states $(\loc,\val,\pi)$ of the planning semantics, and $\forall\alpha\in\pi$, the
+  predicate $\plnIntxt{\alpha}{\pi(\alpha)}$ is $\true$.
+\end{theorem}
+
+Let $S_g=(\Q_g,\gamma\cup\realpos,\transit{}_{\gamma})$ (resp. $S_{p}=(\Q_{p},\gamma\cup\realpos\cup\{\plana\},\tranbp{}{3})$)
+the labeled transition system characterizing the global (resp. planning) semantics. 
+\begin{proposition}\mbox{}\\
+  \label{prop:relation}
+  \vspace{-6mm}
+  \begin{description}[labelwidth=1.5cm]
+    \item[\namedlabel{itm:1}{Relation 1}]$\forall\delta\in\realpos.(\loc,\val,\pi)\tranbp{\delta}{3}(\loc',\val',\pi')
+      \Rightarrow (\loc,\val)\transit{\delta}_{\gamma}(\loc',\val')$
+    \item[\namedlabel{itm:2}{Relation 2}]$\forall\alpha\in\gamma.(\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi')
+      \Rightarrow (\loc,\val)\transit{\alpha}_{\gamma}(\loc',\val')$
+  \end{description}
+\end{proposition}
+It is straightforward that~\ref{itm:1} is a consequence of the definition of time progress in the planning semantics. For Relation~\ref{itm:2},  
+using Definition~\ref{def:plan}, we can deduce that:\\
+\begin{displaymath}
+(\loc,\val,\pi)\tranbp{\alpha}{3}(\loc',\val',\pi')\Rightarrow \pi(\alpha)=0,
+\end{displaymath}
+By Theorem~\ref{thm:pi_pln}, this implies that $\plnIntxt{\alpha}{0}$ is $\true$ at state $(\loc,\val,\pi)$, meaning that $\enabled(\alpha)$ is
+also $\true$, which allows to infer~\ref{itm:2}.  
+
+\begin{corollary}\label{cr:reach}
+  If a state $(\loc,\val,\pi)\in\reach(S_p)$, then $(\loc,\val)\in\reach(S_g)$.
+\end{corollary}
+
+\begin{definition}[Weak Simulation]
+  A weak simulation over $A=(\Q_A,\sum\cup\{\beta\},\to_A)$ and $B=(\Q_B,\sum\cup\{\beta\},
+  \to_B)$ is a relation $R\subseteq \Q_A\times \Q_B$ such that we have: 
+  $\forall(q,r)\in R, a\in \sum .q\transit{a}_A q' \implies\exists r':(q',r')\in R\wedge r\transit{
+  \beta^*a\beta^*}_B r' \text{ and } \forall(q,r)\in R: q\transit{\beta}_Aq'\implies\exists r':
+  (q',r')\in R\wedge r\transit{\beta^*}r'$.
+  B simulates A, denoted by $A\simu{R}B$, means that B can do everything A does.
+\end{definition}
+The definition of weak simulation is based on the unobservability of $\beta-$transitions. In our case, $\beta-$transitions corresponds to $\plana-$transitions.
+\begin{corollary}\label{cr:sim}
+  $S_p\simu{R_1} S_g$ with $R_1=\{(\q,\pi);\q)\in\Q_p\times\Q_g\}$.
+\end{corollary}
+
+Corollary~\ref{cr:sim} corresponds to a notion of correctness of the planning semantics: any execution in the planning semantics corresponds to an execution in the global state semantics.
+
+By contrast to (cite fm), where planning immediately, i.e. with a zero horizon, was allowed, 
+by introducing a minimal horizon of planning interactions, the planning semantics does no longer
+preserve all execution sequences of the global state semantics.
+
+As explained in example, the planning semantics may introduce deadlocks as shown by the scenario presented in Example~\ref{exp:dl}.
+In the following, we present different verification methods to check the deadlock freedom of a system under the planning semantics rules.
+
+
+
+
+

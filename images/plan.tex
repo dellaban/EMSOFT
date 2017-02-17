@@ -1,0 +1,84 @@
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [place,label={[shift={(-1,-5.2)}]$C_1$}] (l01)  {$l_0^1$};
+  \node [place,below=1.5cm of l01] (l11) {$l_1^1$};
+
+  \path (l01) edge node[left]{$a_1$} (l11);
+
+  \node [place,right=2cm of l01,label={[shift={(.2,-5.2)}]$C_2$}] (l02)  {$l_0^2$};
+  \node [place,below=1.5cm of l02,xshift=1cm] (l12) {$l_1^2$};
+  \node [place,below=1.5cm of l02,xshift=-1cm] (l22) {$l_2^2$};
+
+  \path (l02) edge node[right]{$b_1$} (l12);
+  \path (l02) edge node[left]{$a_2$} (l22);
+  
+  \node [place,right=2cm of l02,yshift=1mm,label={[shift={(-1,-5.2)}]$C_3$}] (l03)  {$l_0^3$};
+  \node [place,below=0.5cm of l03] (l13) {$l_1^3$};
+  \node [place,below=0.5cm of l13] (l23) {$l_2^3$};
+  
+  \path (l03) edge node[right]{$b_1$} (l13);
+  \path (l13) edge node[left]{$c_1$} (l23);
+  
+\node [place,right=2cm of l03,label={[shift={(0.8,0)}]\textcolor{red}{$x \le k$}}] (l04)  {$l_0^4$};
+  \node [place,below=1.5cm of l04,label={[shift={(-1,-2.2)}]$C_4$}] (l14) {$l_1^4$};
+  
+  \path (l04) edge node[left]{$c_2$} (l14);
+  
+  \node (p1) [above=5mm of l01]{};
+  \draw[dotted,->] (p1)-- (l01);
+  \node (q1) [above=5mm of l02]{};
+  \draw[dotted,->] (q1)-- (l02);
+  \node (r1) [above=5mm of l03]{};
+  \draw[dotted,->] (r1)-- (l03);
+  \node (t1) [above=5mm of l04]{};
+  \draw[dotted,->] (t1)-- (l04);
+  \node (p2) [below=5mm of l11]{};
+  \draw[dotted,->] (l11)--(p2);
+  \node (q2) [below=5mm of l12]{};
+  \draw[dotted,->] (l12)--(q2);
+  \node (q22) [below=5mm of l22]{};
+  \draw[dotted,->] (l22)--(q22);
+  \node (r2) [below=5mm of l23]{};
+  \draw[dotted,->] (l23)--(r2);
+  \node (t2) [below=5mm of l14]{};
+  \draw[dotted,->] (l14)--(t2);
+  
+  \node [inner xsep=1cm,inner ysep=1.5cm,draw, fit=(l01)(l11)(p1)(p2)] (rec1) {};
+  \node [inner xsep=1cm,inner ysep=1.5cm,draw, fit=(l02)(l12)(l22)(q1)(q2)(q22)] (rec2) {};
+  \node [inner xsep=1cm,inner ysep=1.5cm,draw, fit=(l03)(l13)(l23)(r1)(r2)] (rec3) {};
+  \node [inner xsep=1cm,inner ysep=1.5cm,draw, fit=(l04)(l14)(t1)(t2)] (rec4) {};
+  \node [draw=red, inner ysep=1.5cm,inner xsep=1.75cm,rectangle,fit=(rec1)(rec2)](rec6){};
+  \node [draw=blue, inner xsep=1cm,inner ysep=1.5cm,rectangle,fit=(rec3)](rec7){};
+  \node [rectangle,draw=black,inner xsep=1cm,inner ysep=3.4cm,right=1cm of rec4](rec5){}; 
+  
+  \node [dots,label=-90:$a_1$] (a1) at ($(rec1.north east)!0.5!(rec1.north west)$) {};
+  
+  \node [dots,label=-90:$a_2$] (a2) at ($(rec2.north east)!0.7!(rec2.north west)$) {};
+  \node [dots,label=-90:$b_2$] (b2) at ($(rec2.north east)!0.3!(rec2.north west)$) {};
+  
+  \node [dots,label=-90:$b_1$] (b1) at ($(rec3.north east)!0.7!(rec3.north west)$) {};
+  \node [dots,label=90:$c_1$] (c1) at ($(rec3.south east)!0.3!(rec3.south west)$) {};
+  
+  \node [dots,label=90:$c_2$] (c2) at ($(rec4.south east)!0.7!(rec4.south west)$) {};
+  \node [dots] (c3) at ($(rec4.south east)!0.3!(rec4.south west)$) {};
+  \node [dots] (c4) at ($(rec5.south east)!0.7!(rec5.south west)$) {};
+  
+  \draw [-] (a1) -- ++(0,5mm)  -|  (a2)++(0,5mm) -|(a2) node[xshift=-2cm,yshift=1.5cm]{$\alpha=\{a_1,a_2\}$}; 
+  \draw [-] (b2) -- ++(0,5mm)  -|  (b1)++(0,3mm) -|(b1) node[xshift=-2cm,yshift=1.5cm]{$\beta=\{b_1,b_2\}$}; 
+  \draw [-] (c1) -- ++(0,-5mm)  -|  (c2)++(0,-3mm) -|(c2) node[xshift=-2cm,yshift=-1.5cm]{$\zeta=\{c_1,c_2\}$}; 
+  \draw [-] (c3) -- ++(0,-5mm)  -|  (c4)++(0,-3mm) -|(c4); 
+  \draw [dotted,-] (rec4) -- (rec5);
+
+\end{tikzpicture}
+%\caption{A Timed system}\label{fig:run}
+\end{figure}
+
+

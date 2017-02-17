@@ -1,0 +1,54 @@
+\begin{figure}[b]
+  \centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+  \tikzstyle{every node}=[font=\scriptsize]
+
+  \node [place,accepting] (l0)  {$l_1^3$};
+  \node [place,below=of l0,yshift=0.2cm] (l1) [label=left:\textcolor{red}{$x\le 4$}] {$l_2^3$};
+  \node [place,below=1.5cm of l1,label={[shift={(-1,-1)}]$B_3$}] (l2) {$l_3^3$};
+
+  \path (l0) edge node [align=center, xshift =0.7cm]{init \\ $x\ge8$ \\ $x=0$} (l1)
+        (l1) edge [bend left] node [align=center]{$p_0$ \\ $x=4$ \\ $x:=0$} (l2)
+        (l2) edge [bend left] node[align=center] {$q_0$ \\ $x:=0$} (l1);
+
+  \node [place,accepting] (l2-1) [left=3.5cm of l1] {$l_{1}^{1}$};
+  \node [place] (l2-2) [below=1.5cm of l2-1,label={[shift={(-1,-1)}]$B_2$}]{$l_{2}^{1}$};
+
+  \path (l2-1) edge [bend left] node[align=center]{$p_{1}$ \\ $y_{1}\ge 8$ } (l2-2)
+  (l2-2) edge [bend left] node[align=center]{$q_{1}$ \\ $y_1:=0$} (l2-1);
+  
+  \node [place,accepting] (l3-1) [right=3.5cm of l1] {$l_{1}^{2}$};
+  \node [place] (l3-2) [below=1.5cm of l3-1,label={[shift={(-1,-1)}]$B_1$}]{$l_{2}^{2}$};
+
+  \path (l3-1) edge [bend left] node[align=center]{$p_{2}$ \\ $y_{2}\ge 8$ } (l3-2)
+  (l3-2) edge [bend left] node[align=center]{$q_{2}$ \\ $y_2:=0$} (l3-1);
+  
+  \node [inner xsep=1.2cm,inner ysep=0.5cm, fit=(l0)(l1)(l2), draw] (rec1) {};
+  \node [inner xsep=1.2cm,inner ysep=0.5cm, fit=(l2-1)(l2-2),draw] (rec2) {};
+  \node [inner xsep=1.2cm,inner ysep=0.5cm, fit=(l3-1)(l3-2),draw] (rec3) {};
+  
+  \node [dots,label=-90:$p_0$] (a) at ($(rec1.north east)!0.5!(rec1.north west)$) {};
+  \node [dots,label=90:$q_0$] (c) at ($(rec1.south east)!0.5!(rec1.south west)$) {};
+  
+  \node [dots,label=-180:$p_{1}$] (b1) at ($(rec2.north east)!0.3!(rec2.south east)$) {};
+  \node [dots,label=-180:$q_{1}$] (d1) at ($(rec2.north east)!0.7!(rec2.south east)$) {};
+  
+  \node [dots,label=0:$p_{2}$] (b2) at ($(rec3.north west)!0.3!(rec3.south west)$) {};
+  \node [dots,label=0:$q_{2}$] (d2) at ($(rec3.north west)!0.7!(rec3.south west)$) {};
+
+  \path (a) ++(0,0.5cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+  \draw  [-] (b1) -- ++(0.5cm,0) |- node[above,xshift=1cm]{$a_{1}$} (x1) -- (a) -- (x2)node[above]{$a_{2}$} -| ($(b2)+(-0.5cm,0)$) -- (b2);
+
+  \path (c) ++(0,-0.5cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+  \draw  [-] (d1) -- ++(0.5cm,0) |-  node[xshift=1cm]{$a_{3}$}(x1) -- (c) -- (x2)node[above]{$a_{4}$} -| ($(d2)+(-0.5cm,0)$) -- (d2);
+
+
+\end{tikzpicture}
+\caption{\small Example of a controller with two workers components}\label{fig:comp}
+\end{figure}

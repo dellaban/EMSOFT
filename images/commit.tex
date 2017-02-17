@@ -1,0 +1,38 @@
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [place] (l01)  {$l_0^1$};
+  \node [place,below=7.5mm of l01,fill=red] (l11) {$l_1^1$};
+  \node [place,below=7.5mm of l11] (l21) {$l_2^1$};
+
+  \path (l01) edge node[left]{$t:=k$} (l11);
+  \path (l11) edge node[left,label={[shift={(1.8,1)}]\textcolor{red}{committed}}]{$a!$} (l21);
+
+  
+  \node [place,right=1cm of l03,fill=red,yshift=-0.5cm] (l02)  {$l_0^2$};
+  \node [place,below=10mm of l02] (l12) {$l_1^2$};
+  
+  \path (l02) edge node[align=center,left]{$a?$ \\ $j:=t$} (l12);
+  
+  \node (p1) [above=3mm of l01]{};
+  \draw[dotted,->] (p1)-- (l01);
+  \node (q1) [above=3mm of l02]{};
+  \draw[dotted,->] (q1)-- (l02);
+  \node (p2) [below=3mm of l21]{};
+  \draw[dotted,->] (l21)--(p2);
+  \node (q2) [below=3mm of l12]{};
+  \draw[dotted,->] (l12)--(q2);
+  
+
+\end{tikzpicture}
+%\caption{A Timed system}\label{fig:run}
+\end{figure}
+
+

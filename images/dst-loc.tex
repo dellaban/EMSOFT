@@ -1,0 +1,108 @@
+\begin{figure}[H]
+  \center
+%  \begin{adjustwidth}{-12mm}{-12mm}
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=1pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}
+]
+\tikzstyle{every node}=[font=\scriptsize]
+
+
+  \node (rec1) [draw, thick,minimum width=4cm,minimum height=1.5cm]{$Scheduler_1$};
+  \node (rec2) [draw, right=of rec1,xshift=1cm,thick,minimum width=4cm,minimum height=1.5cm]{$Scheduler_2$};
+  \node (rec3) [draw, below=of rec2,xshift=-1cm,thick,minimum width=1cm,minimum height=1cm]{$C$};
+  \node (rec4) [draw, below=of rec1,xshift=1cm,thick,minimum width=1cm,minimum height=1cm]{$R$};
+  \node (rec5) [draw, right=1cm of rec3,thick,minimum width=1cm,minimum height=1cm]{$T_{2}$};
+  \node (rec6) [draw, left=1cm of rec4,thick,minimum width=1cm,minimum height=1cm]{$T_{1}$};
+ 
+  \path (rec1) ++ (1.3cm,3mm) coordinate (g);
+  \path (g) ++ (0.8mm,0.8mm) coordinate (g1);
+  \path (g) ++ (0,1.3mm) coordinate (g2) node [below=2mm of g]{$g_1$};
+  \draw (g) circle [radius=1.5mm];
+  \draw[-,line width=1pt] (g) -- (g1);
+  \draw[-,line width=1pt] (g) -- (g2);
+  \path (rec2) ++ (1.3cm,3mm) coordinate (g);
+  \path (g) ++ (0.8mm,0.8mm) coordinate (g1);
+  \path (g) ++ (0,1.3mm) coordinate (g2) node [below=2mm of g]{$g_2$};
+  \draw (g) circle [radius=1.5mm];
+  \draw[-,line width=1pt] (g) -- (g1);
+  \draw[-,line width=1pt] (g) -- (g2);
+  
+
+  \node (co1) at ($(rec3.north west)!0.2!(rec3.north east)$)[yshift=-0.7mm] {};
+  \node (cr1) at ($(rec3.north west)!0.4!(rec3.north east)$)[yshift=-0.7mm] {};
+  \node (co2) at ($(rec3.north west)!0.6!(rec3.north east)$)[yshift=-1mm] {};
+  \node (cr2) at ($(rec3.north west)!0.8!(rec3.north east)$)[yshift=-1mm] {};
+  
+  \node (ro1) at ($(rec4.north west)!0.2!(rec4.north east)$)[yshift=-1mm] {};
+  \node (rr1) at ($(rec4.north west)!0.4!(rec4.north east)$)[yshift=-1mm] {};
+  \node (ro2) at ($(rec4.north west)!0.6!(rec4.north east)$)[yshift=-0.7mm] {};
+  \node (rr2) at ($(rec4.north west)!0.8!(rec4.north east)$)[yshift=-0.7mm] {};
+  
+  \node  (t2o) at ($(rec5.north west)!0.8!(rec5.north east)$) [yshift=-1mm]{};
+  \node  (t2r) at ($(rec5.north west)!0.5!(rec5.north east)$)[yshift=-1mm] {};
+  \node  (t2obs) at ($(rec5.north west)!0.2!(rec5.north east)$)[yshift=-0.7mm] {};
+  
+  \node  (t1o) at ($(rec6.north west)!0.2!(rec6.north east)$)[yshift=-1mm] {};
+  \node  (t1r) at ($(rec6.north west)!0.5!(rec6.north east)$)[yshift=-1mm] {};
+  \node  (t1obs) at ($(rec6.north west)!0.8!(rec6.north east)$)[yshift=-0.7mm] {};
+
+  \node (s1co) at ($(rec1.south west)!0.8!(rec1.south east)$)[yshift=0.7mm] {};
+  \node (s1cr) at ($(rec1.south west)!0.9!(rec1.south east)$)[yshift=0.7mm]{};
+  \node (s1obs) at ($(rec1.south east)!0.2!(rec1.north east)$)[yshift=1mm,xshift=-0.7mm]{};
+  
+  \node  (s2ro) at ($(rec2.south west)!0.1!(rec2.south east)$) [yshift=0.7mm]{};
+  \node (s2rr)at ($(rec2.south west)!0.2!(rec2.south east)$) [yshift=0.7mm]{};
+  \node (s2obs) at ($(rec2.south west)!0.2!(rec2.north west)$)[yshift=1mm,xshift=0.7mm]{};
+  
+  
+  \node (s1ro) [above=1.3cm of ro1] {};
+  \node (s1rr) [above=13mm of rr1] {};
+  
+  \node (s1t1o) [above=13mm of t1o] {};
+  \node (s1t1r) [above=13mm of t1r] {};
+  \node (s2t2o) [above=13mm of t2o] {};
+  \node (s2t2r) [above=13mm of t2r] {};
+
+  \node (s2co) [above=13mm of co2] {};
+  \node (s2cr) [above=13mm of cr2] {};
+
+  \draw [->, name path=line1] (co1) -- (s1co);
+  \draw [->, name path=line2] (s1cr) -- (cr1);
+  \draw [->] (ro1) -- node[yshift=3mm]{Offer}(s1ro);
+  \draw [->] (s1rr) --node[yshift=-3mm]{Notif} (rr1);
+  \draw [->] (t1o) -- node[yshift=3mm]{Offer}(s1t1o);
+  \draw [->] (s1t1r) --node[yshift=-3mm]{Notif} (t1r);
+  
+  \draw [dotted,->] (t1obs) -- node[above,pos=0.9]{$Obs_{T_1}$}(s2obs);
+  \draw [dotted,->] (t2obs) -- node[above,pos=0.9]{$Obs_{T_2}$}(s1obs);
+  \draw [->] (co2) -- node[yshift=3mm]{Offer}(s2co);
+  \draw [->] (s2cr) --node[yshift=-3mm]{Notif} (cr2);
+  \path [->, name path=line3] (ro2) -- (s2ro);
+  \path [->, name path=line4] (s2rr) --(rr2);
+  \draw [->] (t2o) -- node[yshift=3mm,xshift=-5mm]{Offer}(s2t2o);
+  \draw [->] (s2t2r) -- node[yshift=-3mm,xshift=5mm]{Notif} (t2r);
+  
+  \path[name intersections={of=line3 and line1, by={a}}];%
+  \path[name intersections={of=line3 and line2, by={b}}];%
+  \path[name intersections={of=line4 and line1, by={c}}];%
+  \path[name intersections={of=line4 and line2, by={d}}];%
+  
+  \coordinate (aux1) at (a) ++ (1.5,1.5);
+  \coordinate (aux2) at (c) -- (1.5,1.5);
+  \draw[-,connect=(ro2) to (aux1) over (a) by 1pt];
+  \draw[->,connect=(aux1) to (s2ro) over (b) by 1pt];
+  \draw[-,connect=(s2rr) to (aux2) over (c) by 1pt];
+  \draw[->,connect=(aux2) to (rr2) over (d) by 1pt];
+  
+
+
+\end{tikzpicture}
+%\end{adjustwidth}
+\caption{\small Distributed implementation of the running example}\label{fig:dst}
+\end{figure}
+

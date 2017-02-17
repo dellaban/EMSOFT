@@ -1,0 +1,135 @@
+\newpage
+\appendix
+\begin{proof}[Theorem~\ref{thm:pienf}]
+  We will use proof by induction to prove theorem~\ref{thm:pienf}.
+  \begin{enumerate}
+    \item At the initial state of the system $(\loc_0,\val_0,\pi_0)$, we have:
+      $\pi_0=\emptyset$. We deduce then that the theorem holds at the initial state of the system.
+    \item Assuming that we are at state $(\loc,\val,\pi)$ where the theorem holds,
+      let us prove that it still holds at state $(\loc',\val',\pi')$ such that:
+      \begin{displaymath}
+      \forall\ex\in\gamma\cup\realpos\cup\{\plana\},(\loc,\val,\pi)\tranbp{\ex}{3}(\loc',\val',\pi')
+      \end{displaymath}
+    \begin{enumerate}
+      \item $\ex\in\gamma$:\\
+        We have $(\loc,\val,\pi)\tranbp{\ex}{3}(\loc',\val',\pi')\Rightarrow\pi'=\pi-\ex$, and we know 
+        from Definition~\ref{def:plan} that all the interactions in a plan have disjoint set of components, that is,
+        $\p{\ex}\cap\p{\pi'}=\emptyset$. This property allows us to infer that $\forall\alpha\in\pi'$:
+        $$\begin{rcases}
+          \pi(\alpha)&=\delta,\\
+          \pi'(\alpha)&=\delta',
+        \end{rcases}\Rightarrow\delta=\delta',$$
+        Then, using property~\ref{pt:enf1}, we can deduce that $\forall\alpha\in\pi',\enabledfrombis{\pi'(\alpha)}(\alpha)$ still holds at state $(\loc',\val',\pi')$.
+        It is straightforward that for $\pi'=\emptyset$ the property holds. 
+      \item $\ex\in\realpos$:\\
+        We have $(\loc,\val,\pi)\tranbp{\ex}{3}(\loc',\val',\pi')\Rightarrow\pi'=\pi-\ex\wedge\ex\le\min\pi$, that is: 
+        \begin{displaymath}
+           \forall\alpha\in\pi',\pi'(\alpha)=\delta'=\pi(\alpha)-\ex\wedge \ex\le\pi(\alpha),
+        \end{displaymath}
+        Notice that:
+        \begin{displaymath}
+        \forall\alpha\in\pi',\enabledfrombis{\pi'(\alpha)}(\alpha)=\enabledfrombis{\pi(\alpha)-\ex}(\alpha),
+        \end{displaymath}
+        Then, we deduce using property~\ref{pt:enf2}, that $\forall\alpha\in\pi',\enabledfrombis{\pi'(\alpha)}(\alpha)$ still holds at state $(\loc',\val',\pi')$.
+        It is straightforward that for $\pi'=\emptyset$ the property holds. 
+      \item $\ex\in\{\plana\}$:\\
+        We have $(\loc,\val,\pi)\tranbp{\plan{\beta,\delta''}}{3}(\loc',\val',\pi')$. By definition of planning action $\enabledfrombis{\delta''}(\beta)$ is $\true$
+        at state $(\loc',\val',\pi')$. Notice also that planning actions does not change the states (locations and clocks valuations) of components, that is,
+        $\forall\alpha\in\pi'-\beta,\pi(\alpha)=\pi'(\alpha)$, which proves that $\enabledfrombis{\delta'}(\alpha)$ is $\true$ at state $(\loc',\val',\pi')$.  
+    \end{enumerate}
+  \end{enumerate}
+\end{proof}
+  \qed
+\begin{proof}[Theorem~\ref{thm:sim1}]
+\label{proof:sim1}
+To prove that $S_{p}$ simulates 
+$S_g$, that is, $S_g\simu{R_2}S_{p}$ we need to prove that:\\
+\begin{displaymath}
+  \begin{split}
+    &\forall (\q;(\q,\emptyset))\in R_2,\forall \sigma\in\gamma\cup\realpos \text{ such that }
+  \q\transit{\sigma}_{\gamma}\q':\\
+  &\exists(\q',\emptyset) \text{ such that }
+(\q';(\q',\emptyset'))\in R_2\text{and }(\q,\emptyset)\tranbp{\plana^*\sigma\plana^*}{7}
+(\q',\emptyset)
+  \end{split}
+\end{displaymath}
+\begin{enumerate}[label=(\roman*)]
+\item $\sigma\in\gamma$:\\
+  Suppose that $(\q;(\q,\emptyset))\in R_2 \text{ and } \q\transit{\sigma}_{\gamma}\q'$.
+  We have: $\q\transit{\sigma}_{\gamma}\q'\implies\enabled(\alpha)\Leftrightarrow\enabledfromz(\alpha)$. We deduce then that,
+  $(\q,\emptyset)\tranbp{\plan{\sigma,0}\sigma}{7}(\q',\emptyset)$  
+We conclude by remarking that $(\q';(\q',\emptyset))\in R_2$.
+
+\item $\sigma\in\realpos$:\\
+  Suppose that $(\q;(\q,\emptyset))\in R_2 \text{ and } \q\transit{\sigma}_{\gamma}\q'$.
+  We have:\\ $\q\transit{\sigma}_{\gamma}\q'\implies\tpc{i}(\val_i+\sigma)_{i\in\{1,\cdots,n
+\}}$. Thus, by definition we have $(\q,\emptyset)\tranbp{\sigma}{3}(\q',\emptyset)$.
+We conclude by remarking that $(\q';(\q',\emptyset))\in R_2$.
+\end{enumerate}
+\end{proof}
+\qed
+\begin{proof}[Theorem~\ref{thm:dlp}]
+  Let $(\loc,\val,\pi)$ be a reachable state of the planning semantics. It is straightforward that applying Theorem~\ref{thm:pienf} to all the planned interaction,
+  gives term A of Equation~\ref{eq:dlp}.
+
+  Assuming $(\loc,\val,\pi)$ is a deadlock state. This means that \emph{(i)} time cannot progress in the system, and that
+  no interactions can be \emph{(ii)} executed or \emph{(iii)} planned.
+  By definition of the weak planning semantics we have:\\
+  \begin{description}[labelwidth=1.5cm]
+    \item[\namedlabel{p1}{R1}] $\emph(i)\Rightarrow\bigvee_{i=1}^{n}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i})$, with $n$ representing the number of components in the system
+    \item[\namedlabel{p2}{R2}] $\emph(ii)\Rightarrow\forall\alpha\in\pi,\pi(\alpha)\neq0$
+    \item[\namedlabel{p3}{R3}] $\emph(iii)\Rightarrow\forall\alpha\in\gamma\setminus\pi,\neg\enabled(\alpha)\vee\alpha\in\confl(\pi)$
+  \end{description}
+Notice that by putting $\delta'=\delta$ in Property~\ref{pt:enf2}, we can infer that $\enabled(\alpha)$ is satisfied at state $(\loc,\val+\delta')$
+and since we are assuming components with well form guards, we have the following lemma:
+\begin{lemma}\label{p:inv}
+   If $\enabledfrom(\alpha)$ holds at state $(\loc,\val)$, then
+   we have $\bigwedge\limits_{a_i\in\alpha}\bigwedge\limits_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\neg\urg(\tpc{\loc_i})$.
+\end{lemma}
+Using this lemma,~\ref{p1} can be relaxed on components participating in planned interactions, that is:
+\begin{displaymath}
+  \ref{p1}\Rightarrow\bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i}),
+\end{displaymath}
+which represent term B of Equation~\ref{eq:dlp}.
+
+Using corollary~\ref{cr:reach}, we know that state $(\loc,\val)$ is reachable in the global state semantics. Moreover,
+we are assuming deadlock-free systems w.r.t the global state semantics, meaning that $(\loc,\val)$ is not a deadlock state,
+that is, $\exists\alpha\in\gamma$ such that $(\loc,\val)\transit{\alpha}_{\gamma}(\loc',\val')$.
+By combining this with~\ref{p2} and~\ref{p3} we deduce that the following is satisfied: 
+
+\begin{displaymath}
+  \bigwedge_{\alpha\in\pi}\pi(\alpha)\neq0\quad\wedge\quad\big(\bigvee_{\alpha\in\pi}\enabled(\alpha)\vee
+  \bigvee_{\alpha\in\confl(\pi)}\enabled(\alpha)\big),
+\end{displaymath}
+which gives term C and proves the theorem.
+\end{proof}
+\qed
+\begin{proof}[Theorem~\ref{thm:phi}]
+Let $(\loc,\val,\pi)$ be a rachable state of the weak planning semantics. This state is a deadlock state if Equation~\ref{eq:dlp} is
+satisfied, meaning that $\exists\alpha\in\pi$ for which the following is satisfied:
+\begin{equation}\label{eq:last}
+ % \begin{split}
+  \enabledfrombis{\pi(\alpha)}(\alpha)\wedge\quad\pi(\alpha)\neq0\quad\wedge\quad\Big(\enabled(\alpha)\vee\bigvee_{\beta\in\confl(\alpha)}\enabled(\beta)\Big)%\\
+  %  \equiv\enabledfrombis{\pi(\alpha)}(\alpha)\wedge\Big(\pi(\alpha)\neq0\vee\bigvee_{\beta\in\alpha\cup\confl(\alpha)}\enabled(\beta)\Big)
+  %\end{split}
+\end{equation}
+We have:
+\begin{description}[labelwidth=1.5cm]
+  \item[\namedlabel{l1}{R1}] $\pi(\alpha)\neq0\Rightarrow\deltama\neq0,$ 
+\end{description}
+and using Property~\ref{pt:delta} we can infer that:
+\begin{description}[labelwidth=1.5cm]
+  \item[\namedlabel{l2}{R2}] $\pi(\alpha)\neq0\wedge\enabledfrombis{\pi(\alpha)}(\alpha)\Rightarrow\bigfrown{\enabledfromd(\alpha)}$ 
+\end{description}
+Thus, Equation~\ref{eq:last} becomes:
+\begin{equation}\label{eq:end}
+  (\deltama\neq0)\quad\wedge\quad\bigfrown{\enabledfromd(\alpha)}\quad\wedge\bigvee_{\beta\in\alpha\cup\confl(\alpha)}\enabled(\alpha)
+\end{equation}
+Notice that:
+\begin{equation}\label{eq:endbis}
+  \bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i})\Rightarrow\bigvee_{B_i\in S\setminus\p{\alpha}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i})
+\end{equation}
+
+Finally by combining Equations~\ref{eq:end} and~\ref{eq:endbis} we obtain Equation~\ref{eq:dlpf}, which proves the Theorem.
+\end{proof}
+\qed

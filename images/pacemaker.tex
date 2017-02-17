@@ -1,0 +1,30 @@
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node (rec1) at (0,0) [draw, rounded corners, thick,minimum width=2.5cm,minimum height=4cm]{Heart};
+  \node (rec2) [draw, rounded corners, right=2cm of rec1,thick,minimum width=2.5cm,minimum height=4cm]{Pacemaker};
+  
+  \node (agp) at ($(rec1.north east)!0.3!(rec1.south east)$)[xshift=-1mm] {};
+  \node (agh) at ($(rec2.north west)!0.3!(rec2.south west)$)[xshift=1mm] {};
+  \node (aph) at ($(rec1.north east)!0.2!(rec1.south east)$)[xshift=-1mm] {};
+  \node (app) at ($(rec2.north west)!0.2!(rec2.south west)$)[xshift=1mm] {};
+  \node (vgp) at ($(rec1.north east)!0.7!(rec1.south east)$)[xshift=-1mm] {};
+  \node (vgh) at ($(rec2.north west)!0.7!(rec2.south west)$)[xshift=1mm] {};
+  \node (vph) at ($(rec1.north east)!0.8!(rec1.south east)$)[xshift=-1mm] {};
+  \node (vpp) at ($(rec2.north west)!0.8!(rec2.south west)$)[xshift=1mm] {};
+
+  \draw [->] (agh) -- node{Artiral pace}(agp);
+  \draw [->] (aph) -- node{Artrial event}(app);
+  \draw [->] (vgp) -- node{Ventricular event}(vgh);
+  \draw [->] (vpp) -- node{Ventricular pace}(vph);
+
+\end{tikzpicture}
+\caption{Heart and Pacemaker interactions}\label{fig:pace}
+\end{figure}

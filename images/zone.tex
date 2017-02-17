@@ -1,0 +1,102 @@
+\begin{figure}[H]
+  \begin{adjustwidth}{-12mm}{-12mm}
+  \begin{subfigure}[b]{0.25\textwidth}
+  \centering
+  \begin{tikzpicture}[->,node distance=5mm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=0.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+  \node [place,accepting] (l0)  {$l_1$};
+  \node [place,below=1cm of l0] (l1) [label=right:\textcolor{red}{$x\le 10$}] {$l_2$};
+  \node [place,below=2cm of l1] (l2) {$l_3$};
+
+  \path (l0) edge node [align=center, xshift =0.7cm]{init \\ $x:=0$, $y:=0$} (l1)
+        (l1) edge [bend left] node [align=center]{$cont$ \\ $y \ge 20$ \\ $x:=0$, $y:=0$} (l2)
+             edge [loop,in=120,out=150,looseness=10] node [align=center,below,xshift=-8mm,yshift=5mm]{$loop$ \\ $x=10$ \\ $x:=0$} (l1)
+        (l2) edge [bend left] node[align=center] {$end$ \\ $x:=0$, $y:=0$} (l1);
+    \end{tikzpicture}
+  \caption{\centering An atomic BIP component}
+  \label{fig:z1}
+  \end{subfigure}
+  %\hfill
+  \begin{subfigure}[b]{0.36\textwidth}
+  \centering
+  \begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+  \node [right=4cm of l0](s0){$\ll l_1, x=y\gg$};
+  \node [below=3mm of s0](s1){$\ll l_2, x \le 10 \wedge x=y  \gg$};
+  \node [below=3mm of s1,xshift=-2cm](s2){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 10  \gg$};
+  \node [below=3mm of s2,xshift=-6mm](s3){$\ll l_2, x \le 10 \wedge y \le 30 \wedge y-x = 20  \gg$};
+  \node [below=3mm of s3,xshift=-6mm](s4){$\ll l_2, x \le 10 \wedge y \le 40 \wedge y-x = 30  \gg$};
+  \node [below=3mm of s4,xshift=-6mm](s5){$\ll l_2, x \le 10 \wedge y \le 50 \wedge y-x = 40  \gg$};
+  \node [below=3mm of s5,xshift=-6mm](s6){$\vdots$};
+  \node [below=4mm of s6,xshift=5cm](s7){$\ll l_3,  y=x  \gg$};
+  \node [below=1mm of s6](s8){};
+
+  \path (s0) edge (s1)
+        (s1) edge (s2)
+        (s2) edge (s3)
+        (s3) edge (s4)
+        (s4) edge (s5)
+        (s5) edge (s6)
+        (s8) edge (s7)
+        (s1)++(0.9,-0.2) edge[bend left]++(0.2,-3.8cm) 
+        (s2)++(1.8,-0.2) edge[bend left]++(0.5,-3.1cm) 
+        (s3)++(1.9,-0.2) edge[bend left]++(0.5,-2.4cm) 
+        (s4)++(2,-0.2) edge[bend left]++(0.5,-1.7cm) 
+        (s5)++(2.1,-0.2) edge[bend left]++(0.5,-1.1cm) 
+        (s7)++(1,0) edge[bend right] ++(-3mm,4.2cm);
+    \end{tikzpicture}
+  \caption{\centering Symbolic states representation before normalization}
+  \label{fig:z2}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.36\textwidth}
+  \centering
+  \begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+  \node [right=7cm of s0](t0){$\ll l_1, x=y\gg$};
+  \node [below=3mm of t0](t1){$\ll l_2, x \le 10 \wedge x=y  \gg$};
+  \node [below=3mm of t1,xshift=-2cm](t2){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 10  \gg$};
+  \node [below=3mm of t2,xshift=-5mm](t3){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 20  \gg$};
+  \node [below=3mm of t3,xshift=-5mm](t4){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 30  \gg$};
+  \node [below=3mm of t4,xshift=-5mm](t5){$\ll l_2, x \le 10 \wedge y \le 20 \wedge y-x = 40  \gg$};
+  \node [below=3mm of t5,xshift=-5mm](t6){$\ll l_2, x \le 10 \wedge y > 20 \wedge y-x > 40  \gg$};
+  \node [below=3mm of t6,xshift=5cm](t7){$\ll l_3,  y=x  \gg$};
+  \node [right=0cm of t6](t8){};
+
+  \path (t0) edge (t1)
+        (t1) edge (t2)
+        (t2) edge (t3)
+        (t3) edge (t4)
+        (t4) edge (t5)
+        (t5) edge (t6)
+        (t1)++(0.9,-0.2) edge[bend left]++(0.2,-3.8cm) 
+        (t2)++(1.8,-0.2) edge[bend left]++(0.5,-3.1cm) 
+        (t3)++(1.9,-0.2) edge[bend left]++(0.5,-2.4cm) 
+        (t4)++(2,-0.2) edge[bend left]++(0.5,-1.7cm) 
+        (t5)++(2.1,-0.2) edge[bend left]++(0.5,-1.1cm) 
+        (t6) edge (t7)
+        (t8) edge[looseness=10,loop,right,out=-20,in=20](t8)
+        (t7)++(1,0) edge[bend right] ++(0mm,4cm);
+    \end{tikzpicture}
+  \caption{\centering Symbolic states representation after normalization=centering}
+  \label{fig:z3}
+  \end{subfigure}
+\end{adjustwidth}
+\caption{An atomic component and its symbolic state representations}\label{fig:zone}
+\end{figure}

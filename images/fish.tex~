@@ -1,0 +1,96 @@
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=2pt}]
+
+  \node [initial, place] (l0)  {$l0$};
+  \node [place,below=of l0,xshift=2cm] (l1) {$l1$};
+  \node [place,below=of l0,xshift=-2cm] (l2) {$l2$};
+
+  \path (l0) edge [in=30, out=60,loop] node{eq0} (l0)
+             edge [in=150, out=120,loop] node[above]{set0} (l0)
+             edge [bend left] node{set1} (l1)
+             edge [bend right] node[left]{set2} (l2)
+        (l1) edge [in=60, out=30,loop] node[above]{set1} (l1)
+             edge [in=-60, out=-30,loop] node[below]{eq1} (l1)
+             edge [bend left] node[right]{set0} (l0)
+             edge [bend right] node[above]{set2} (l2)
+        (l2) edge [in=120, out=150,loop] node[above]{set2} (l2)
+             edge [in=240, out=210,loop] node[below]{eq2} (l2)
+             edge [bend right] node[left]{set0} (l0)
+             edge [bend right] node[below]{set1} (l1);
+
+  \node [place] (l2-3) [left=1.8cm of l2] {wait};
+  \node [place] (l2-2) [above=of l2-3,label=above:$x\le k$]{req};
+  \node [place] (l2-4) [left=of l2-3]                       {cs};
+  \node [initial, place, left=of l2-2] (l2-1)  {idle};
+
+  \path (l2-1) edge node[align=center, pos=0.5]{try1 reset$\{x\}$ } (l2-2)
+        (l2-2) edge node[align=center, pos=0.5, swap]{set1 \\ reset$\{x\}$} (l2-3)
+        (l2-3) edge node[align=center, pos=0.5]{enter1 $x > k$} (l2-4)
+               edge [bend right] node[align=center, pos=0.5, swap]{retry1 \\ reset$\{x\}$} (l2-2)
+        (l2-4) edge node[align=center,pos=0.5]{exit1} (l2-1);
+  
+  \node [place] (l3-4) [right=1.8cm of l1]                      {cs};
+  \node [initial, place,above=of l3-4] (l3-1)  {idle};
+  \node [place] (l3-2) [right=of l3-1,label=above:$x\le k$]{req};
+  \node [place] (l3-3)  [right=of l3-4] {wait};
+
+  \path (l3-1) edge node[align=center, pos=0.5]{try2 reset $\{x\}$ } (l3-2)
+        (l3-2) edge node[align=center, pos=0.5, swap]{set2 \\ reset$\{x\}$} (l3-3)
+        (l3-3) edge node[align=center, pos=0.5]{enter2 $x > k$} (l3-4)
+               edge [bend right] node[align=center, pos=0.5, swap]{retry2 \\ reset$\{x\}$} (l3-2)
+        (l3-4) edge node[align=center,pos=0.5]{exit2} (l3-1);
+  
+  \node [inner sep=3.2cm, draw, fit=(l0)(l1)(l2)] (rec1) {};
+  \node [inner sep=3.2cm, inner xsep=3.8cm, draw, fit=(l2-1)(l2-2)(l2-3)(l2-4)] (rec2) {};
+  \node [inner sep=3.2cm, ,inner xsep=3.8cm, draw, fit=(l3-1)(l3-2)(l3-3)(l3-4)] (rec3) {};
+
+  \node [dots,label=-180:set1] (set1) at ($(rec2.north east)!0.1!(rec2.south east)$) {};
+  \node [dots,label=-180:enter1] (enter1) at ($(rec2.north east)!0.3!(rec2.south east)$) {};
+  \node [dots,label=-90:retry1] (retry1) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  \node [dots,label=-90:exit1] (exit1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node [dots,label=-90:try1] (try1) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  
+  \node [dots,label=0:set2] (set2) at ($(rec3.north west)!0.1!(rec3.south west)$) {};
+  \node [dots,label=0:enter2] (enter2) at ($(rec3.north west)!0.3!(rec3.south west)$) {};
+  \node [dots,label=-90:retry2] (retry2) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+  \node [dots,label=-90:exit2] (exit2) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node [dots,label=-90:try2] (try2) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  
+  \node [dots,label=0:set1] (setp1) at ($(rec1.north west)!0.1!(rec1.south west)$) {};
+  \node [dots,label=0:eq1] (eq1) at ($(rec1.north west)!0.3!(rec1.south west)$) {};
+  \node [dots,label=180:set2] (setp2) at ($(rec1.north east)!0.1!(rec1.south east)$) {};
+  \node [dots,label=180:eq2] (eq2) at ($(rec1.north east)!0.3!(rec1.south east)$) {};
+  \node [dots,label=-90:set0] (set0) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node [dots,label=-90:eq0] (eq0) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  
+  \draw [-] (set1) -- (setp1);
+  \draw [-] (set2) -- (setp2);
+  \draw [-] (enter1) -- (eq1);
+  \draw [-] (enter2) -- (eq2);
+ 
+  %\draw [-] (try1) to[ncbar] (set0);
+  %\draw [-] (retry1) to[ncbar=7mm] (set0);
+  \draw [-] (exit1) to[ncbar=10mm] (eq0);
+  
+ % \draw [-] (try2) to[ncbar] (set0);
+ % \draw [-] (retry2) to[ncbar=-7mm] (set0);
+  \draw [-] (exit2) to[ncbar=-10mm] (eq0);
+
+\path (eq0) ++(0,1cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+\draw  [-] (exit1) |- (x1) -- (eq0) -- (x2) -| (exit2);
+ % \draw [-] (sync1) |- (a1) -- (sync);
+%  \draw [-] (sync1) |- (a1) -- (sync);
+%  \draw [-] (sync1) |- (a1) -- (sync);
+
+  %\node (a1) [coordinate,label=90:$a_1$] at ([yshift=1cm]sync) {};
+
+  %\draw [-] (sync1) |- (a1) -- (sync);
+  %\draw [-] (sync3) |- (a1);
+ % \draw [-] (set1) to[ncbar] (get1);
+%  \draw [-] (set3) to[ncbar=-0.5cm] (get2);
+
+\end{tikzpicture}

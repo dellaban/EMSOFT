@@ -1,0 +1,81 @@
+\documentclass[runningheads,a4paper]{llncs}
+\usepackage{verimagreport}
+\input{../src/packages.tex}
+\input{../src/commands.tex}
+\stackMath
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+  \mbox{\hspace{1cm}}#2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother
+\makeatletter
+\newcommand{\mytag}[2]{%
+  \text{#1}%
+  \@bsphack
+  \protected@write\@auxout{}%
+         {\string\newlabel{#2}{{#1}{\thepage}}}%
+  \@esphack
+}
+\makeatother
+\bibyear{2016}
+\newlength{\mywidth}
+\newcommand\bigfrown[2][\textstyle]{\ensuremath{%
+  \array[b]{c}\text{\resizebox{\mywidth}{.7ex}{$#1\frown$}}\\[-1.3ex]#1#2\endarray}}
+\settowidth{\mywidth}{$\enabledfromd(\alpha)$}
+
+\tikzset{                                 
+    connect/.style args={(#1) to (#2) over (#3) by #4}{
+    insert path={                         
+      let                             
+      \p1=($(#1)-(#3)$),            
+      \n1={veclen(\x1,\y1)},        
+      \n2={atan2(\y1,\x1)},         
+      \n3={abs(#4)},                
+      \n4={#4>0 ?180:-180}          
+              in                            
+              (#1) -- ($(#1)!\n1-\n3!(#3)$) 
+              arc (\n2:\n2+\n4:\n3) -- (#2) 
+      }                                     
+    }                                       
+}              
+\newsavebox{\img}  
+\urldef{\mailsa}\path|{mahieddine.dellabani, saddek.bensalem, jacques.combaz, marius.bozga}@imag.fr|    
+
+\institute{University Grenoble Alpes, VERIMAG, F-38000 Grenoble, France\\
+  CNRS, VERIMAG, F-38000 Grenoble, Frnace\\
+\mailsa\\
+\url{http://www.verimag.fr/rsd}}
+
+\title{Local Planning of Multiparty Interactions with Bounded Horizon}
+
+\author{Mahieddine Dellabani, Jacques Combaz, Saddek Bensalem, Marius Bozga}
+
+\date{\today}
+
+\reportnumber{TR-2016-05}
+
+
+\abstract{Dynamic scheduling of distributed real-time systems with multiparty interactions is acknowledged to be a very hard task. For such systems, multiple schedulers are used to coordinate the parallel activities of remotely running components. In order to ensure global consistency and timing constraints, these schedulers must cope with significant communication delays while moreover, use only point-to-point message passing as communication primitive on the platform. In this paper, we investigate a formal model for such systems as compositions of timed automata subject to multiparty interactions and we propose a distributed implementation method aiming to overcome the communication delays problem through planning ahead interactions. Moreover, we develop static conditions allowing to make the planning decisions local to different schedulers and thus to decrease the overall coordination overhead. The method has been implemented and we report preliminary results on benchmarks.}
+
+\keywords{Distributed Real-Time Systems$\cdot$Timed Automata$\cdot$Knowledge}
+
+\reviewers{}
+
+
+\begin{document}
+
+\maketitlepage
+\input{../src/intro.tex}
+\input{../src/ts.tex}
+\input{../src/weakPlan.tex}
+\input{../src/strongPlan2.tex}
+\input{../src/inv.tex}
+\input{../src/exp.tex}
+\input{../src/appendix.tex}
+
+
+\bibliographystyle{abbrv} 
+\bibliography{main}
+\end{document}

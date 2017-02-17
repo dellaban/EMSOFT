@@ -1,0 +1,24 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  bplace/.style={opacity=0.6,dashed,place,draw=green,fill=aqua},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+
+
+\node [place] (l1)  [xshift=-1cm,label=above:$B_1$,label=left:\textcolor{red}{$c\le3$}]{$\loc_1$};
+  \node [place,below=21mm of l1] (l1') {$\loc'_1$};
+  \path (l1) edge node[align=center]{$a_1$ \\  reset c}(l1');
+  
+  \node [place] (l1)  [right=5cm of l1,label=above:$B_1$]{$\loc_1$};
+  \node [place,below=21mm of l1] (l1') {$\loc'_1$};
+  \path (l1) edge node[align=center]{$a_1$ \\ \textcolor{red}{$3<c$} \\\textcolor{red}{eager}\\ reset c}(l1');
+  
+  
+\end{tikzpicture}
+\end{figure}

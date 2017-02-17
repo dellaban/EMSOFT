@@ -1,0 +1,28 @@
+\begin{figure}[h]
+  \centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  ]
+  \tikzstyle{every node}=[font=\scriptsize]
+  
+  
+  \node [place,accepting,label=right:\textcolor{red}{$c\le P$}] (l0) {$l_{1}$};
+  \node [place] (l1) [below=1.5cm of l0]{$l_{2}$};
+
+  \path (l0) edge [bend left] node[align=center]{$a$ \\ $c=P$ } (l1)
+        (l1) edge [bend left] node[align=center]{$b$ \\ $E \le c \le D $\\$c:=0$} (l0);
+  
+  \node [inner xsep=1.7cm,inner ysep=5mm, draw, fit=(l0)(l1)] (rec) {};
+  
+  \node [dots,label=-90:$a$] (a) at ($(rec.north east)!0.3!(rec.north west)$) {};
+  \node [dots,label=-90:$b$] (b) at ($(rec.north east)!0.7!(rec.north west)$) {};
+
+
+\end{tikzpicture}
+\caption{\small Timed automaton representation of a simple component}\label{fig:atom}
+\end{figure}

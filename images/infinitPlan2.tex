@@ -1,0 +1,51 @@
+\begin{figure}
+\center
+\begin{tikzpicture}
+  \begin{axis}[
+   axis y line=none,
+   y=0.3cm,
+   restrict y to domain=1:5,
+   axis lines=left,
+   enlarge x limits=upper,
+   scatter/classes={
+   o={mark=*,fill=white}
+   },
+   scatter,
+   scatter src=explicit symbolic,
+   every axis plot post/.style={mark=*,thick},
+   xlabel=Time,
+   x label style={at={(axis description cs:0.95,-0.1)},anchor=south},
+   xticklabels={,,},
+   legend style={
+      draw=none,
+      at={(1.8,-1)},
+      anchor=south east
+  },
+  legend image post style={mark=none}
+  ]
+\addplot table [y expr=1,meta index=1, header=false] {
+15 c
+18 c
+};\addlegendentry{$\cup_{\delta\in[\hmn,\hmx]}\zonep{\delta}g_{\alpha}$}
+\addplot table [y expr=1,meta index=1, header=false] {
+20 c
+21 c
+};\addlegendentry{$g_{\alpha}$}
+\addplot table [y expr=2,meta index=1, header=false] {
+18 c
+17 c
+};\addlegendentry{$\zonep{\delta-d}g_{\alpha}$}
+\addplot table [y expr=3,meta index=1, header=false] {
+17 c
+16 c
+};\addlegendentry{$\zonep{\delta-2d}g_{\alpha}$}
+\addplot table [y expr=4,meta index=1, header=false] {
+16 c
+15 c
+};\addlegendentry{$\zonep{\delta-3d}g_{\alpha}$}
+  \end{axis}
+  
+  
+
+\end{tikzpicture}
+\end{figure}

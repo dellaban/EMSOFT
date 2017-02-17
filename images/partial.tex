@@ -1,0 +1,27 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  bplace/.style={opacity=0.6,dashed,place,draw=green,fill=aqua},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+
+
+  \node [place] (l1)  [xshift=1cm,label=above:$B_1$]{$\loc_1$};
+  \node [place,below=21mm of l1] (l1') {$\loc'_1$};
+  \path (l1) edge node[align=center]{$a_1$ \\ g \\ reset $c_1,\cdots,c_n$}(l1');
+  
+  
+  \node [place] (l2)  [right=3cm of l1,label=above:$B^{\perp}_1$]{$\loc_1$};
+  \node [bplace,below=7mm of l2] (l2t) {$\perp$};
+  \node [place,below=7mm of l2t] (l2') {$\loc'_1$};
+  \path (l2) edge node[align=center]{$a_1$ \\ g \\ reset $c_1,\cdots,c_n$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+\end{tikzpicture}
+%\caption{Global State and Partial State representation of a Component}
+\end{figure}

@@ -1,0 +1,63 @@
+\begin{proof}[Theorem~\ref{thm:sim2}]
+\label{proof:sim2}
+To prove that $S_g$ simulates 
+$S_p$, that is, $S_p\simu{R_2}S_g$ we need to prove that:\\
+\begin{enumerate}
+  \item $\forall ((\q,\pi);\q)\in R_2,\forall \sigma\in\gamma\cup\realpos$ such that 
+    $(\q,\pi)\tranbp{\sigma}{3}(\q',\pi'):$
+\begin{displaymath}
+  \exists\q'\text{ such that }
+  ((\q',\pi');\q')\in R_2\text{ and }\q\transit{\sigma}_{\gamma}\q'
+\end{displaymath}
+  \item $\forall ((\q,\pi);\q)\in R_2,\text{ such that }
+    (\q,\pi)\tranbp{\plan{\alpha,\delta}}{6}(\q',\pi'):$\\
+\begin{displaymath}
+        ((\q',\pi');\q')\in R_2
+\end{displaymath}
+\end{enumerate}
+\begin{enumerate}
+  \item 
+\begin{enumerate}[label=(\roman*)]
+\item $\sigma\in\gamma$:\\
+  Suppose that $((\q,\pi);\q)\in R_2 \text{ and } (\q,\pi)\tranbp{\sigma}{3}(\q',\pi')$.
+  We have: $(\q,\pi)\tranbp{\sigma}{3}(\q',\pi)\implies\enabled(\alpha)$. We deduce then that,
+$\q\transit{\sigma}_{\gamma}\q'$  
+We conclude by remarking that $((\q',\pi');\q')\in R_2$.
+
+\item $\sigma\in\realpos$:\\
+  Suppose that $((\q,\pi);\q)\in R_2 \text{ and } (\q,\pi)\tranbp{\sigma}{3}(\q',\pi')$.
+  We have:
+      $(\q,\pi)\tranbp{\sigma}{3}(\q',\pi')\implies\tpc{i}(\val_i+\sigma)_{i\in\{1,\cdots,n
+      \}}$. Thus, by definition we have $\q\transit{\sigma}_{\gamma}\q'$.
+      We conclude by remarking that $((\q',\pi);\q')\in R_2$.
+\end{enumerate}
+  \item For $\plana$ actions:\\
+    $\plana$ actions does not affect the current state, it just adds a new interaction and its chosen execution date to the plan, thus we have:
+   $\forall ((\q,\pi);\q)\in R_2$, such that 
+    $(\q,\pi)\tranbp{\plan{\alpha,\delta}}{6}(\q',\pi')$, with $\q=\q'$. Thus, we conclude that $((\q',\pi');\q')\in R_2$
+\end{enumerate}
+\end{proof}
+
+
+\begin{proof}[Theorem \ref{free}]
+  \label{proof:dis}
+
+  Let's assume the system S is at state $\q=(\loc,\val)$ where $\loc\in\Loc_{\alpha}$ and that all the interactions planned previously 
+  are deadlock-free, that is, $\q\enables\pi$. Planning $\alpha$ in $\delta$ units of time introduces a deadlock if:\\
+  $\exists\sigma:(\loc,\val)\transit{\ex_0}(\loc_1,\val_1)\transit{\ex_1}_{\gamma}(\loc_2,\val_2)\cdots(\loc',\val')$, with $\ex\in\realpos\cup\Gamma$,
+  $d(\sigma)<\delta$ and $\disabled(S,\Gamma,\alpha)\text{ is } \true \text{ at } (\loc',\val')$, which can be written as follows:
+  \begin{displaymath}
+      \forall\beta\in\gamma\setminus\Gamma\cup\{\alpha\}\cup\confl(\alpha).\neg\enabled(\beta)
+      \wedge\bigvee_{\loc'_i\in\loc'}\urg(\tpc{\loc'_i},\val'_i),
+\end{displaymath}
+  \begin{enumerate}
+    \item We can easily see that: \[\disabled(S,\Gamma,\alpha)\implies
+    \bigvee_{B\in S\setminus\p{\alpha}}\bigvee_{\loc\in\Loc_i}\urg(\tpc{\loc_i},\val_i)\]
+    \item \[\disabled(S,\Gamma,\alpha)\implies \bigvee_{\beta\in \confl(\alpha)\cup\{\alpha\}}\enabled(\beta)\]
+
+      Assuming that all the interaction planned previously are deadlock-free, and since the system under global semantics rules does not have a deadlock at 
+      this state, we conclude that the deadlock introduced by planning $\alpha$ is due to eitheir its execution date, or to the fact of disallowing the execution 
+      of $\confl(\alpha)$. 
+  \end{enumerate}
+\end{proof}
+

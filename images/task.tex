@@ -1,0 +1,57 @@
+\begin{figure}[h]
+\begin{tikzpicture}[->,node distance=1cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+  ]
+  \tikzstyle{every node}=[font=\scriptsize]
+
+  \node [accepting, place] (l0)  {$idle$};
+  \node [place,below=1.5cm of l0,label={[shift={(-1,-1.6)}]$C$}] (l1) {$run$};
+
+  \path (l0) edge [in=100, out=160,loop,looseness=4] node[left]{end} (l0)
+             edge [bend left] node[right,align=center]{init\\$z > 4$} (l1)
+        (l1) edge [in=-10, out=-70,loop,looseness=4] node[right]{end} (l1)
+        edge [bend left] node[left,align=center]{run\\ z:=0} (l0);
+
+  \node [accepting, place] (p1-0) [right=1cm of l0,xshift=2cm] {$idle_1$};
+  \node [place] (p1-1) [right=1.5cm of p1-0]{$wait_1$};
+  \node [place] (p1-2) [below=1.5cm of p1-1,label=below:\textcolor{red}{$x\le 3$}]            {$start_1$};
+  \node [place] (p1-3) [left=1.5cm of p1-2,label={[shift={(3.2,-1.8)}]$T_1$}] {$exec_1$};
+  
+  \path (p1-0) edge node[align=center, pos=0.5]{$init_1$} (p1-1)
+        (p1-1) edge node[align=center, pos=0.5]{$release_1$\\$x:=0$ } (p1-2)
+        (p1-2) edge node[align=center, pos=0.5]{$process_1$\\ $1 \le x \le 3$ } (p1-3)
+        (p1-3) edge node[align=center, pos=0.5]{$end_1$} (p1-0);
+
+
+  \node [place] (p2-1) [left=2cm of l0,xshift=-1cm]{$wait_2$};
+  \node [accepting, place] (p2-0) [left=1.5cm of p2-1]{$idle_2$};
+  \node [place] (p2-2) [below=1.5cm of p2-1,label=below:\textcolor{red}{$y\le 3$}]            {$start_2$};
+  \node [place] (p2-3) [left=1.5cm of p2-2,label={[shift={(-.5,-1.8)}]$T_2$}] {$exec_2$};
+  
+  \path (p2-0) edge node[align=center, pos=0.5]{$init_2$} (p2-1)
+        (p2-1) edge node[align=center, pos=0.5]{$release_2$\\ $y:=0$ } (p2-2)
+        (p2-2) edge node[align=center, pos=0.5]{$process_2$ \\ $1 \le y \le 3$ } (p2-3)
+        (p2-3) edge node[align=center, pos=0.5]{$end_2$} (p2-0);
+  
+  \node [accepting, place] (r0) [above=2.5cm of l0,xshift=-1.5cm,label={[shift={(-0.5,-1.8)}]$R$}] {$free$};
+  \node [place,right=2cm of r0] (r1) {$busy$};
+
+  \path (r0) edge [bend left] node[above]{enter} (r1)
+        (r1) edge [bend left] node[below]{exit} (r0);
+  
+  \node [inner xsep=1cm,inner ysep=1cm,draw, yshift=-1mm, fit=(l0)(l1)] (rec1) {};
+  \node [inner xsep=8mm,inner ysep=8mm,draw, fit=(r0)(r1)] (rec2) {};
+  \node [inner xsep=8mm,inner ysep=8mm,draw, fit=(p1-0)(p1-1)(p1-2)(p1-3)] (rec3) {};
+  \node [inner xsep=8mm,inner ysep=8mm,draw, fit=(p2-0)(p2-1)(p2-2)(p2-3)] (rec4) {};
+
+
+
+\end{tikzpicture}
+\end{figure}
+
+

@@ -1,0 +1,25 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+  \pgfdeclarelayer{bg}
+  \pgfsetlayers{bg,main}
+  \node (rec2) at (0,2) [draw, thick,minimum width=2cm,minimum height=2cm,fill=yellow]{$B_{2}$};
+  \node (rec1) [draw, left=1cm of rec2,thick,minimum width=2cm,minimum height=2cm,align=center,fill=yellow]{$B_{1}$};
+  \node (dots) [draw=none, right=5mm of rec2,thick,minimum width=2cm,minimum height=2cm,align=center]{$\cdots$};
+  \node (rec3) [draw, right=5mm of dots,thick,minimum width=2cm,minimum height=2cm,align=center,fill=yellow]{$B_{n}$};
+  \begin{pgfonlayer}{bg}
+    \node (glue) [draw opacity=0,rounded corners=2pt,draw, left=-48mm of rec2,yshift=15mm,thick,minimum width=12cm,minimum height=2cm,align=center,fill=lbordeau]{\huge{glue}};
+  \end{pgfonlayer}
+
+  \node [inner xsep=3cm,inner ysep=1.5cm,draw=bordeau, fit=(rec1)(rec2)(dots)(rec3)(glue),label={[shift={(-6,-5)}]\huge{$S$}},yshift=-5mm] (sys) {};
+
+
+\end{tikzpicture}
+\end{figure}
+

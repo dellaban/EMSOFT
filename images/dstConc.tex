@@ -1,0 +1,81 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+
+  
+ 
+    \node (ip1) [fill=prpl,draw,draw opacity=0,rounded corners=2pt, 
+    thick,minimum width=3cm,minimum height=2cm,align=center]{Scheduler 1\\$\gamma_1=\{\alpha_1,\alpha_2\}$};
+    \node (ip11)[right=0 mm of ip1]{\includegraphics[scale=.3]{../images/gears.png}};
+    \node [inner xsep=1.5cm,inner ysep=7.5mm,draw=bordeau, fit=(ip1)(ip11)] (sys) {};
+    \node  (p1) at ($(sys.south west)!0.4!(sys.south east)$) {};
+    \node  (p'1) [below=3mm of p1]{};
+    \node  (p2) at ($(sys.south west)!0.6!(sys.south east)$) {};
+    \node  (p'2) [below=3mm of p2]{};
+    \draw[->] (p1) -- (p'1);
+    \draw[->] (p'2) -- (p2);
+    
+    \node (ip2) [right=1cm of ip11,fill=aqua,draw,draw opacity=0,rounded corners=2pt, 
+    thick,minimum width=3cm,minimum height=2cm,align=center]{Schedluer 2\\$\gamma_2=\{\alpha_3\}$};
+    \node (ip21)[right=0 mm of ip2]{\includegraphics[scale=.3]{../images/gears.png}};
+    \node [inner xsep=1.5cm,inner ysep=7.5mm,draw=bordeau, fit=(ip2)(ip21)] (sys) {};
+    \node  (p1) at ($(sys.south west)!0.4!(sys.south east)$) {};
+    \node  (p'1) [below=3mm of p1]{};
+    \node  (p2) at ($(sys.south west)!0.6!(sys.south east)$) {};
+    \node  (p'2) [below=3mm of p2]{};
+    \draw[->] (p1) -- (p'1);
+    \draw[->] (p'2) -- (p2);
+    \node (crp)[above=5 mm of ip1,xshift=2.5cm]{\includegraphics[scale=.8]{../images/crp.jpg}};
+    \node (dedline)[above=5 mm of ip1,xshift=8.5cm]{\includegraphics[scale=.2]{../images/deadline.jpg}};
+    \node (plus)[above=1.5cm of ip1,xshift=5.5cm]{\byes};
+  
+    
+    \node (nw) [fill=orl,rounded corners=8pt,minimum width=15cm,minimum height=8mm,below=4mm of sys,xshift=-3.5cm]{Communication Network};
+   
+ 
+  \node (rec2) [xshift=-1cm,below=5mm of nw,draw, thick,minimum width=1.5cm,minimum height=1.5cm]{$B_{2}$};
+  \node (rec1) [draw, left=10mm of rec2,thick,minimum width=1.5cm,minimum height=1.5cm,align=center]{$B_{1}$};
+  \node (rec3) [draw, right=10mm of rec2,thick,minimum width=1.5cm,minimum height=1.5cm,align=center]{$B_{3}$};
+  
+  
+  
+    \node (rec4) [draw, right=10mm of rec3,thick,minimum width=1.5cm,minimum height=1.5cm,align=center]{$B_{4}$};
+
+  \node  (p1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node  (p'1) [above=4mm of p1]{};
+  \node (p2) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  \node  (p'2) [above=4mm of p2]{};
+  \node (q1) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node  (q'1) [above=4mm of q1]{};
+  \node (q2) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+  \node  (q'2) [above=4mm of q2]{};
+  \node (r1) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  \node  (r'1) [above=4mm of r1]{};
+  \node (r2) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node  (r'2) [above=4mm of r2]{};
+  \node (t1) at ($(rec4.north west)!0.7!(rec4.north east)$) {};
+  \node  (t'1) [above=4mm of t1]{};
+  \node (t2) at ($(rec4.north west)!0.3!(rec4.north east)$) {};
+  \node  (t'2) [above=4mm of t2]{};
+
+  \draw[->] (p1) -- (p'1);
+  \draw[->] (p'2) -- (p2);
+  \draw[->] (q1) -- (q'1);
+  \draw[->] (r1) -- (r'1);
+  \draw[->] (q'2) -- (q2);
+  \draw[->] (r'2) -- (r2);
+  \draw[->] (t'2) -- (t2);
+  \draw[->] (t1) -- (t'1);
+
+\end{tikzpicture}
+\end{figure}
+
+
+

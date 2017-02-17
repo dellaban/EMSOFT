@@ -1,0 +1,210 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  bplace/.style={opacity=0.6,dashed,place,draw=green,fill=aqua},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+
+  \node (rec2) [draw, thick,minimum width=1cm,minimum height=1cm]{$B_{2}$};
+  \node (rec1) [draw, left=5mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{1}$};
+  \node (rec3) [draw, right=5mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{3}$};
+  \node (rec4) [draw, right=5mm of rec3,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{4}$};
+
+
+  \node [dots,scale=.5] (p1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node [dots,scale=.5] (p2) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  \node [dots,scale=.5] (q1) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+  \node [dots,scale=.5] (q2) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  \node [dots,scale=.5] (r1) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node [dots,scale=.5] (r2) at ($(rec4.north west)!0.3!(rec4.north east)$) {};
+
+  
+
+  \draw [-] (q1) to[ncbar=2mm] (p1) node[xshift=-8mm,yshift=5mm]{$\alpha_1$};
+  \draw [-] (q2) to[ncbar=-2mm] (p2) node[xshift=8mm,yshift=5mm]{$\alpha_2$};
+  \draw [-] (r2) to[ncbar=-2mm] (r1) node[xshift=8mm,yshift=5mm]{$\alpha_3$};
+\end{tikzpicture}
+\end{figure}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  bplace/.style={opacity=0.6,dashed,place,draw=green,fill=aqua},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+ 
+  \only<1>{\node [place,tokens=1] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,below=7mm of l1,label=left:$\perp$] (l1t) {};
+  \node [place,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place,tokens=1] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place,tokens=1] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+  \only<2>{\node [place] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,below=7mm of l1,label=left:$\perp$,tokens=1] (l1t) {};
+  \node [place,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,tokens=1,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place,tokens=1] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+  \only<3>{\node [place] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,tokens=1,below=7mm of l1,label=left:$\perp$] (l1t) {};
+  \node [place,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,tokens=1,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place,tokens=1] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+  \only<4>{\node [place] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,tokens=1,below=7mm of l1,label=left:$\perp$] (l1t) {};
+  \node [place,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,tokens=1,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,tokens=1,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+\only<5>{\node [place] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,below=7mm of l1,label=left:$\perp$] (l1t) {};
+  \node [place,tokens=1,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,tokens=1,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,tokens=1,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+  \only<6>{\node [place] (l1)  [label=left:$\loc_1$,label=above:$B^{\perp}_1$]{};
+  \node [bplace,below=7mm of l1,label=left:$\perp$] (l1t) {};
+  \node [place,tokens=1,below=7mm of l1t,label=left:$\loc'_1$] (l1') {};
+  \path (l1) edge node[align=center]{$a_1$}(l1t);
+  \draw (l1t) [dashed,opacity=0.6]-- node{$\beta$}(l1');
+  
+  \node [place,tokens=1] (l2)  [right=2cm of l1,label=above:$B^{\perp}_2$,label=left:$\loc_2$]{};
+  \node [bplace,below=7mm of l2,label=left:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=left:$\loc'_2$] (l2') {};
+  \node [bplace,right=2mm of l2t,label=right:$\perp$] (l2'') {};
+  \path (l2') edge[bend right] node[below,align=center]{$a'_2$}(l2'');
+  \path (l2'') edge[bend right,dashed,opacity=0.6] node[above]{$\beta$}(l2);
+  \path (l2) edge node[align=center]{$a_2$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+  
+  \node [place] (l3)  [right=2cm of l2,label=above:$B^{\perp}_3$,label=right:$\loc_3$]{};
+  \node [bplace,below=7mm of l3,label=right:$\perp$] (l3t) {};
+  \node [place,tokens=1,below=7mm of l3t,label=right:$\loc'_3$] (l3') {};
+  \path (l3) edge node[align=center]{$a_3$ }(l3t);
+  \draw (l3t) [dashed,opacity=0.6]-- node{$\beta$}(l3');
+
+  \node [place,tokens=1] (l2)  [right=2cm of l3,label=above:$B^{\perp}_4$,label=right:$\loc_4$]{};
+  \node [bplace,below=7mm of l2,label=right:$\perp$] (l2t) {};
+  \node [place,below=7mm of l2t,label=right:$\loc'_4$] (l2') {};
+  \path (l2) edge node[align=center]{$a_4$}(l2t);
+  \draw (l2t) [dashed,opacity=0.6]-- node{$\beta$}(l2');
+}
+ 
+\end{tikzpicture}
+\end{figure}
+

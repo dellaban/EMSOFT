@@ -1,0 +1,73 @@
+\begin{figure}[h]
+  \center
+  \begin{subfigure}[b]{0.4\textwidth}
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=7mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+  \node[place](l1){};
+  \node[place,below=5mm of l1,xshift=1cm](l2){};
+  \node[place,below=5mm of l1,xshift=-1cm](l3){};
+  \path (l1) edge (l2)
+             edge (l3);
+  \node (rec1) [draw, thick,fit=(l1)(l2)(l3),inner xsep=1cm,inner ysep=1cm]{};
+  \node (rec2) [draw, yshift=5mm,left=8mm of rec1,thick,minimum width=2cm,minimum height=2cm,align=center]{};
+  \node (rec3) [draw, yshift=5mm,right=8mm of rec1,thick,minimum width=2cm,minimum height=2cm,align=center]{};
+
+
+  \node [dots] (p1) at ($(rec1.north west)!0.3!(rec1.north east)$) {};
+  \node [dots] (p2) at ($(rec1.north west)!0.7!(rec1.north east)$) {};
+    
+  \node [dots] (q1) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  
+  \node [dots] (q2) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+
+  
+
+  \draw [-] (q1) to[ncbar] (p1) node[xshift=-12mm,yshift=1.2cm,label=above:$\alpha_1$]{};
+  \draw [-] (q2) to[ncbar=-5mm] (p2) node[xshift=12mm,yshift=1.2cm,label=above:$\alpha_2$]{};
+
+  
+
+
+
+\end{tikzpicture}
+\caption*{\centering$\alpha_1$ and $\alpha_2$ actions enabled from the same location}
+\end{subfigure}
+  \begin{subfigure}[b]{0.4\textwidth}
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.4},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+  \node (rec1) [draw, thick,minimum width=3cm,minimum height=3cm]{};
+  \node (rec2) [draw, yshift=5mm,left=8mm of rec1,thick,minimum width=2cm,minimum height=2cm,align=center]{};
+  \node (rec3) [draw, yshift=5mm,right=8mm of rec1,thick,minimum width=2cm,minimum height=2cm,align=center]{};
+
+
+  \node [dots] (p1) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+    
+  \node [dots] (q1) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  
+  \node [dots] (q2) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+
+  
+  \path (p1) ++(0,0.5cm) +(-1cm,0) coordinate(x1) +(1cm,0) coordinate(x2);
+  \draw  [-] (q1) -- ++(0,5mm) |- (x1) node [above]{$\alpha_1$}-- (p1) -- (x2)node [above]{$\alpha_2$} -| ($(q2)+(0,5mm)$) -- (q2);
+
+
+
+\end{tikzpicture}
+\caption*{\centering$\alpha_1$ and $\alpha_2$ shares the same action}
+  \end{subfigure}
+\end{figure}
+

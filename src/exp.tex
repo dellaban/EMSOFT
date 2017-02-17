@@ -1,0 +1,70 @@
+\section{Implementation and Experiments}\label{sec:5}
+
+The presented method has been implemented as a middleend filter of the BIP compiler. BIP~\cite{Basu:BIP} is a highly expressive, component-based
+framework with rigorous semantics that allows the construction of complex, hierarchically structured models from single components characterized by their behavior.
+The method input consists of real-time BIP model
+and a file containing an approximation of the reachable states of components combined with history clock inequalities as explained in 
+Section~\ref{sec:4}. The latter is generated using the RTD-Finder tool, a verification tool for real-time component based
+systems modeled in the RT-BIP language. Our filter generates for each interaction of the input model a Yices~\cite{yices} file containing system invariants together with the condition for
+planning the considered interaction, that is, $\neg\sched(\alpha,\deltama)$. Thereafter, Yices checks the satisfiability of
+$\bigwedge_{i=1}^n \reach(B_i)\wedge\quad\historyineq(S_g)\quad\wedge\quad\neg\sched(\alpha,\deltama)$. We also define $\deltama$ as free variable.
+If this condition is unsatisfiable, then planning interactions
+$\alpha$ is safe and unbounded that is, $\deltamax=+\infty$. Otherwise, Yices generates a counter-example. Due to the monotony of the condition, this counter-example can be
+used to find the maximal value of $\deltama$  satisfying the above condition using a binary search algorithm.
+Together, the determined values of the bounds $\deltamax$ for each interaction will affect the dynamic of the hole system: for an interaction 
+$\alpha$ the greater $\deltama$ is, the more flexible the scheduling of $\alpha$ will be. 
+
+We ran our experiments on three other models besides of the model presented in Figure~\ref{fig:run}: Pacemaker~\cite{pace}, Fischer~\cite{fisch}, and
+Gear controller~\cite{gear}. We developed an implementation of these models in RT-BIP.
+The following tables show the result of our experiments. Table~\ref{t:1} gives a detailed result of the experiments ran on 
+the Task Manager model~\ref{fig:run}. It summarizes, for each interaction, its \emph{conflicting interactions} and the potential
+locations for which a time progress condition may expire while planning it (column $\inv$). The last column, $\deltama$, details the maximum horizon for 
+planning interaction $\alpha$. Notice that the symmetry of the model allows to perform the verification on interactions $\alpha_1,\alpha_3,\alpha_5\text{, and }
+\alpha_7$ and deduce the results for the other interactions.
+Table~\ref{t:2} depicts the results of our experiments on different models. For each model, it summarizes the number of interactions
+that can be safely planned with an unbounded horizon ($\deltamax=\infty$). It also gives the number of interactions that cannot be planned in advance, and thus,
+need to be executed immediately after being planned $(\deltamax=0)$.
+   \vspace{-.8cm}
+   \begin{table*}
+     \caption{Detailed Results of the Task Manager Experiments}\label{t:1}
+    \centering
+    \vspace*{3mm}
+    \begin{tabular}{| c || c | c | c | c | c |}
+      \hline
+      Interaction      &  Conflicting Interactions     & $\inv$       & $\deltama$  \\ \hline
+      $\alpha_1$       & $\alpha_2,\alpha_4,\alpha_8$  & $\loc^3_2$   & $\infty$ \\\hline
+      $\alpha_3$       & $\alpha_2,\alpha_4,\alpha_8$  & $\loc^3_2$   & $\infty$ \\\hline
+      $\alpha_5$       & $\alpha_6,\alpha_8$           & $\loc^3_2$   & $\infty$\\\hline
+      $\alpha_7$       & $\alpha_2,\alpha_4$           & $\loc^3_2$   & 0 \\\hline
+    \end{tabular}
+   \end{table*}
+   \vspace{-1.5cm}
+   \begin{table*}
+     \caption{Results of Experiments}\label{t:2}
+    \vspace*{3mm}
+    \centering
+    \begin{tabular}{| c || c | c  | c |}
+      \hline
+      \multirow{2}{*}{Model}             & \multicolumn{3}{c|}{Number of Interactions}\\\cline{2-4}
+                                         & $\deltamax=0$ &$\deltamax=\infty$ & total\\\hline
+      
+      Task Manager                       &  2           & 6                & 8 \\\hline 
+      Pacemaker                          &  0           & 6                & 6  \\ \hline
+      Gear                               &  0           & 17               & 17 \\ \hline
+      Fischer                            & 0            & 10               & 10 \\ \hline
+    \end{tabular}
+   \end{table*}
+   \vspace{-1cm}
+\section{Conclusion and Future Work}
+
+We presented a method for scheduling real-time systems in a distributed context considering models including multiparty interactions.
+The proposed approach defines sufficient conditions ensuring a deadlock-free local planning of interactions with certain horizons.
+Moreover, it is proved that those conditions are interaction dependent, in other terms, this means that changing the planning horizon of an interaction
+does not affect the planning of other interactions. A key innovative idea is the use of global knowledge in addition to local components informations to enhance
+the local scheduling of interactions. The computed knowledge captures not only the way components synchronize through interactions, but it also 
+consider the history clock inequalities between those interactions and express explicitly the synchrony of time progress. 
+
+There are many open problems to be investigated such as: \emph{(i)} when planning an interaction, identifying conditions based on
+the state of components involved in this interaction, and \emph{(ii)} defining a lower bound for planning interaction. The latter represents an important point
+meaning that, if planning interactions can be ensured for a lower bound, that effectively represents the communication delays of the target platform, then all the problems
+induced by those delays, such as global consistency and performance dropping will be solved. 

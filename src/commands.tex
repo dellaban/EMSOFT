@@ -1,0 +1,277 @@
+% beamer presentation
+\newcommand{\keyword}[1]{\textcolor{bordeau}{#1}}
+
+
+\definecolor{ltgreen}{RGB}{180, 202, 72}
+\definecolor{mdgreen}{RGB}{138, 181, 78}
+\definecolor{dkgreen}{RGB}{0, 153, 0}
+\definecolor{dgreen}{rgb}{.2,.7,.2}
+% theorems
+
+% specific environment
+%\newenvironment{comment}{\vspace*{0.5cm} \noindent \underline{Note :} }{\vspace*{0.5cm}}
+%\newenvironment{proof}[1]{\noindent\textbf{Proof#1:}}{\hspace*{0.25cm}$\Box$ \vspace*{0.25cm}}
+%\newenvironment{proposition}{\begin{beamerboxesrounded}[shadow=true]{Proposition}}{\end{beamerboxesrounded}}
+
+% maths
+\newcommand{\simu}[1]{\sqsubseteq_{#1}}
+\newcommand{\pmax}[1]{\textbf{max} \ #1}
+\newcommand{\pmin}[1]{\textbf{min} \ #1}
+\newcommand{\ppmax}[2]{\textbf{max}_{#2} \ #1}
+\newcommand{\ppmin}[2]{\textbf{min}_{#2} \ #1}
+\newcommand{\false}{\textnormal{\textit{false}}}
+\newcommand{\true}{\textnormal{\textit{true}}}
+\newcommand{\func}[2]{#1(#2)}
+% sets
+\newcommand{\deltami}{\delta_{\min}}                 %non negative integer values
+\newcommand{\deltama}{\delta_{\max}(\alpha)}                 %non negative integer values
+\newcommand{\deltamax}{\delta_{\max}}                 %non negative integer values
+\newcommand{\deltamin}{\delta_{\min}}                 %non negative integer values
+\newcommand{\integerpoz}{\mathbb Z_{\ge 0}}                 %non negative integer values
+\newcommand{\integerpos}{\mathbb Z_{> 0}}                 %non negative integer values
+\newcommand{\integer}{\mathbb{Z}}                 % integer values
+\newcommand{\real}{\mathbb{R}}                    % real numbers
+\newcommand{\realpos}{\mathbb R_{> 0}}               % non-negative real numbers
+\newcommand{\realposz}{\mathbb R_{\ge 0}}               % non-negative real numbers
+\newcommand{\realpoz}{\mathbb R_{\ge 0}}               % non-negative real numbers
+\newcommand{\ii}{\imath}
+\newcommand{\jj}{\jmath}
+% time
+\newcommand{\hmnb}[1]{h_{\min}(#1)}
+\newcommand{\hmxb}[1]{h_{\max}(#1)}
+\newcommand{\hmn}{h_{\min}(\alpha)}
+\newcommand{\hmx}{h_{\max}(\alpha)}
+\newcommand{\timeval}{\mathbb{T}}                 % set of time values
+\newcommand{\tc}{\textrm{tc }}       % lower bound of tc
+\newcommand{\lbtc}{\mathtt{l}}       % lower bound of tc
+\newcommand{\ubtc}{\mathtt{u}}       % upper bound of tc
+\newcommand{\Q}{\mathrm{Q}}       % urgency type lazy
+%\newcommand{\G}{\mathcal{G}}       % urgency type lazy
+\newcommand{\Loc}{\mathcal{L}}       % urgency type lazy
+\newcommand{\lazy}{\mathrm{l}}       % urgency type lazy
+\newcommand{\delayable}{\mathrm{d}}  % urgency type delayable
+\newcommand{\eager}{\mathrm{e}}      % urgency type eager
+\newcommand{\I}{\mathcal{I}}      % urgency type eager
+\newcommand{\reset}{\textnormal{\textsf{reset}}}  % reset a list of clocks
+\newcommand{\clks}{\textnormal{\textsf{X}}}       % set of clocks
+\newcommand{\val}{v}                              % valuation of the clocks
+\newcommand{\valg}{\bar{v}}                              % valuation of the clocks
+\newcommand{\valgp}{\bar{v'}}                              % valuation of the clocks
+\newcommand{\Val}{\mathcal{V}}                              % valuation of the clocks
+\newcommand{\vals}[1]{\textnormal{\textsf{V(}}#1\textnormal{\textsf{)}}}% set of valuations
+\newcommand{\urg}{\textnormal{\textit{urg}}}      % urgency predicate: true iff the guard is urgent
+%\newcommand{\q}{\tsf{q}}      % urgency predicate: true iff the guard is urgent
+\newcommand{\q}{q}      % urgency predicate: true iff the guard is urgent
+\newcommand{\x}{\tsf{x}}      % urgency predicate: true iff the guard is urgent
+\newcommand{\urgb}{\tsf{urg}}      % urgency predicate: true iff the guard is urgent
+\newcommand{\confl}{\mathit{conf}}      % urgency predicate: true iff the guard is urgent
+\newcommand{\obs}{\tsf{obs}}      % urgency predicate: true iff the guard is urgent
+%\newcommand{\guard}{\textnormal{\textsf{guard}}}  % 
+\newcommand{\wait}{\textnormal{\textsf{wait}}}
+\newcommand{\untimed}{\textnormal{\textsf{u}}}    % untimed transitions
+\newcommand{\timed}{\textnormal{\textsf{t}}}      % timed transitions
+\newcommand{\tpc}[1]{\mathit{tpc}_{#1}}
+\newcommand{\tpcb}{\textnormal{\mathit{tpc}}}
+\newcommand{\hastpc}{\textnormal{\texttt{hastpc}}}
+\newcommand{\enables}{\textnormal{\texttt{ enables }}}
+\newcommand{\nenables}{\textnormal{\texttt{$\neg$enables }}}
+
+% ideal model
+\newcommand{\relt}[1]{\stackrel{#1}{\longrightarrow}} % transition relationship
+\newcommand{\locs}{\textnormal{\textsf{Q}}}       % set of control locations
+\newcommand{\p}[1]{\mathrm{part}(#1)}       % set of control locations
+\newcommand{\cp}{B=\gamma(B_1,\cdots,B_n)}  % composition
+%\newcommand{\guards}[1]{\textnormal{\textsf{G(}}#1\textnormal{\textsf{)}}} % set of guards over a set of clocks
+\newcommand{\TC}[1]{\textnormal{\textsf{TC(}}#1\textnormal{\textsf{)}}} % set of guards over a set of clocks
+\newcommand{\actions}{\textnormal{\textsf{A}}}    % set of actions
+\newcommand{\states}{\textnormal{\textsf{S}}}     % set of states
+
+% physical model
+\newcommand{\etf}{\varphi}                        % execution time function
+\newcommand{\instanceof}{\triangleleft}           % instance of
+\newcommand{\waitloc}[1]{wait_{#1}}               % waiting control location for the completion of a given action
+\newcommand{\complete}[1]{end_{#1}}               % completion action for a given action
+\newcommand{\etclk}[1]{x_{#1}}                    % clock for counting the execution time of a given action
+
+
+% implementation
+\newcommand{\interactions}{\gamma}                % set of interactions
+\newcommand{\enabledinteractions}[1]{\gamma_{#1}} % set of enabled interactions for a given {state}
+\newcommand{\nextactivation}[2]{\textnormal{\textsf{next}}_{#2}(#1)}    % next activation
+\newcommand{\nextdeadline}[2]{\textnormal{\textsf{deadline}}_{#2}(#1)}    % next deadline
+\newcommand{\nexta}[1]{\mathrm{next(#1)}}
+\newcommand{\deadline}[1]{\mathrm{deadline(#1)}}
+% urgency
+\newcommand{\urgency}[1]{\textcolor{red}{#1}}
+\newcommand{\good}[1]{\textcolor{dgreen}{#1}}
+% safe
+\newcommand{\safe}{\textnormal{\texttt{safe}}}
+%send receive
+\newcommand{\bsr}[1]{B_{#1}^{SR}}
+\newcommand{\ysr}{\gamma^{SR}}
+\newcommand{\csr}{B^{SR}}
+
+% thank you slide
+\newcommand{\thankyou}%
+{
+    \frame{%
+
+      \textbf{\Huge Thank You!}%
+      \vspace{1cm}
+      \begin{figure}
+        \includegraphics[scale=1]{../images/question.pdf}  \\
+      \end{figure}
+      \vspace{1cm}
+      \insertauthor \\
+      \vspace{0.60cm}
+      
+    }%
+}
+
+\newcommand{\barrow}{\item[\color{red}\ding{227}]}
+\newcommand{\yes}{\textcolor{dkgreen}{\ding{58}}} % green +
+\newcommand{\byes}{\scalebox{3}{\textcolor{dkgreen}{\ding{58}}}} % green +
+\newcommand{\no}{\textcolor{dkorange}{\ding{54}}} % red X
+\newcommand{\notsure}{\textcolor{mdgrey}{\textbf{???}}} % grey ???
+\newcommand{\neutral}{\textcolor{mdgrey}{$\bm{\sim}$}} % grey ~
+
+
+
+\newcommand{\ie}{i.\,e.\xspace}
+\newcommand{\eg}{e.\,g.\xspace}
+\newcommand{\warning}[1]{\includegraphics[width=.3cm]{../images/warning.pdf}~~#1}
+\newcommand{\warnings}{\includegraphics[scale=.4]{../images/warning.pdf}}
+%fonts
+\newcommand{\transit}[1]{\xrightarrow{#1}}
+\newcommand{\transitb}[1]{\stackrel{#1}{\leadsto}}
+\newcommand{\transitbp}[1]{\stackrel{#1}{\leadsto}_{\pi\gamma}}
+\newcommand{\bv}{\textnormal{\textbf{v}}}
+\newcommand{\inv}{\mathit{tpc}}
+%\newcommand{\inv}{\textnormal{tpc}}
+%\newcommand{\C}{\mathcal{C}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\tsf}[1]{\textnormal{\textsf{#1}}}
+\newcommand{\tsfb}[3]{\textnormal{\textsf{#1}\textsubscript{#2}\textsuperscript{#3}}}
+\newcommand{\tib}[1]{\textbf{\textit{#1}}}
+\newcommand{\tb}[1]{\textbf{#1}}
+\newcommand{\ti}[1]{\textit{#1}}
+\newcommand{\tcal}[1]{\mathcal{#1}}
+\newcommand{\tr}[1]{TR_{#1}}
+\newcommand{\cn}{\textit{B}}
+\newcommand{\msucc}{\textnormal{\textsf{succ}}}
+\newcommand{\tsucc}{\textnormal{\textsf{time-succ}}}
+\newcommand{\dsucc}{\textnormal{\textsf{disc-succ}}}
+\newcommand{\close}{\textnormal{\textsf{norm}}}
+\newcommand{\reach}{\textit{Reach}}
+\newcommand{\ic}{\textit{CI}}
+\newcommand{\iim}{\textit{II}}
+
+\newcommand{\guard}[2]{\mathit{guard}(#1,#2)}
+\newcommand{\ex}{\sigma}
+\newcommand{\reachable}{\tsf{Reach}}
+\newcommand{\locations}[1]{\mathcal{L}_{#1}}
+\newcommand{\plan}[1]{\mathit{\mathbf{plan}}(#1)}
+\newcommand{\plana}{\textnormal{\tb{plan}}}
+\newcommand{\enabled}{\mathit{Enabled}}
+\newcommand{\disabled}{\mathit{Disabled}}
+\newcommand{\enabledfrom}{\mathit{Enabled}^{{\scriptscriptstyle \nearrow^{\delta}}}}
+\newcommand{\enabledfrombis}[1]{\mathit{Enabled}^{{\scriptscriptstyle \nearrow^{#1}}}}
+\newcommand{\enabledfromz}{\mathit{Enabled}^{{\scriptscriptstyle \nearrow^0}}}
+\newcommand{\enabledfromd}{\mathit{Enabled}^{{\scriptscriptstyle \nearrow^{[0,\deltama]}}}}
+\newcommand{\enabledfromdi}{\mathit{Enabled}^{{\scriptscriptstyle \nearrow^{[0,h(\alpha)]}}}}
+\newcommand{\zoneplan}{\swarrow^{\deltamax}_{\deltamin}}
+\newcommand{\zonep}[1]{\swarrow^{#1}}
+\newcommand{\at}[1]{\tsf{at}(#1)}
+\newcommand{\backward}{\swarrow}
+\newcommand{\backwardd}{\swarrow^{\deltama}}
+\newcommand{\historyineq}{\mathcal{E}}
+\newcommand{\rise}{\uparrow}
+\newcommand{\fall}{\downarrow}
+\newcommand{\backwarduntil}[1]{_{#1}\makebox[2.1ex][r]{$\backward$}}
+\newcommand{\interactioninvariants}[1]{\mathcal{II}}
+\definecolor{aqua}{rgb}{0.5, 1.0, 0.83}
+\definecolor{aqua2}{rgb}{0.5, 1.0, 0.83}
+%maths
+\newenvironment{rrcases}
+  {\left.\begin{numcases}}
+  {\end{numcases}\right\rbrace}
+
+\newcommand{\LeftEqNo}{\let\veqno\@@leqno}
+\newcommand{\sched}{\mathit{schedule}}
+\newcommand{\loc}{\ell}
+\newcommand{\locg}{\bar{\ell}}
+\newcommand{\locgp}{\bar{\ell'}}
+\newcommand{\equi}{\Leftrightarrow}
+\newcommand{\lto}{\longrightarrow}
+\newcommand{\llto}[1]{\overset{#1}{\leadsto}}
+\newcommand{\shiftpoints}{4pt}
+
+
+\newcommand{\ta}{(\Loc,\loc_0,\A,\T,\X,\tpc)}
+\newcommand{\tab}[1]{(\Loc_{#1},\loc_0^{#1},\A_{#1},T_{#1},\X_{#1},\tpc_{#1})}
+\newcommand{\lts}{(\Q,A\cup\realpos,\lto)}
+\newcommand{\ltsg}{(\Q_g,\gamma\cup\realpos,\lto)}
+\newcommand{\squig}{{\scriptstyle\sim\mkern-3.9mu}}
+\newcommand{\lsquigend}{{\lhd\mkern-3mu}}
+\newcommand{\rsquigend}{{\scriptstyle\rule{.1ex}{0ex}>}}
+\newcounter{sqindex}
+\newcommand\squigs[1]{
+    \setcounter{sqindex}{0}
+      \whiledo {\value{sqindex}< #1}{\addtocounter{sqindex}{1}\squig}
+    }
+\newcommand{\tranbp}[2]{
+  \mathbin{\stackon[2pt]{\squigs{#2}\rsquigend}{\scriptstyle{#1\,}}}_{\gamma}
+      }
+
+\newcommand{\Depth}{1}
+\newcommand{\Height}{1.75}
+\newcommand{\Width}{0.5}
+
+\newcommand{\backhtxt}{\swarrow^{\hmx}_{\hmn}}
+\newcommand{\backhtxtb}{\swarrow^{\hmx}_{\hmn}}
+\newcommand{\backh}{\swarrow^{\hmx}_{\hmn}g(x)\Leftrightarrow\exists\delta\in[\hmn,\hmx].g(x+\delta),}
+
+\newcommand{\plntxt}[1]{\mathit{Plannable(#1)}}
+\newcommand{\pln}[1]{\mathit{Plannable(#1)}=\bigvee_{\loc\in\Loc_{#1}}
+\at{\loc}\wedge\backhtxt(\bigwedge_{a_i\in#1} \guard{a_i}{\loc_i}),}
+
+\newcommand{\plnIntxt}[2]{\mathit{Plannable(#1,#2)}}
+\newcommand{\plnIn}[2]{\mathit{Plannable(#1,#2)}=\bigvee_{\loc\in\Loc_{#1}}
+\at{\loc}\wedge\bigwedge_{a_i\in#1} \Big(\guard{a_i}{\loc_i}+#2\Big),}
+
+
+\newcommand{\stat}{%
+\smash{\raisebox{.5\dimexpr3\baselineskip+4\itemsep+2\parskip}{$\left.\rule{0pt}{.5\dimexpr4\baselineskip+3\itemsep+3\parskip}\right\}$\ \parbox{5.5cm}{dynamically checked during execution}}}
+}
+\newcommand{\dyn}{%
+\smash{\raisebox{.5\dimexpr3\baselineskip+4\itemsep+2\parskip}{$\left.\rule{0pt}{.5\dimexpr4\baselineskip+3\itemsep+3\parskip}\right\}$\ \parbox{5.5cm}{dynamically checked during execution}}}
+}
+
+
+\newlength{\mywidth}                          
+\newcommand\bigfrown[2][\textstyle]{\ensuremath{%
+  \array[b]{c}\text{\resizebox{\mywidth}{.7ex}{$#1\frown$}}\\[-1.3ex]#1#2\endarray}}
+ \settowidth{\mywidth}{$\enabledfromd(\alpha)$}
+
+ 
+ \makeatletter
+\def\namedlabel#1#2{\begingroup
+  \mbox{\hspace{1cm}}#2%
+    \def\@currentlabel{#2}%
+    \phantomsection\label{#1}\endgroup
+}
+\makeatother
+
+\makeatletter
+\newcommand{\mytag}[2]{%
+ \text{#1}%
+  \@bsphack
+    \protected@write\@auxout{}%
+   {\string\newlabel{#2}{{#1}{\thepage}}}%
+  \@esphack
+}          
+\makeatother

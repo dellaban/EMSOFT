@@ -1,0 +1,200 @@
+\begin{thebibliography}{10}
+
+\bibitem{rtbip11}
+T.~Abdellatif, J.~Combaz, and J.~Sifakis.
+\newblock Model-based implementation of real-time applications.
+\newblock In {\em EMSOFT}, 2010.
+
+\bibitem{alur94}
+R.~Alur and D.~L. Dill.
+\newblock A theory of timed automata.
+\newblock {\em Theor. Comput. Sci.}, 1994.
+
+\bibitem{DBLP:conf/tacas/AstefanoaeiRBBC14}
+L.~Astefanoaei, S.~B. Rayana, S.~Bensalem, M.~Bozga, and J.~Combaz.
+\newblock Compositional invariant generation for timed systems.
+\newblock In {\em Tools and Algorithms for the Construction and Analysis of
+  Systems - 20th International Conference, {TACAS} 2014, Held as Part of the
+  European Joint Conferences on Theory and Practice of Software, {ETAPS} 2014,
+  Grenoble, France, April 5-13, 2014. Proceedings}, pages 263--278, 2014.
+
+\bibitem{DBLP:conf/fsttcs/Bagrodia87}
+R.~Bagrodia.
+\newblock A distributed algorithm to implement n-party rendevouz.
+\newblock In {\em Foundations of Software Technology and Theoretical Computer
+  Science, Seventh Conference, Pune, India, December 17-19, 1987, Proceedings},
+  pages 138--152, 1987.
+
+\bibitem{Bagrodia:1989:PSD:75618.75621}
+R.~Bagrodia.
+\newblock Process synchronization: Design and performance evaluation of
+  distributed algorithms.
+\newblock {\em IEEE Trans. Softw. Eng.}, 15(9):1053--1065, Sept. 1989.
+
+\bibitem{Basu:BIP}
+A.~Basu, M.~Bozga, and J.~Sifakis.
+\newblock Modeling heterogeneous real-time components in bip.
+\newblock In {\em Proceedings of the Fourth IEEE International Conference on
+  Software Engineering and Formal Methods}, SEFM '06, pages 3--12, Washington,
+  DC, USA, 2006. IEEE Computer Society.
+
+\bibitem{uppaal}
+G.~Behrmann, A.~David, K.~G. Larsen, J.~H{\aa}kansson, P.~Pettersson, W.~Yi,
+  and M.~Hendriks.
+\newblock {UPPAAL} 4.0.
+\newblock In {\em QEST}, 2006.
+
+\bibitem{bengtssonY03}
+J.~Bengtsson and W.~Yi.
+\newblock On clock difference constraints and termination in reachability
+  analysis of timed automata.
+\newblock In {\em ICFEM}, 2003.
+
+\bibitem{lin-inv}
+S.~Bensalem, M.~Bozga, B.~Boyer, and A.~Legay.
+\newblock Incremental generation of linear invariants for component-based
+  systems.
+\newblock In {\em Application of Concurrency to System Design (ACSD), 2013 13th
+  International Conference on}, pages 80--89, July 2013.
+
+\bibitem{DBLP:conf/isola/BensalemBCT14}
+S.~Bensalem, M.~Bozga, J.~Combaz, and A.~Triki.
+\newblock Rigorous system design flow for autonomous systems.
+\newblock In {\em Leveraging Applications of Formal Methods, Verification and
+  Validation. Technologies for Mastering Change - 6th International Symposium,
+  ISoLA 2014, Imperial, Corfu, Greece, October 8-11, 2014, Proceedings, Part
+  {I}}, pages 184--198, 2014.
+
+\bibitem{DBLP:conf/pdcs/ChabrolDALD05}
+D.~Chabrol, V.~David, C.~Aussagu{\`{e}}s, S.~Louise, and F.~Daumas.
+\newblock Deterministic distributed safety-critical real-time systems within
+  the oasis approach.
+\newblock In {\em International Conference on Parallel and Distributed
+  Computing Systems, {PDCS} 2005, November 14-16, 2005, Phoenix, AZ, {USA}},
+  pages 260--268, 2005.
+
+\bibitem{DBLP:journals/toplas/ChandyM84}
+K.~M. Chandy and J.~Misra.
+\newblock The drinking philosopher's problem.
+\newblock {\em {ACM} Trans. Program. Lang. Syst.}, 6(4):632--646, 1984.
+
+\bibitem{Chandy:1988:PPD:59087}
+K.~M. Chandy and J.~Misra.
+\newblock {\em Parallel Program Design: A Foundation}.
+\newblock Addison-Wesley Longman Publishing Co., Inc., Boston, MA, USA, 1988.
+
+\bibitem{Charette09}
+R.~N. Charette.
+\newblock This car runs on code.
+\newblock {\em IEEE Spectrum}, 2009.
+
+\bibitem{yices}
+B.~Dutertre and L.~de~Moura.
+\newblock The yices smt solver.
+\newblock Technical report, SRI International, 2006.
+
+\bibitem{DBLP:conf/hybrid/GhosalHKS04}
+A.~Ghosal, T.~A. Henzinger, C.~M. Kirsch, and M.~A.~A. Sanvido.
+\newblock Event-driven programming with logical execution times.
+\newblock In {\em Hybrid Systems: Computation and Control, 7th International
+  Workshop, {HSCC} 2004, Philadelphia, PA, USA, March 25-27, 2004,
+  Proceedings}, pages 357--371, 2004.
+
+\bibitem{DBLP:conf/lctrts/HenzingerKM05}
+T.~A. Henzinger, C.~M. Kirsch, and S.~Matic.
+\newblock Composable code generation for distributed giotto.
+\newblock In {\em Proceedings of the 2005 {ACM} {SIGPLAN/SIGBED} Conference on
+  Languages, Compilers, and Tools for Embedded Systems (LCTES'05), Chicago,
+  Illinois, USA, June 15-17, 2005}, pages 21--30, 2005.
+
+\bibitem{henzinger94}
+T.~A. Henzinger, X.~Nicollin, J.~Sifakis, and S.~Yovine.
+\newblock Symbolic model checking for real-time systems.
+\newblock {\em Inf. Comput.}, 1994.
+
+\bibitem{pace}
+Z.~Jiang, M.~Pajic, S.~Moarref, R.~Alur, and R.~Mangharam.
+\newblock Modeling and verification of a dual chamber implantable pacemaker.
+\newblock In {\em Proceedings of the 18th International Conference on Tools and
+  Algorithms for the Construction and Analysis of Systems}, TACAS'12, pages
+  188--203, Berlin, Heidelberg, 2012. Springer-Verlag.
+
+\bibitem{DBLP:journals/arc/Kopetz03}
+H.~Kopetz.
+\newblock Time-triggered real-time computing.
+\newblock {\em Annual Reviews in Control}, 27(1):3--13, 2003.
+
+\bibitem{Kopetz:2004:IAD:1032662.1034360}
+H.~Kopetz.
+\newblock An integrated architecture for dependable embedded systems.
+\newblock In {\em Proceedings of the 23rd IEEE International Symposium on
+  Reliable Distributed Systems}, SRDS '04, pages 160--161, Washington, DC, USA,
+  2004. IEEE Computer Society.
+
+\bibitem{fisch}
+L.~Lamport.
+\newblock A fast mutual exclusion algorithm.
+\newblock {\em ACM Trans. Comput. Syst.}, 5(1):1--11, Jan. 1987.
+
+\bibitem{gear}
+M.~Lindahl, P.~Pettersson, and W.~Yi.
+\newblock {Formal Design and Analysis of a Gearbox Controller}.
+\newblock {\em Springer International Journal of Software Tools for Technology
+  Transfer (STTT)}, 3(3):353--368, 2001.
+
+\bibitem{MurataPetriNet}
+T.~Murata.
+\newblock Petri nets: Properties, analysis and applications.
+\newblock {\em Proceedings of the IEEE}, 77(4):541--580, Apr 1989.
+
+\bibitem{DBLP:conf/concur/ParrowS92}
+J.~Parrow and P.~Sj{\"{o}}din.
+\newblock Multiway synchronizaton verified with coupled simulation.
+\newblock In {\em {CONCUR} '92, Third International Conference on Concurrency
+  Theory, Stony Brook, NY, USA, August 24-27, 1992, Proceedings}, pages
+  518--533, 1992.
+
+\bibitem{DBLP:conf/coordination/PerezCRT02}
+J.~A. P{\'{e}}rez, R.~Corchuelo, D.~Ruiz, and M.~Toro.
+\newblock An order-based, distributed algorithm for implementing multiparty
+  interactions.
+\newblock In {\em Coordination Models and Languages, 5th International
+  Conference, {COORDINATION} 2002, YORK, UK, April 8-11, 2002, Proceedings},
+  pages 250--257, 2002.
+
+\bibitem{quilbeuf:tel-01168470}
+J.~Quilbeuf.
+\newblock {\em {Distributed Implementations of Component-based Systems with
+  Prioritized Multiparty Interactions : Application to the BIP Framework.}}
+\newblock Theses, {Universit{\'e} de Grenoble}, Sept. 2013.
+
+\bibitem{RTD-FINDER}
+S.~B. Rayana, L.~Astefanoaei, S.~Bensalem, M.~Bozga, and J.~Combaz.
+\newblock Compositional verification for timed systems based on automatic
+  invariant generation.
+\newblock {\em CoRR}, abs/1506.04879, 2015.
+
+\bibitem{veriRepo}
+M.~B. Saddek~Bensalem, Benoit~Boyer and A.~Legay.
+\newblock Compositional invariant generation for timed systems.
+\newblock Technical Report TR-2012-15, {Verimag} Research Report, 2012.
+
+\bibitem{ahlem:thesis}
+A.~Triki.
+\newblock {\em Distributed Implementation of Timed Component-based Systems}.
+\newblock PhD thesis, UJF, 2015.
+
+\bibitem{tripakis98:thesis}
+S.~Tripakis.
+\newblock {\em The analysis of timed systems in practice}.
+\newblock PhD thesis, Joseph Fourier University, 1998.
+
+\bibitem{DBLP:conf/rtas/ZhaoLL07}
+Y.~Zhao, J.~Liu, and E.~A. Lee.
+\newblock A programming model for time-synchronized distributed real-time
+  systems.
+\newblock In {\em Proceedings of the 13th {IEEE} Real-Time and Embedded
+  Technology and Applications Symposium, {RTAS} 2007, April 3-6, 2007,
+  Bellevue, Washington, {USA}}, pages 259--268, 2007.
+
+\end{thebibliography}

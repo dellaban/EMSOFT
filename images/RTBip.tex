@@ -1,0 +1,30 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+  \pgfdeclarelayer{bg}
+  \pgfsetlayers{bg,main}
+\Large{
+  \node (rec1) [draw,fill=white, thick,minimum width=10mm,minimum height=10mm]{\textcolor{red}{B}};
+  \node (rec2) [draw,fill=white, right=3mm of rec1,thick,minimum width=10mm,minimum height=10mm]{\textcolor{green}{E}};
+  \node (rec3) [draw, fill=white,right=3mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{black}{H}};
+  \node (rec4) [draw, fill=white,right=3mm of rec3,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{cyan}{A}};
+  \node (rec5) [draw, fill=white,right=3mm of rec4,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{orange}{V}};
+  \node (rec6) [draw, fill=white,right=3mm of rec5,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{brown}{I}};
+  \node (rec7) [draw, fill=white,right=3mm of rec6,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{yellow}{O}};
+  \node (rec8) [draw, fill=white,right=3mm of rec7,thick,minimum width=1cm,minimum height=1cm,align=center]{\textcolor{purple}{R}};
+  }
+\begin{pgfonlayer}{bg}
+    \node (interaction) [rectangle split part fill={lb,lbordeau},draw,draw opacity=0,rectangle split,rectangle split parts=2,rounded corners=2pt, left=-10mm of rec8,yshift=13mm,thick,minimum width=13cm,minimum height=2cm,align=center]{\huge{Priorities} \nodepart{second} \huge{Multiparty-Interactions}};
+  \end{pgfonlayer}
+
+
+\end{tikzpicture}
+\end{figure}
+
+

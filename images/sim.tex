@@ -1,0 +1,31 @@
+\begin{figure}[h]
+ \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!75,minimum size=5mm},
+  palce/.style={circle,thick,draw=red!75,fill=red!75,minimum size=5mm},
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+
+\node(txt1){B=\{\begin{tikzpicture}\node[place]{};\end{tikzpicture},$\sum\cup\{\beta\},\tranbp{}{3}\}$};
+\node(txt2)[right=2cm of txt1]{A=\{\begin{tikzpicture}\node[palce]{};\end{tikzpicture},$\sum\cup,\transit{}\}$};
+\node[place,below=1cm of txt1,xshift=1cm](l0){};
+\node[palce,right=2cm of l0](l1){};
+\node [ellipse,inner xsep=1cm,inner ysep=5mm,draw, fit=(l0)(l1)] (e1) {R};
+\pause
+
+\node[place,below=2cm of l0](l2){};
+\node[left=1cm of l2,yshift=1.5cm](sig){$\sigma\in\sum\cup\realpos$};
+\path (l0) edge node [left]{$\sigma$}(l2);
+
+\pause
+\node[palce,below=2cm of l1](l3){};
+\draw[->,decorate,decoration=snake](l1)--node[right]{$\sigma$}(l3);
+\pause
+\node [ellipse,inner xsep=1cm,inner ysep=5mm,draw, fit=(l2)(l3)] (e) {R};
+
+\end{tikzpicture}
+\end{figure}  
+

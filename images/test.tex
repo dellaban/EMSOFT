@@ -1,0 +1,71 @@
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=45,auto]
+
+  \tikzstyle{place}=[circle,thick,draw=blue!75,fill=blue!20,minimum size=6mm]
+  \tikzstyle{red place}=[place,draw=red!75,fill=red!20]
+
+  \tikzstyle{every label}=[red]
+  \begin{scope}[every node/.style={scale=.6}]
+    % First net
+    \node [red place] (l1)  [label=above:$x\le 7$]   {$l1$};
+    \node [place] (l2) [right of=l1,xshift=1.5cm,label={[xshift=-0.5cm, yshift=0cm]$x\le 5$}]{$l2$};
+    \node [place] (l3)  [above of=l2,xshift=2cm,label=above:$x\le 3$] {$l3$};
+    \node [place] (l4) [below of=l2,xshift=2cm]                       {$l4$};
+  
+    \path (l1) edge node{} (l2)
+          (l2) edge [bend left] node[align=center,pos=0.6]{$reset\{x\}$ \\ $x\ge 1$} (l3)
+               edge [bend right] node{} (l4);
+  \end{scope}
+  
+  \begin{pgfonlayer}{background}
+     \filldraw [line width=4mm,join=round,black!10]
+       ([yshift=0.5cm]l3  -| l3.east)  rectangle (l4.south  -| l1.west);
+  \end{pgfonlayer}
+  
+  \pause
+  
+  \begin{scope}[xshift=-4cm,yshift=-3.5cm,every node/.style={scale=.6}]
+    % First net
+    \node [place] (w1)  [label=above:$x\le 7$]   {$l1$};
+    \node [red place] (w2) [right of=w1,xshift=1.5cm,label={[xshift=-0.5cm, yshift=0cm]$x\le 5$}]{$l2$};
+    \node [place] (w3)  [above of=w2,xshift=2cm,label=above:$x\le 3$] {$l3$};
+    \node [place] (w4) [below of=w2,xshift=2cm]                       {$l4$};
+  
+    \path (w1) edge node{} (w2)
+    (w2) edge [bend left] node[align=center,pos=0.6]{$reset\{x\}$ \\ $x\ge 1$} (w3)
+               edge [bend right] node{} (w4);
+  \end{scope}
+  
+  \begin{pgfonlayer}{background}
+     \filldraw [line width=4mm,join=round,black!10]
+       ([yshift=0.5cm]w3 -| w3.east)  rectangle (w4.south  -| w1.west);
+  \end{pgfonlayer}
+  \draw [-to,thick,snake=snake,segment amplitude=.4mm,
+         segment length=2mm,line after snake=1mm]
+         ($(l2)-(10mm,12mm)$) -- ($(w3)+(5mm,-5mm)$)
+         node [above=1mm,midway,text width=3cm,text centered]{};
+   
+  
+  \pause 
+  \begin{scope}[xshift=4cm,yshift=-3.5cm,every node/.style={scale=.6}]
+    % First net
+    \node [place] (o1)  [label=above:$x\le 7$]   {$l1$};
+    \node [place] (o2) [right of=o1,xshift=1.5cm,label={[xshift=-0.5cm, yshift=0cm]$x\le 5$}]{$l2$};
+    \node [red place] (o3)  [above of=o2,xshift=2cm,label=above:$x\le 3$] {$l3$};
+    \node [place] (o4) [below of=o2,xshift=2cm]                       {$l4$};
+  
+    \path (o1) edge node{} (o2)
+    (o2) edge [bend left] node[align=center,pos=0.6]{$reset\{x\}$ \\ $x\ge 1$} (o3)
+               edge [bend right] node{} (o4);
+  \end{scope}
+  
+  \begin{pgfonlayer}{background}
+     \filldraw [line width=4mm,join=round,black!10]
+       ([yshift=0.5cm]o3 -| o3.east)  rectangle (o4.south  -| o1.west);
+  \end{pgfonlayer}
+  
+  \draw [-to,thick,snake=snake,segment amplitude=.4mm,
+         segment length=2mm,line after snake=1mm]
+         ($(l2)-(-5mm,12mm)$) -- ($(o1)+(-5mm,3mm)$)
+         node [above=1mm,midway,text width=3cm,text centered]{};
+
+\end{tikzpicture}

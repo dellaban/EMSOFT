@@ -1,0 +1,57 @@
+\begin{figure}[h]
+ \centering
+\begin{tikzpicture}[->,node distance=1cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+
+\node[place](l1){$\loc_1$};
+\node[place,below=6mm of l1,xshift=6mm](l2){};
+\node[place,below=6mm of l1,xshift=-6mm](l3){};
+
+\path (l1) edge node[right]{$s_1$}(l2) 
+      (l1) edge node[left]{$a_1$}(l3);
+
+\node[place,right=2.5cm of l1,label=right:$c\le 3$](l4){$\loc_2$};
+\node[place,below=6mm of l4,xshift=6mm](l5){};
+\node[place,below=6mm of l4,xshift=-6mm](l6){};
+
+\path (l4) edge node[right]{$s_2'$}(l5) 
+      (l4) edge node[left]{$s_1'$}(l6);
+
+\node[place,right=2.5cm of l4](l7){$\loc_3$};
+\node[place,below=6mm of l7,xshift=6mm](l8){};
+\node[place,below=6mm of l7,xshift=-6mm](l9){};
+
+\path (l7) edge node[right]{$a_2$}(l8) 
+      (l7) edge node[left]{$s_2$}(l9);
+
+\node [inner xsep=1cm,inner ysep=1cm,draw, yshift=-1mm, fit=(l1)(l2)(l3)] (rec1) {};
+\node [inner xsep=1cm,inner ysep=1cm,draw, yshift=-1mm, fit=(l4)(l5)(l6)] (rec2) {};
+\node [inner xsep=1cm,inner ysep=1cm,draw, yshift=-1mm, fit=(l7)(l8)(l9)] (rec3) {};
+\node [left=5mm of rec1,inner xsep=1cm,inner ysep=1cm,draw](rec4){};
+\node [right=5mm of rec3,inner xsep=1cm,inner ysep=1cm,draw](rec5){};
+  
+
+\node [dots] (s1) at ($(rec2.south west)!0.5!(rec2.north west)$) {};
+\node [dots] (s2) at ($(rec2.south east)!0.5!(rec2.north east)$) {};
+\node [dots] (s'2) at ($(rec3.south west)!0.5!(rec3.north west)$) {};
+\node [dots] (s'1) at ($(rec1.south east)!0.5!(rec1.north east)$) {};
+\node [dots] (a1) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+\node [dots] (a2) at ($(rec4.north west)!0.5!(rec4.north east)$) {};
+\node [dots] (b1) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+\node [dots] (b2) at ($(rec5.north west)!0.5!(rec5.north east)$) {};
+
+\draw[-] (s1)-- node[above]{$\sigma_1$}(s'1);
+\draw[-] (s2)--node[above]{$\sigma_2$}(s'2);
+
+\draw[-](a2)|- node[above,xshift=1.5cm]{$\alpha_1$}++(0,1cm)-- ++(1cm,0)-|(a1);
+\draw[-](b2)|- node[above,xshift=-1.5cm]{$\alpha_2$}++(0,1cm)-- ++(-1cm,0)-|(b1);
+
+\end{tikzpicture}
+\end{figure}  
+

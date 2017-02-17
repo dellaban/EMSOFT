@@ -1,0 +1,74 @@
+\section{Deadlock-free Planning}\label{sec:3}
+\vspace*{-1mm} As explained in Example~\ref{exp:dl}, local planning of interactions can 
+  introduce deadlocks in the system since it does not consider time progress
+  conditions of components not participating in the planned interactions. Effectively,
+  the weak planning semantics ensures that time can progress until the chosen execution date only w.r.t
+  timing constraints of participating components, but such progress may be disallowed by the rest of the system leading to deadlock states.
+  In this section, we provide sufficient conditions for having deadlock-free planning.
+
+  Planning an interaction $\alpha$ implies not only blocking components 
+  participating in $\alpha$ until $\alpha$ executes, but also preventing the system from planning interactions
+  involving these components, that is, interactions of $\confl(\alpha)$.
+  Consequently, the subset of interactions $\gamma' \subseteq \gamma$ that can be planned at a given state $(\loc,\val,\pi)$ depends on the content of the plan $\pi$.
+  It satisfies $\gamma'=\{\gamma\setminus\pi\cup\confl(\pi)\}$.
+
+  By Corollary~\ref{cr:reach}, a (reachable) deadlock state $(\loc,\val,\pi)$ of the weak planning semantics $S_p$ is such that $(\loc,\val)$ is a reachable state of the global state semantics $S_g$.
+  Since we assume that $S_g$ is deadlock-free, $(\loc,\val)$ is not a deadlock in $S_g$.
+  A deadlock state $(\loc,\val,\pi)$ of $S_p$ is caused by the plan $\pi$ which
+  is restricting the execution in $S_p$ w.r.t. $S_g$: interactions $\alpha$ of $\pi$ cannot execute before $\pi(\alpha)$ time units, and interactions $\alpha \in \confl(\pi)$ are blocked for (at least)
+  $\textnormal{max } \{ \pi(\beta) \ | \ \beta\#\alpha \}$.
+  Notice that due to well-formed guards, in a deadlock state $(\loc,\val,\pi)$ we have necessarily $\at{\loc_i} \wedge \urg(\tpc{\loc_i})$ for a location $\loc_i$ of a component $B_i \notin \p{\pi}.$ 
+
+  \begin{theorem}\label{thm:dlp}
+    If a state $(\loc,\val,\pi)\in\reach(S_p)$ deadlocks, the following equation is satisfied:
+  \begin{equation}\label{eq:dlp}
+  %\begin{split}
+  %  &\underbrace{\bigwedge_{\alpha\in\pi}\enabledfrombis{\pi(\alpha)}(\alpha)}_\text{\mytag{A}{A}}\quad\wedge
+  %  \underbrace{\bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i} \at{\loc_i} \wedge \urg(\tpc{\loc_i})}_\text{\mytag{B}{B}}\\
+  %  &\wedge\underbrace{\bigwedge_{\alpha\in\pi}\pi(\alpha)\neq 0\wedge\big(\bigvee_{\alpha\in\pi}(\enabled(\alpha)\vee
+  %  \bigvee_{\alpha\in\confl(\pi)}\enabled(\alpha)\big)}_\text{\mytag{C}{C}}
+  %\end{split}
+  \begin{split}
+    &\underbrace{\bigwedge_{\alpha\in\pi}\enabledfrombis{\pi(\alpha)}(\alpha)}_\text{A}\quad\wedge
+    \underbrace{\bigvee_{B_i\in S\setminus\p{\pi}}\bigvee_{\loc_i\in\Loc_i} \at{\loc_i} \wedge \urg(\tpc{\loc_i})}_\text{B}\\
+    &\wedge\underbrace{\bigwedge_{\alpha\in\pi}\pi(\alpha)\neq 0\wedge\big(\bigvee_{\alpha\in\pi}(\enabled(\alpha)\vee
+    \bigvee_{\alpha\in\confl(\pi)}\enabled(\alpha)\big)}_\text{C}
+  \end{split}
+  \end{equation}
+  \end{theorem}
+  Term A of Equation~\ref{eq:dlp} represents an invariant of the system. On the other hand, terms B and
+  C characterize the deadlock: Term B expresses the urgency of time progress condition in components not involved in the planned interactions, 
+  whereas, term C specifies the origin of the deadlock: it characterizes states $(\loc,\val,\pi)$ of $S_p$ for which $\pi$ restricts the execution of an 
+  interaction $\alpha$ whereas it can be executed at $(\loc,\val)$ in $S_g$.
+  As explained above, such an interaction satisfies $\pi(\alpha) > 0$ or $\alpha \in \confl(\pi)$.
+  
+  It is clear that Equation~\ref{eq:dlp} depends on the reachable states of the planning semantics since it explicitly depends on plans $\pi$.
+  The following gives weaker conditions for deadlocks which are independent of the plan. 
+  \begin{theorem}\label{thm:phi}
+    Let $\Phi(\alpha)$ be the following predicate:
+    \begin{equation}\label{eq:phi}
+    %\begin{split}
+      \bigfrown{\enabledfromd(\alpha)}\wedge
+      \bigvee_{B_i\in S\setminus\p{\alpha}}\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}\wedge\urg(\tpc{\loc_i})
+    \wedge\bigvee_{\beta\in\alpha\cup\confl(\alpha)}\enabled(\beta)
+    %\end{split}
+  \end{equation}
+  where $\bigfrown{\enabledfromd(\alpha)}$ is the result of transforming all the timing constraints of the form $x\le ct$ by $x<ct$
+  in $\backwardd(\bigwedge_{a_i\in\alpha}\guard{a_i}{\loc_i})$ of $\enabledfromd(\alpha)$.
+  
+  If a reachable state of the system $(\loc,\val,\pi)$ deadlocks then the following is satisfied:
+  \begin{equation}\label{eq:dlpf}
+      \exists\alpha\in\gamma, \Phi(\alpha)\wedge\deltama\neq0
+  \end{equation}
+  \end{theorem}
+ 
+  Let $\sched(\alpha,\deltama)$ be the following predicate:
+  \begin{displaymath}
+    \sched(\alpha,\deltama) = \neg\Phi(\alpha)\vee(\deltama=0)
+  \end{displaymath}
+
+  Using Theorem~\ref{thm:phi} and Corollary~\ref{cr:reach}, we can conclude that if for all interactions $\alpha\in\gamma$ and for all reachable states of the global state semantics $S_g$ the predicate $\sched(\alpha,\deltama)$ is satisfied, then the weak planning semantics is deadlock-free.
+  Notice that given an interaction $\alpha \in \gamma$ the satisfaction of $\sched(\alpha,\deltama)$ on $Reach(S_g)$ depends only on $\deltama$.
+  Moreover, it is monotonic, that is, if it holds for $\deltama$ then it holds for any $\deltama' < \deltama$.
+  This provides means for building implementations that plan interactions as soon as possible by taking for $\deltama$ the maximal value of $\delta$ such that $\sched(\alpha,\delta)$ holds on $Reach(S_g)$.
+  

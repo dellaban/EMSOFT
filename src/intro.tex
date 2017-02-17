@@ -1,0 +1,64 @@
+\section{Introduction}
+
+Nowadays, real-time systems are ubiquitous in several application domains, 
+and such an emergence led to an increasing need of performance: resources, 
+availability, concurrency...etc. This expansion initiate a shift from the
+use of single processor based hardware platforms, to large sets 
+of interconnected and distributed computing nodes, and even gave birth to
+a new family of system known as \emph{Networked Embedded Systems}, and
+that are intrinsically distributed.
+Such evolution stems from an increase in complexity of real-time software 
+embedded on such platforms (e.g. electronic control in avionics 
+and automotive domains~\cite{Charette09}), and the need to integrate 
+formerly isolated systems~\cite{Kopetz:2004:IAD:1032662.1034360} so that 
+they can cooperate as well as share resources, improving functionality 
+and reducing costs.
+
+To deal with such complexity, the community of safety critical systems 
+often restricts its scope to predictable systems, which are represented 
+with domain specific models (e.g. periodic tasks, synchronous systems, 
+time-deterministic systems) for which the range of possible executions 
+is small enough to be easily analyzed, allowing the pre-computation 
+of optimal control strategies.
+\emph{Networked Embedded Systems} usually describes a set of real-time systems, 
+distributed across platform(s) and interacting through a network. 
+Because of their adaptive behavior, the standard practice when implementing 
+such systems is not to rely on models for pre-computation but rather to design
+systems dynamically adapting at runtime to the actual context of execution.
+Such approaches do not offer any formal guarantee of timeliness.
+The lack of a priori knowledge on system behavior leaves also little room for 
+static optimization.
+
+Model-based development is one promising approach in building distributed 
+real-time system. First, an application model is designed, expressing 
+abstraction of the timed system behavior. This abstraction is platform 
+independent, meaning that it does not consider platform introduced delays 
+or CPU speed, which allow to: \emph{(i)} model the system at early stages 
+without any knowledge of the target platform, and \emph{(ii)} verify 
+the obtained model against some safety properties (functional requirements).
+Thereafter, the application source code, which represents the actual 
+implementation of the system on a given platform, 
+is automatically generated from the model. The big challenge becomes then 
+how to verify the timing behavior of the implementation, since a lot of 
+assumption drops such as atomic execution of action or timeless communication delays. 
+
+\indent In this paper, we propose an extension of the work presented in (cite fm) 
+consisting in a model-based approach aiming to mitigate the communication delays of 
+distributed platforms. In this approach, systems consist of components represented 
+as timed automata that may synchronize on particular actions to coordinate 
+their activities. We contribute to this research field by proposing methods for 
+scheduling interactions with bounded horizons aiming to reduce the impact of 
+communication delays on systems execution.
+We extend our previous work by defining lower bound horizons for planning interactions, 
+which correspond to the platform communication delays.
+In particular, \emph{(i)} we exetend the semantics of (cite fm) for \emph{planning} interactions with 
+lower bound horizons, \emph{(ii)} we discuss different methodologies for checking deadlock 
+freedom property for such models, and \emph{(iii)} highlight the key issues met during our reflection. 
+
+The rest of the paper is organized as follows. In Section~\ref{sec2}, 
+we provide a definition of timed automata with respect to multiparty interactions. 
+In Section~\ref{sec3}, we discuss the existing gap between the application model and
+its implementation. Then, we propose a formal semantics based on planning
+interactions with bounded horizons aiming to shorten this gap.
+Thereafter, we propose different verification approaches for checking deadlock
+freedom property of the presented model (Section~\ref{sec4}). 

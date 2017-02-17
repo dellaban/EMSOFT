@@ -1,0 +1,124 @@
+\begin{figure}[H]
+  \center
+  \begin{adjustwidth}{-8mm}{-12mm}
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=8mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=1pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}
+]
+\tikzstyle{every node}=[font=\scriptsize]
+
+  \node (rec1) at (0,0) [draw, thick,minimum width=1cm,minimum height=1cm]{$C$};
+  \node (rec2) [draw, above=5mm of rec1,thick,minimum width=1cm,minimum height=1cm]{$R$};
+  \node (rec3) [draw, right=1cm of rec1,thick,minimum width=1cm,minimum height=1cm]{$T_{1}$};
+  \node (rec4) [draw, left=1cm of rec1,thick,minimum width=1cm,minimum height=1cm]{$T_{2}$};
+
+  \node [dots] (i2) at ($(rec4.south west)!0.6!(rec4.south east)$) {};
+  \node [dots] (s2) at ($(rec4.south west)!0.8!(rec4.south east)$) {};
+  \node [dots] (e2) at ($(rec4.north east)!0.2!(rec4.north west)$) {};
+  \node [dots] (p2) at ($(rec4.north east)!0.5!(rec4.north west)$) {};
+  
+  \node [dots] (i1) at ($(rec3.south east)!0.6!(rec3.south west)$) {};
+  \node [dots] (s1) at ($(rec3.south east)!0.8!(rec3.south west)$) {};
+  \node [dots] (e1) at ($(rec3.north west)!0.2!(rec3.north east)$) {};
+  \node [dots] (p1) at ($(rec3.north west)!0.5!(rec3.north east)$) {};
+
+  \node [dots] (tr) at ($(rec2.north west)!0.5!(rec2.north east)$) {};
+  \node [dots] (fr) at ($(rec2.south west)!0.5!(rec2.south east)$) {};
+  
+  \node [dots] (ic) at ($(rec1.south west)!0.4!(rec1.south east)$) {};
+  \node [dots] (rc) at ($(rec1.south west)!0.6!(rec1.south east)$) {};
+  \node [dots] (ec) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+
+  \path (tr) ++(0,0.5cm) +(-1cm,0) coordinate(xp2) +(1cm,0) coordinate(xp1);
+  \draw  [-] (p1) |-node[above,xshift=-.5cm]{$process_1$} (xp1) -- (tr) -- (xp2)node[above,xshift=-.5cm]{$process_2$} -| (p2);
+
+  \path (ic) ++(0,-0.5cm) +(3mm,0) coordinate(xi1) +(-3mm,0) coordinate(xi2);
+  \draw  [-, name path=line1] (i1) |-node[above,xshift=-1cm]{$init_1$} (xi1) -- (ic) -- (xi2)node[above,xshift=-.5cm]{$init_2$} -| (i2);
+  \path (rc) ++(0,-0.75cm) +(3mm,0) coordinate(sx1) +(-3mm,0) coordinate(sx2);
+  \path  [-, name path=line2] (s1) |-node[below,xshift=-5mm]{$start_1$} (sx1) -- (rc) -- (sx2)node[below,xshift=-1cm]{$start_2$} -| (s2);
+  
+  \path[name intersections={of=line1 and line2, by={a,b,c,d}}];%
+  
+  \coordinate (aux1) at (s2|-sx2);
+  \coordinate (aux2) at (s1|-sx1);
+  \draw[-,connect=(s2) to (aux1) over (d) by 2pt];
+  \draw[-] (aux1) -- (sx2);
+  \draw[-,connect=(sx2) to (rc) over (c) by 2pt];
+  \draw[-,connect=(rc) to (sx1) over (b) by 2pt];
+  \draw[-] (sx1) -- (aux2);
+  \draw[-,connect=(aux2) to (s1) over (a) by 2pt];
+
+  \path (fr) ++(0,-0.225cm) +(-1cm,0) coordinate(xe2) +(1cm,0) coordinate(xe1);
+  \draw [-] (e1) |- node[above,xshift=-.6cm]{$end_1$}(xe1) -- (ec);
+  \draw [-] (xe1) -- (fr);
+  \draw [-] (e2) |- node[above,xshift=.6cm]{$end_2$}(xe2) -- (ec);
+  \draw [-] (xe2) -- (fr);
+
+
+  \node (rec9) [draw, right=2cm of rec3,yshift=1.5cm,thick,minimum width=6cm,minimum height=1.5cm,align=center]{Scheduler};
+  \path (rec9) ++ (2.5cm,3mm) coordinate (g);
+  \path (g) ++ (1mm,1mm) coordinate (g1);
+  \path (g) ++ (0,1.7mm) coordinate (g2) node [below=3mm of g]{$g$};
+  \draw (g) circle [radius=2mm];
+  \draw[-,line width=1pt] (g) -- (g1);
+  \draw[-,line width=1pt] (g) -- (g2);
+  \node (rec5) [draw, below=1cm of rec9,thick,xshift=-8mm,minimum width=1cm,minimum height=1cm]{$R^{SR}$};
+  \node (rec6) [draw, right=7mm of rec5,thick,minimum width=1cm,minimum height=1cm]{$C^{SR}$};
+  \node (rec7) [draw, left=7mm of rec5,thick,minimum width=1cm,minimum height=1cm]{$T_{1}^{SR}$};
+  \node (rec8) [draw, right=7mm of rec6,thick,minimum width=1cm,minimum height=1cm]{$T_{2}^{SR}$};
+ 
+  \node (p5) at ($(rec7.north west)!0.3!(rec7.north east)$)[yshift=-1mm] {};
+  \node (q5) at ($(rec7.north west)!0.7!(rec7.north east)$)[yshift=-1mm] {};
+  
+  \node (p6) at ($(rec5.north west)!0.3!(rec5.north east)$)[yshift=-1mm] {};
+  \node (q6) at ($(rec5.north west)!0.7!(rec5.north east)$)[yshift=-1mm] {};
+  
+  \node (p7) at ($(rec6.north west)!0.3!(rec6.north east)$)[yshift=-1mm] {};
+  \node (q7) at ($(rec6.north west)!0.7!(rec6.north east)$)[yshift=-1mm] {};
+  
+  \node (p8) at ($(rec8.north west)!0.3!(rec8.north east)$)[yshift=-1mm] {};
+  \node (q8) at ($(rec8.north west)!0.7!(rec8.north east)$)[yshift=-1mm] {};
+   
+  \node (ps5) [above=1cm of p5] {};
+  \node (qs5) [above=1cm of q5] {};
+  \node (ps6) [above=1cm of p6] {};
+  \node (qs6) [above=1cm of q6] {};
+  \node (ps7) [above=1cm of p7] {};
+  \node (qs7) [above=1cm of q7] {};
+  \node (ps8) [above=1cm of p8] {};
+  \node (qs8) [above=1cm of q8] {};
+
+  \draw [->] (p5) -- node[yshift=2mm]{Offer}(ps5);
+  \draw [->] (qs5) -- node[yshift=-2mm]{Notif} (q5);
+  \draw [->] (p6) -- node[yshift=2mm]{Offer} (ps6);
+  \draw [->] (qs6) -- node[yshift=-2mm]{Notif} (q6);
+  \draw [->] (p7) -- node[left,yshift=2mm]{Offer} (ps7);
+  \draw [->] (qs7) -- node[right,yshift=-2mm]{Notif} (q7);
+  \draw [->] (p8) -- node[left,yshift=2mm]{Offer} (ps8);
+  \draw [->] (qs8) -- node[right,yshift=-2mm]{Notif} (q8);
+
+  \path (rec3) +(8mm,10mm) coordinate(x1);
+  \path (rec3) +(20mm,10mm) coordinate(x2);
+  
+  \draw [-to,thick,segment amplitude=.4mm,
+         segment length=2mm]
+         (x1) -- (x2)
+         node [above=1mm,midway,text width=2cm,text centered]{decentralization};
+
+\end{tikzpicture}
+\end{adjustwidth}
+\caption{\small Parallel distributed system with centralized scheduler}\label{fig:mul}
+\end{figure}
+\begin{example}
+  Figure \ref{fig:mul} depicts the result of the transformation of the timed system of
+  Figure \ref{fig:run} towards a distributed model with a centralized scheduler. 
+  This transformation introduces parallelism between components, that is,
+  the components involved in the selected interaction will execute in parallel.
+  For example, if the scheduler chooses to execute the interaction
+  $init_1$, both components $C$ and $T_1$ will execute this corresponding actions in parallel.
+\end{example}
+

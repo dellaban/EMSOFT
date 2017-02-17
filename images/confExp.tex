@@ -1,0 +1,33 @@
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  bplace/.style={opacity=0.6,dashed,place,draw=green,fill=aqua},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.7},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}
+]
+
+  \node (rec2) [draw, thick,minimum width=1cm,minimum height=1cm]{$B_{2}$};
+  \node (rec1) [draw, left=5mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{1}$};
+  \node (rec3) [draw, right=5mm of rec2,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{3}$};
+  \node (rec4) [draw, right=5mm of rec3,thick,minimum width=1cm,minimum height=1cm,align=center]{$B_{4}$};
+
+
+  \node [dots,scale=.5] (p1) at ($(rec2.north west)!0.3!(rec2.north east)$) {};
+  \node [dots,scale=.5] (p2) at ($(rec2.north west)!0.7!(rec2.north east)$) {};
+  \node [dots,scale=.5] (q1) at ($(rec1.north west)!0.5!(rec1.north east)$) {};
+  \node [dots,scale=.5] (q2) at ($(rec3.north west)!0.3!(rec3.north east)$) {};
+  \node [dots,scale=.5] (r1) at ($(rec3.north west)!0.7!(rec3.north east)$) {};
+  \node [dots,scale=.5] (r2) at ($(rec4.north west)!0.3!(rec4.north east)$) {};
+
+  
+
+  \draw [-] (q1) to[ncbar=2mm] (p1) node[xshift=-8mm,yshift=5mm]{$\alpha_1$};
+  \draw [-] (q2) to[ncbar=-2mm] (p2) node[xshift=8mm,yshift=5mm]{$\alpha_2$};
+  \draw [-] (r2) to[ncbar=-2mm] (r1) node[xshift=8mm,yshift=5mm]{$\alpha_3$};
+\end{tikzpicture}
+\end{figure}
+

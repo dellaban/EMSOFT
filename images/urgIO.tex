@@ -1,0 +1,22 @@
+\begin{figure}[h]
+  \centering
+\begin{tikzpicture}[->,node distance=7mm,>=stealth',bend angle=40,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.5},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={},
+  scale=0.3
+]
+
+  \node [place] (l1) {$\loc_1$};
+  \node [place,below=15mm of l1] (l2) {$\loc_2$};
+  \node [place,right=15mm of l1] (l3) {$\loc_{err}$};
+
+
+  \path (l1) edge node[align=center]{in\\$c<=k$}(l2);
+  %      (l1) edge node[align=center] {in\\$c<=k$}(l2);
+        \draw[dashed] (l1) -- node[align=center] {timeout\\$[c>=k']^e$}(l3);
+\end{tikzpicture}
+\end{figure}

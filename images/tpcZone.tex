@@ -1,0 +1,48 @@
+\begin{figure}
+  \centering
+  \hspace{-1cm}
+  \begin{subfigure}[H]{100pt}
+  \centering
+  \begin{tikzpicture}[scale=0.7]
+  \tikzstyle{every node}=[font=\scriptsize]
+
+    \draw [<->,thick] (0,2) node (yaxis) [above] {$y$}
+        |- (2.5,0) node (xaxis) [right] {$x$};
+        \draw (1,0) coordinate (a_1) -- (1,2) coordinate (a_2);
+        \node[above=0cm of a_1,xshift=1mm] (x1) {k};
+    \fill[green!20!white,opacity=0.6] (0,0) rectangle (1,2); 
+  \end{tikzpicture}
+    \caption{\scriptsize $x \le k$}
+  \end{subfigure} 
+  \begin{subfigure}[H]{100pt}
+  \centering
+  \begin{tikzpicture}[scale=0.7]
+  \tikzstyle{every node}=[font=\scriptsize]
+    \draw [<->,thick] (0,2) node (yaxis) [above] {$y$}
+        |- (2.5,0) node (xaxis) [right] {$x$};
+    \draw (0,1) coordinate (a_1) -- (2.5,1) coordinate (a_2);
+        \node[left=0cm of a_1] (y1) {d};
+    \fill[blue!20!white,opacity=0.6] (0,0) rectangle (2.5,1); 
+  \end{tikzpicture}
+    \caption{\scriptsize $y \le d$}
+  \end{subfigure} 
+  \hspace{-0cm}
+  %\vspace{-1cm}  
+  \begin{subfigure}[H]{100pt}
+  \centering
+  \begin{tikzpicture}[scale=0.7]
+  \tikzstyle{every node}=[font=\scriptsize]
+    \draw [<->,thick] (0,2) node (yaxis) [above] {$y$}
+        |- (2.5,0) node (xaxis) [right] {$x$};
+        \coordinate (a_1) at (0,1);
+        \coordinate (a_2) at (1,0);
+        \node[left=-5mm of y1] (a_1) {d};
+        \node[above=-5mm of x1] (a_2) {k};
+    \fill[blue!20!red,opacity=0.6] (0,0) rectangle (1,1); 
+  \end{tikzpicture}
+    \caption{\scriptsize $x \le k$ and $y \le d$}
+  \end{subfigure} 
+
+\caption{Zone representation of tpc for a component with two clocks}
+  \label{fig:zone-tpc}
+\end{figure}

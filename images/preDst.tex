@@ -1,0 +1,51 @@
+\begin{figure}[h]
+  \center
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  triangle/.style={fill=black,regular polygon,regular polygon sides=3,minimum size=10pt,inner sep=0pt,}]
+
+
+ 
+%  \pgfdeclarelayer{bg}
+%  \pgfsetlayers{bg,main}
+  \node (rec1) [fill=lbordeau,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{Scheduler};
+  \path (rec1) ++ (1cm,0mm) coordinate (g);
+  \path (g) ++ (0.8mm,0.8mm) coordinate (g1);
+  \path (g) ++ (0,1.2mm) coordinate (g2);% node [below=3mm of g]{$g$};
+  \draw (g) circle [radius=1.5mm];
+ \draw[-,line width=0.5pt] (g) -- (g1);
+  \draw[-,line width=0.5pt] (g) -- (g2);
+  \node (rec2) [fill=llbordeau,below=1mm of rec1,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{Application};
+  \node (rec3) [fill=bordeau,below=1mm of rec2,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{\textcolor{white}{HW Platform}};
+  \node (a1) [right=-19mm of rec1,single arrow,minimum height=1cm,right color=bordeau,rotate=-90]{};
+  \node (a1) [left=-19mm of rec2,yshift=1.2cm,single arrow,minimum height=1cm,right color=bordeau,rotate=90]{};
+\pause
+  \node (rec1) [right=4cm of rec1,yshift=15 mm,fill=lbordeau,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{Scheduler};
+  \path (rec1) ++ (1cm,0mm) coordinate (g);
+  \path (g) ++ (0.8mm,0.8mm) coordinate (g1);
+  \path (g) ++ (0,1.2mm) coordinate (g2);% node [below=3mm of g]{$g$};
+  \draw (g) circle [radius=1.5mm];
+ \draw[-,line width=0.5pt] (g) -- (g1);
+  \draw[-,line width=0.5pt] (g) -- (g2);
+  \node (rec2) [fill=llbordeau,below=1mm of rec1,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{Application};
+  \node (dst) [right=3mm of rec2,align=center]{Distribute the application \\accross the avaialable platforms};
+  \node (rec3) [fill=bordeau,below=20mm of rec2,xshift=-5cm,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{\textcolor{white}{HW Platform 1}};
+  \node (rec4) [fill=bordeau,below=20mm of rec2,xshift=5cm,,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{\textcolor{white}{HW Platform 3}};
+  \node (rec5) [fill=bordeau,below=20mm of rec2,rounded corners,draw, thick,minimum width=4cm,minimum height=1cm]{\textcolor{white}{HW Platform 2}};
+  \begin{scope}[on background layer]
+    \node<2> (glue) [draw opacity=0,rounded corners=8pt,draw, below=25mm of rec2,thick,minimum width=12cm,minimum height=1cm,align=center,fill=gray]{\textcolor{white}{\large{Communication Network}}};
+  \end{scope}
+  \draw[->] (rec2)--(rec3);
+  \draw[->] (rec2)--(rec4);
+  \draw[->] (rec2)--(rec5);
+
+\end{tikzpicture}
+\end{figure}
+
+
+
+

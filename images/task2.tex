@@ -1,0 +1,66 @@
+\begin{figure}[h]
+  \centering
+\begin{tikzpicture}[->,node distance=1.3cm,>=stealth',bend angle=20,auto,
+  place/.style={circle,thick,draw=blue!75,fill=blue!20,minimum size=10mm},
+  red place/.style={place,draw=red!75,fill=red!20}
+  every label/.style={red},
+  every node/.style={scale=.6},
+  dots/.style={fill=black,circle,inner sep=2pt},
+  initial text={}]
+
+  \node [accepting, place,label={[shift={(-1.5,-1.8)}]$B_4$}] (l0)  {$l_0^4$};
+  \node [place,right=2cm of l0] (l1) {$l_1^4$};
+
+  \path (l0) edge [in=160, out=-160,loop] node[left]{end} (l0)
+             edge [bend left] node[above]{init} (l1)
+        (l1) edge [in=-20, out=20,loop] node[right]{end} (l1)
+             edge [bend left] node[below]{run} (l0);
+
+  \node [accepting, place] (p1-0) [below=1.5cm of l1,xshift=2cm] {$l_0^1$};
+  \node [place] (p1-1) [right=1.5cm of p1-0]{$l_1^1$};
+  \node [place] (p1-2) [below=1.5cm of p1-1,label={[shift={(1,-1.8)}]$B_1$}]            {$l_2^1$};
+  \node [place] (p1-3) [left=1.5cm of p1-2,label=left:\textcolor{red}{$x\le k$}] {$l_3^1$};
+  
+  \path (p1-0) edge node[align=center, pos=0.5]{$init_1$} (p1-1)
+        (p1-1) edge node[align=center, pos=0.5]{$start_1$\\$x:=0$ } (p1-2)
+        (p1-2) edge node[align=center, pos=0.5]{$process_1$,\\ $x\ge t_1$ } (p1-3)
+        (p1-3) edge node[align=center, pos=0.5]{$end_1$} (p1-0);
+
+
+  \node [place] (p2-1) [below=1.5cm of l0,xshift=-2cm]{$l_1^2$};
+  \node [accepting, place] (p2-0) [left=1.5cm of p2-1]{$l_0^2$};
+  \node [place] (p2-2) [below=1.5cm of p2-1,label={[shift={(-4.5,-1.8)}]$B_2$}]      {$l_2^2$};
+  \node [place] (p2-3) [left=1.5cm of p2-2,label=left:\textcolor{red}{$y\le p$}] {$l_3^2$};
+  
+  \path (p2-0) edge node[align=center, pos=0.5]{$init_2$} (p2-1)
+        (p2-1) edge node[align=center, pos=0.5]{$start_2$\\ $y:=0$ } (p2-2)
+        (p2-2) edge node[align=center, pos=0.5]{$process_2$, $y\ge t_2$ } (p2-3)
+        (p2-3) edge node[align=center, pos=0.5]{$end_2$} (p2-0);
+  
+  \node [accepting, place] (r0) [left=1.8cm of p1-0] {$l_0^3$};
+  \node [place,below=1.5cm of r0,label={[shift={(-1.5,-1.7)}]$B_3$},label=right:\textcolor{red}{$z\le m$}] (r1) {$l_1^3$};
+
+  \path (r0) edge [bend left] node[right]{enter} (r1)
+        (r1) edge [bend left] node[left]{exit} (r0);
+  
+  \node [inner xsep=3cm,inner ysep=1cm,draw, fit=(l0)(l1)] (rec1) {};
+  \node [inner xsep=2cm,inner ysep=1.95cm,yshift=0.05cm,draw, fit=(r0)(r1)] (rec2) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p1-0)(p1-1)(p1-2)(p1-3)] (rec3) {};
+  \node [inner xsep=2cm,inner ysep=2cm,draw, fit=(p2-0)(p2-1)(p2-2)(p2-3)] (rec4) {};
+  \node [inner xsep=4cm,inner ysep=2.5cm,draw, fit=(rec1)(rec2)(rec3)(rec4)] (rec5) {};
+  \node [inner xsep=1.5cm,inner ysep=5mm,draw,above=5mm of rec1] (rec5) {
+    
+    $\begin{aligned}
+      \gamma_1 &=\{
+    init_1=\{init,init_1\}, start_1=\{start,start_1\}, process_1=\{enter,proces_1\}, 
+  end_1=\{end,exit,end_1\}\} \\
+  \gamma_2 &= \{init_2=\{init, init_2\}, start_2=\{start,start_2\}, 
+    process_2=\{enter,process_2\},end_2=\{end,exit,end_2\}\} 
+    \end{aligned}$
+  };
+
+\end{tikzpicture}
+\caption{Simple example of distributed task manager}\label{fig:run2}
+\end{figure}
+
+
