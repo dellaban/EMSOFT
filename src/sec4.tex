@@ -65,7 +65,7 @@ necessary and sufficient condition satisfied by deadlock states:
     &\bigvee_{B_i\in S\setminus\p{\pi}}\Big(
     \underbrace{\bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
   \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)}_\text{\mytag{R1}{r1}}\\
-  &\wedge\underbrace{\bigwedge_{\alpha\in\setminus\pi\cup\confl(\pi)}\neg\plntxt{\alpha}}_\text{\mytag{R2}{r2}}\\
+  &\wedge\underbrace{\bigwedge_{\alpha\in\gamma\setminus\pi\cup\confl(\pi)}\neg\plntxt{\alpha}}_\text{\mytag{R2}{r2}}\\
   &\wedge\underbrace{\bigwedge_{\alpha\in\pi}\Big(\pi(\alpha)\neq0\wedge
     \plnIntxt{\alpha}{\pi(\alpha)}\Big)}_\text{\mytag{R3}{r3}} 
   \end{split}
@@ -107,8 +107,8 @@ reached yet their execution dates.
     \bigvee_{\loc_i\in\Loc_i}\at{\loc_i}
   \wedge\urg(\tpc{\loc_i}(\val_i+h_{\min}))\Big)\wedge\\
   &\Big(\bigwedge_{\beta\in\Gamma(B_i)\setminus\confl(\alpha)}\hspace{-8mm}
-    \neg\plntxt{\beta}\vee\hspace{-5mm}\bigvee_{\beta\in\Gamma(B_i)\cap\confl(\alpha)}
-\hspace{-8mm}\plntxt{\beta}\Big)\Big]\\
+  \neg\plntxt{\beta}\vee\bigvee_{\beta\in\Gamma(B_i)\cap\confl(\alpha)}
+\plntxt{\beta}\Big)\Big]\\
 &\wedge\tilde{\plntxt{\alpha}} 
   \end{split}
 \end{equation}
