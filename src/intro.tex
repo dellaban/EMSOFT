@@ -2,10 +2,10 @@
 
 Nowadays, real-time systems are ubiquitous in several application domains, 
 and such an emergence led to an increasing need of performance: resources, 
-availability, concurrency...etc. This expansion initiate a shift from the
+availability, concurrency...etc. This expansion initiates a shift from the
 use of single processor based hardware platforms, to large sets 
-of interconnected and distributed computing nodes, and even gave birth to
-a new family of system known as \emph{Networked Embedded Systems}, and
+of interconnected and distributed computing nodes. Moreover, it prompts the birth 
+of a new family of systems known as \emph{Networked Embedded Systems}, and
 that are intrinsically distributed.
 Such evolution stems from an increase in complexity of real-time software 
 embedded on such platforms (e.g. electronic control in avionics 
@@ -46,19 +46,19 @@ assumption drops such as atomic execution of action or timeless communication de
 consisting in a model-based approach aiming to mitigate the communication delays of 
 distributed platforms. In this approach, systems consist of components represented 
 as timed automata that may synchronize on particular actions to coordinate 
-their activities. We contribute to this research field by proposing methods for 
+their activities. We contribute to this research field by proposing a method for 
 scheduling interactions with bounded horizons aiming to reduce the impact of 
 communication delays on systems execution.
 We extend our previous work by defining lower bound horizons for planning interactions, 
 which correspond to the platform communication delays.
-In particular, \emph{(i)} we exetend the semantics of (cite fm) for \emph{planning} interactions with 
-lower bound horizons, \emph{(ii)} we discuss different methodologies for checking deadlock 
-freedom property for such models, and \emph{(iii)} highlight the key issues met during our reflection. 
+In particular, \emph{(i)} we extend the semantics of (cite fm) for \emph{planning} interactions with 
+lower bound horizons, \emph{(ii)} we discuss its correctness, and \emph{(iii)} 
+provide a formal method for deadlock detection on such models. 
 
 The rest of the paper is organized as follows. In Section~\ref{sec2}, 
 we provide a definition of timed automata with respect to multiparty interactions. 
-In Section~\ref{sec3}, we discuss the existing gap between the application model and
-its implementation. Then, we propose a formal semantics based on planning
-interactions with bounded horizons aiming to shorten this gap.
-Thereafter, we propose different verification approaches for checking deadlock
+In Section~\ref{sec3}, we present our extended planning semantics and discuss
+its relation with the usual timed automata semantics. Then, we propose a 
+semantical execution strategy to enforce correctness, and finally,
+provide a compositional verification method for checking the deadlock
 freedom property of the presented model (Section~\ref{sec4}). 
